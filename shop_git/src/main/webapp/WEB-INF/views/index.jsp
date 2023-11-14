@@ -28,5 +28,6 @@
 	    <li><a href="<c:url value='/product/productList'/>">상품 목록</a></li>
 	</ul> 
 </div>
+<!-- for commit -->
 </body>
 </html>

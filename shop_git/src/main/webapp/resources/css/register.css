@@ -1,0 +1,143 @@
+@charset "UTF-8";
+
+form{
+	  	 width:500px;
+         height:700px;	
+         display : flex;
+         flex-direction: column;
+         align-items:center;
+         position : absolute;
+         top:50%;
+         left:50%;
+         transform: translate(-50%, -50%) ;
+         border: 1px solid rgb(89,117,196);
+         border-radius: 10px;
+}
+
+/* 회원가입 문구 */
+.title{
+		color:navy;
+		font-size: 30px;
+}
+
+/* 입력값들 설정  */
+.input-field{
+		 width: 250px;
+	     height: 15px;
+	     border : 1px solid rgb(89,117,196);
+	     border-radius:5px;
+}
+
+/* 아이디 형식 체크 */
+.idRegCheck1{
+	display: none;
+}
+.idRegCheck2{
+	display: none;
+}
+
+/* 비밀번호 형식 체크 */
+.passwordRegCheck1{
+	display: none;
+}
+.passwordRegCheck2{
+	display: none;
+}
+
+/* 비밀번호 일치 여부 검사 */
+.passwordSame1{
+	color:green;
+	display: none;
+}
+.passwordSame2{
+	color:red;
+	display: none;
+}
+
+/* 이메일 형식 체크 */
+.emailReg1{
+	color:green;
+	display: none;	
+}
+.emailReg2{
+	color:red;
+	display: none;
+}
+/* 이메일 인증번호 일치여부 검사 메시지 */
+.emailNumSame1{
+	color: green;
+	display: none;
+}
+.emailNumSame2{
+	color: red;
+	display: none;
+}
+
+/* 전화번호 형식 체크 */
+.telReg1{
+	color:green;
+	display: none;
+}
+.telReg2{
+	color:red;
+	display: none;
+}
+
+/* 공백 여부 체크 */
+.idEmpty{
+	display: none;
+}
+
+.idCheckEmpty{
+	display: none;
+}
+
+.passwordEmpty{
+	display: none;
+}
+
+.passwordSameEmpty{
+	display: none;
+}
+
+.nameEmpty{
+	display: none;
+}
+
+.ageEmpty{
+	display: none;
+}
+
+.sexEmpty{
+	display: none;
+}
+
+.addressEmpty{
+	display: none;
+}
+
+.colorEmpty{
+	display: none;
+}
+
+.telEmpty{
+	display: none;
+}
+
+.emailEmpty{
+	display: none;
+}
+
+.emailNumSameEmpty{
+	display: none;
+}
+
+/*  */
+
+/* 성별 입력창 */
+.input-radio{
+	display: flex;
+	align-items: center;
+	margin-right: center;
+	margin-bottom: 5px;
+}

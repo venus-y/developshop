@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+		
+<configuration>
+	<typeAliases>
+		<typeAlias alias="User" type="com.first.shop.dto.User"/>
+		<typeAlias alias="Product" type="com.first.shop.dto.Product"/>
+		<typeAlias alias="Category" type="com.first.shop.dto.Category"/>
+		<typeAlias alias="ProductImage" type="com.first.shop.dto.ProductImage"/>																					
+	</typeAliases>
+</configuration>

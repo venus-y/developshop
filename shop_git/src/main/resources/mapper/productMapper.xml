@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.first.shop.dao.ProductMapper">
+			
+		<!-- 상품 목록 조회  -->
+		<select id="getProductList" resultType="Product">
+			select * from product;
+		</select>
+		
+		<!-- 총 상품 개수 조회 -->
+		<select id="countAllProduct" resultType="int">
+			select count(*) from product;
+		</select>
+		
+		<!-- 상품 페이지 가져오기 -->
+		<select id="getProductPage" parameterType="Map" resultType="Product">
+			select * from product
+			order by product_id desc
+			limit #{offset}, #{pageSize};
+		</select>
+		
+		<!-- 상품 정보 조회 -->
+		<select id="getProductInfo" parameterType="int" resultType="Product">
+			select * from product
+			where product_id = #{product_id}
+		</select>
+		
+		
+	</mapper>	

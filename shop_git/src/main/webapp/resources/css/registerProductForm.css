@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+/* 입력 양식 폼 */
+form{
+	width:800px;
+            height:800px;
+            display : flex;
+            flex-direction: column;
+            align-items:center;
+            position : absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%) ;
+            border: 1px solid rgb(89,117,196);
+            border-radius: 10px;
+}
+
+/* 상품 입력요소 */
+.product-Input{
+	width: 300px;
+            height: 40px;
+            border : 1px solid rgb(89,117,196);
+            border-radius:5px;
+            padding: 0 10px;
+            margin-bottom: 10px;
+}
+
+
+/* 미리보기 이미지 사이즈 */
+.product_image img{
+		/* align-items 설정을 사용하려면 flex 설정을 먼저 해주어야 함. */
+		display:flex;		
+		align-items: center;
+		width: 500px;
+		height: auto;
+}
+
+/* 유효성 검사 메시지 */
+	.product_name_empty{
+		display: none;
+	}
+	.price_empty{
+		display: none;
+	}
+	.discount_empty{
+		display: none;
+	}
+	.release_date_empty{
+		display: none;
+	}
+	.stock_empty{
+		display: none;
+	}
+	.category_code_empty{
+		display: none;
+	}
+	.savepoint_empty{
+		display: none;
+	}
+	.stock_empty{
+		display: none;
+	}
+	.brand_empty{
+		display: none;
+	}
+	.clothes_empty{
+		display: none;
+	}
+	.sort_empty{
+		display: none;
+	}
+	.product_image_empty{
+		display: none;
+	}
+	 
+
+

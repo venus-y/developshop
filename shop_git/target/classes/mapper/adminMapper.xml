@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.first.shop.dao.AdminMapper">
+			
+		<!-- 상품 등록  -->
+		<insert id="register_product" parameterType="Product">
+			insert into product (product_name, price, discount, stock,
+			 category_code, savepoint, product_image, product_thumbimage)
+			 
+			 values (#{product_name}, #{price}, #{discount}, #{stock},
+			 #{category_code}, #{savepoint}, #{product_image}, #{product_thumbimage})
+		</insert>
+		
+		<!-- 상품 이미지 등록 -->
+		<insert id="register_image" parameterType="ProductImage">
+			insert into product_image (product_no, product_image, product_thumbimage)
+			
+			values (#{product_no}, #{product_image}, #{product_thumbimage})
+		</insert>
+		
+		
+		<!-- 카테고리 목록 불러오기 -->
+		<select id="get_categorylist" resultType="Category">
+			select * from category order by category_code
+		</select>
+		
+		
+		
+	</mapper>	

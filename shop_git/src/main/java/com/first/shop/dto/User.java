@@ -15,8 +15,17 @@ public class User {
 	private Date regdate;
 	private int admincheck;
 	private int point;
+	private int money;
 	private String tel;
 	private String color;
+	
+	
+	public int getMoney() {
+		return money;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
 	
 	public String getId() {
 		return id;
@@ -100,7 +109,8 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", password=" + password + ", name=" + name + ", age=" + age + ", sex=" + sex
 				+ ", birth=" + birth + ", address=" + address + ", email=" + email + ", regdate=" + regdate
-				+ ", admincheck=" + admincheck + ", point=" + point + ", tel=" + tel + ", color=" + color + "]";
+				+ ", admincheck=" + admincheck + ", point=" + point + ", money=" + money + ", tel=" + tel + ", color="
+				+ color + "]";
 	}
 	
 	

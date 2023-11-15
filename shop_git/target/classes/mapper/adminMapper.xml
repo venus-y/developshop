@@ -25,6 +25,15 @@
 			select * from category order by category_code
 		</select>
 		
+		<!-- 상품 정보 수정 -->
+		<update id="update_product" parameterType="Product">
+			update product set product_name = #{product_name}, price = #{price}
+			, discount = #{discount}, stock = #{stock},product_image = #{product_image},
+			 product_thumbimage = #{product_thumbimage} where product_id = #{product_id};
+		</update>
 		
-		
+		<!-- 상품 정보 삭제 -->
+		<delete id="delete_product" parameterType="Product">
+			delete from product where product_id = #{product_id}
+		</delete>
 	</mapper>	

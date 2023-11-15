@@ -25,8 +25,13 @@
 	</beans:bean>
 	
 	
-	
-
+	<!-- 인터셉터 설정 -->
+	<interceptors>
+        <interceptor>
+            <mapping path="/admin/**"></mapping>
+            <beans:bean id="AdminIntreceptor" class="com.first.shop.interceptor.AdminInterceptor"></beans:bean>
+        </interceptor>
+	</interceptors>
 
 
 	

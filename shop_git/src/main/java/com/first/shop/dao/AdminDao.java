@@ -13,4 +13,8 @@ public interface AdminDao {
 	List<Category> list();
 	
 	int registerImg(ProductImage image);
+	
+	int update(Product product);
+	
+	int delete(int product_id);
 }

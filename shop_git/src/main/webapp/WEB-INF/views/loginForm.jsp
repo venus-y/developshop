@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>    
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/index.jsp" />
 	<!--로그인 폼 -->
 	<form action="<c:url value="/login/postLogin"/>" method="post">
 		<h3 id="title">Login</h3>

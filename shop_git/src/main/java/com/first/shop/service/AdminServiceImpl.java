@@ -37,5 +37,17 @@ public class AdminServiceImpl implements AdminService {
 	public int registerProductImage(ProductImage image) {
 		return adminDao.registerImg(image);
 	}
+	
+	// 상품 정보 수정
+	@Override
+	public int updateProductInfo(Product product) {
+		return adminDao.update(product);
+	}
+
+	// 상품 정보 삭제
+	@Override
+	public int deleteProductInfo(int product_id) {
+		return adminDao.delete(product_id);
+	}
 
 }

@@ -38,15 +38,7 @@ public class ProductServiceImpl implements ProductService {
 	// 상품 정보 조회
 	@Override
 	public Product getProductInfo(int product_id) {
-		Product productInfo = productDao.productInfo(product_id);
-		
-		if(productInfo != null) {
-			System.out.println("상품 조회 성공!");
-			System.out.println(productInfo);
-		}else {
-			System.out.println("존재하지 않는 상품입니다.");
-		}
-		
+		Product productInfo = productDao.productInfo(product_id);	
 		return productInfo;
 	}
 

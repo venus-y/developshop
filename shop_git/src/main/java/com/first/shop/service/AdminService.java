@@ -13,4 +13,8 @@ public interface AdminService {
 	List<Category> getCategoryList();
 
 	int registerProductImage(ProductImage image);
+	
+	int updateProductInfo(Product product);
+	
+	int deleteProductInfo(int product_id);
 }

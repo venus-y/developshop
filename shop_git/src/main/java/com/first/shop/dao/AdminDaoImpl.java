@@ -25,15 +25,29 @@ public class AdminDaoImpl implements AdminDao {
 	public int register(Product product) {
 		return session.insert(namespace+"register_product", product);
 	}
-
+	
+	// 카테고리 불러오기
 	@Override
 	public List<Category> list() {
 		return session.selectList(namespace+"get_categorylist");
 	}
-
+	
+	// 이미지 등록
 	@Override
 	public int registerImg(ProductImage image) {
 		return session.insert(namespace+"register_image", image);
+	}
+	
+	// 상품 정보 수정
+	@Override
+	public int update(Product product) {
+		return session.update(namespace+"update_product", product);
+	}
+
+	// 상품 삭제
+	@Override
+	public int delete(int product_id) {
+		return session.delete(namespace+"delete_product", product_id);
 	}
 
 }

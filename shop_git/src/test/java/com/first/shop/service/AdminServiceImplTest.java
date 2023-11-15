@@ -15,6 +15,8 @@ public class AdminServiceImplTest {
 	
 	@Autowired
 	AdminService adminService;
+	@Autowired
+	ProductService productService;
 	
 	@Test
 	public void testRegisterProduct() {
@@ -36,6 +38,19 @@ Product product = new Product();
 		} else {
 			System.out.println("상품 등록 실패");
 		}
+	}
+	
+	@Test
+	public void testUpdate() {
+		Product product = productService.getProductInfo(61);
+		product.setProduct_name("테스터1223금성");
+		adminService.updateProductInfo(product);
+	}
+	
+	@Test
+	public void testDelete() {
+		Product product = productService.getProductInfo(245);
+		adminService.deleteProductInfo(product);
 	}
 
 }

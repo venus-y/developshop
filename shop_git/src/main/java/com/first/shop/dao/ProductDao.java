@@ -13,4 +13,5 @@ public interface ProductDao {
 	List<Product> pageList(Map map);
 	
 	Product productInfo(int product_id);
+	
 }

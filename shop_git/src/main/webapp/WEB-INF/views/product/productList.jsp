@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="<c:url value='/css/productList.css'/>">
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/index.jsp" />
 	<!-- 받아온 상품 정보를 목록에 표시한다. -->
 	<table border="1">
 	<!-- status 변수의 인덱스 % 5가 될 때마다 한 행을 추가하고, 인덱스 % 5가 4 또는 마지막 status값일 경우 행을 닫는다. -->
@@ -26,10 +27,14 @@
 					<a href='<c:url value='/product/productInfo?product_id=${product.product_id}&page=${ph.page}&pageSize=${ph.pageSize}'/>'>
 							<img  src="/shop/upload/${product.product_thumbimage}">
 					</a>	
-						${product.product_name}<br>
+						<br>
+						[${product.product_name}]<br>
 						${product.price}원<br>
 				<c:if test="${product.stock == 0}">
 					[품절]
+				</c:if>
+				<c:if test="${product.stock < 5 && product.stock > 0  }">
+					[품절 임박!!]
 				</c:if>
 					</div>
 				</td>
@@ -54,8 +59,7 @@
 	</div>
 </body>
 	<script type="text/javascript">
-		$(document).ready(function () {
-		});
+		
 	</script>
 
 </html>

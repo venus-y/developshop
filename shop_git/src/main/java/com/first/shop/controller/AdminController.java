@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -53,10 +54,20 @@ public class AdminController {
 	// 상품 수정
 	@GetMapping("/updateProduct")
 	public String update(int product_id, Model model ) {
+	
+		
 		// 상품정보를 모델에 담아 수정 페이지로 전달한다.
 		Product updatingProduct = productService.getProductInfo(product_id);
 		model.addAttribute("productInfo", updatingProduct);
 		return "/admin/updateProduct";
+	}
+	
+	// 상품 삭제 
+	@PostMapping("/deleteProduct")
+	public String delete(@RequestParam int product_id) {
+		System.out.println("여기까진 전달");
+		adminService.deleteProductInfo(product_id);
+		return "/product/productList";
 	}
 	
 	
@@ -96,10 +107,7 @@ public class AdminController {
 		}
 		
 		System.out.println("fileName:"+fileName);
-		
-
-		
-		
+			
 		//상품정보에 이미지정보를 추가한다. 파일 구분자 + 경로 + 구분자 + 파일명
 		product.setProduct_image(yyMMddPath + File.separator + fileName);
 		//썸네일정보를 추가해준다. 년월일 + 구분자와 구분자 사이에 "s"를 추가하고 다음에 오는 구분자 뒤에 "s_"를 추가하고 뒤에 파일명을 덧붙인다.
@@ -111,9 +119,55 @@ public class AdminController {
 		// 뷰로부터 넘어온 상품 객체와 상품이미지를 서비스단으로 넘긴다.
 		adminService.registerProduct(product);
 		// 상품 등록 후 등록리스트로 가야함 , 일단 홈으로 리턴
-		return "redirect:/";
+		return "redirect:/product/productList";
 	}
-	 
+	
+	// 상품 정보 수정
+	@PostMapping("/updateProduct")
+	public String postUpdate(Product product, MultipartFile file
+			, @RequestParam("existing_thumbimage") String existingThumbImage,
+            @RequestParam("existing_image") String existing_image)  throws IOException {
+		// 수정페이지에서 전달된 상품 객체의 정보로 기존 상품정보를 수정해주어야 한다.
+		System.out.println("이미지주소체크"+existing_image);
+		System.out.println("이미지주소체크2"+existingThumbImage);
+		
+		// 받아온 파일을 이미지저장소에 업로드 한다.
+		
+		// 년/월/일 폴더를 새로 생성하고 경로명을 반환받는다.
+		
+		
+		// 이미지파일 정보가 수정되지 않았을 경우 새로운 파일정보가 전달되지 않게 되므로
+		// 파일이 넘어오지 않았을 경우에는 바뀐 상품가격,상품명 등에 대해서만 수정해준다.
+		if(file.getOriginalFilename() == null || file.getOriginalFilename() == ""){
+			product.setProduct_image(existing_image);
+			product.setProduct_thumbimage(existingThumbImage);
+			adminService.updateProductInfo(product);
+			return "redirect:/product/productList";
+		};
+
+		
+		
+		String datePath = UploadFileSettings.calcPath(uploadPath);
+		
+		// 업로드할 파일명
+		String fileName = null;
+		
+		if(file!=null) {
+			fileName = UploadFileSettings.fileUpload(uploadPath, file.getOriginalFilename(), file.getBytes(), datePath);
+		}else {
+			fileName = uploadPath + File.separator + "images" + File.separator + "noProduct.png";
+		}
+		
+		// 상품 객체에 이미지정보를 세팅한다.
+		product.setProduct_image(datePath + File.separator + fileName);
+		product.setProduct_thumbimage(datePath + File.separator + "s" + File.separator + "s_" + fileName);
+		System.out.println("상품정보:"+product);
+		
+		// 수정 작업을 서비스단으로 넘긴다.
+		adminService.updateProductInfo(product);
+		
+		return "redirect:/product/productList";
+	}
 	
 	
 	

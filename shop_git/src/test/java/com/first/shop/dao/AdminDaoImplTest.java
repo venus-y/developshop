@@ -16,6 +16,8 @@ public class AdminDaoImplTest {
 	
 	@Autowired 
 	AdminDao adminDao;
+	@Autowired
+	ProductDao productDao;
 	
 	// 상품등록 테스트
 	@Test
@@ -40,10 +42,12 @@ public class AdminDaoImplTest {
 	}
 	
 	@Test
-	public void testGetCate() {
-//		List<Category> list = adminDao.categoryList();
+	public void testUpdate() {
+		Product product = productDao.productInfo(52);
+		System.out.println(product);
+		product.setProduct_name("테스트12");
+		adminDao.update(product);
 		
-//		System.out.println(list);
 		
 	}
 	
@@ -64,11 +68,18 @@ public class AdminDaoImplTest {
 		product.setProduct_image("example_product.jpg");
 		product.setProduct_thumbimage("example_thumb_product.jpg");
 		
-		int rowCnt = adminDao.register(product);
-		
-		
-		
+		int rowCnt = adminDao.register(product);	
 		System.out.println("결과:"+rowCnt);
 	}
+	
+	// 상품 삭제
+	@Test
+	public void deleteProduct() {
+		Product product = productDao.productInfo(244);
+		adminDao.delete(product);
+		
+	}
+	
+	
 
 }

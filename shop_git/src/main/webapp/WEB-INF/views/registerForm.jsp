@@ -13,6 +13,7 @@
 	<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/index.jsp" />
 	<form id="registerForm" method="post">
 		<span class="title">Register</span>
 		<!-- 아이디 입력 -->

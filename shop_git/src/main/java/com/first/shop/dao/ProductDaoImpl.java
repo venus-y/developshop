@@ -40,5 +40,7 @@ public class ProductDaoImpl implements ProductDao {
 	public Product productInfo(int product_id) {
 		return session.selectOne(namespace+"getProductInfo", product_id);
 	}
+	
+	
 
 }

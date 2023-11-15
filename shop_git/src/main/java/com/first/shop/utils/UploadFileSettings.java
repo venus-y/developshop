@@ -27,6 +27,8 @@ public class UploadFileSettings {
 		// 파일 이름과 uuid 사이에 '_' 구분자를 넣어 사용한다.
 		String newFileName = uuid + "_" + fileName;
 		
+		System.out.println("파일이름 출력"+newFileName);
+		
 		// 이미지경로는 업로드경로에 날짜정보를 더해주는 것으로 설정
 		String imgPath = uploadPath + yyMMddPath;
 		

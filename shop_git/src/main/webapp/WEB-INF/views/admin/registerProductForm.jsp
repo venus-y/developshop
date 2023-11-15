@@ -16,8 +16,7 @@
 		
 </head>
 <body>
-
-
+	<jsp:include page="/WEB-INF/views/index.jsp" />
 	<form id="form" method="post" enctype="multipart/form-data">
 		<h3>상품 등록 페이지</h3>
 		<!-- 상품명 -->

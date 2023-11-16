@@ -31,8 +31,11 @@ public class LoginController {
 	
 	//로그인 요청
 	@PostMapping("/postLogin")
-	public String postLogin(User user, boolean rememberId,
-			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+	public String postLogin(User user, boolean rememberId, HttpServletRequest request,
+			HttpServletResponse response, String toURL) throws UnsupportedEncodingException {
+		
+		System.out.println("요청은 갔나?");
+		
 		User dbUser = loginService.checkUser(user);
 		// 로그인 실패시 메세지와 함께 로그인 페이지로 재이동시킨다.
 		String msg = URLEncoder.encode("아이디나 비밀번호가 일치하지 않습니다.","utf-8");
@@ -55,8 +58,7 @@ public class LoginController {
 			response.addCookie(cookie);
 		}
 		
-		
-		return "redirect:/";
+		return toURL == null ? "redirect:/" : "redirect:" + toURL;
 	}
 	
 	//로그아웃 요청

@@ -39,6 +39,8 @@
 				<!-- 정가 -->
 				<span class="original_price">${productInfo.price}</span>
 				<span class="discounted_price"></span>원
+				<!-- 재고 정보 -->
+				<input type="hidden" class="stock_input" value="${productInfo.stock }">
 			</td>    
 		</tr>
 		
@@ -54,6 +56,20 @@
 		<tr>
 			<td colspan="2">			
 				<button type="button" onclick="location.href='/shop/product/productList?page=${param.page}&pageSize=${param.pageSize}'">상품 목록</button>
+			
+			<span>주문수량</span>
+			<input type="number" class="quantity_input" value="1">			
+			<!-- 상품 수량 조절 -->	
+			<span>
+				<button class="plus_Btn">+</button>
+				<button class="minus_Btn">-</button>
+			<!-- 장바구니 영역 -->	
+			<!-- 로그인 했을 경우에 장바구니를 사용할 수 있다.  -->	
+				<button class="cart_Btn">장바구니 담기</button>
+			<!--  즉시 구매 -->
+				<button class="buyNow_Btn">즉시 구매</button>
+			</span>
+				
 				
 				<!-- 유저가 관리자일 경우에만 상품 수정버튼이 보인다. -->
 			<c:if test="${sessionScope.user.admincheck == 1 }">
@@ -94,6 +110,78 @@
 			let savepoint_value = discountedValue * 0.01;
 			
 			savepoint.text(savepoint_value);
+			
+			
+			
+			// 선택 수량과 재고를 비교하기 위해 재고정보를 가져온다.
+			let stock = $(".stock_input").val();
+			
+			// 선택 수량 정보를 가져온다.
+			let quantity = $(".quantity_input").val();
+			// +, - 버튼 클릭시 이벤트를 추가해준다.
+			
+			
+			
+			$(".plus_Btn").on("click", function () {
+				$(".quantity_input").val(++quantity);
+			});
+			
+			$(".minus_Btn").on("click", function () {
+				// 선택수량이 1보다 작을 수 없다.
+				if(quantity > 1){
+					$(".quantity_input").val(--quantity);
+				}
+			});
+			
+			// Cart 컨트롤러로 전송해줄 데이터
+			let form = {
+				user_id : '${sessionScope.user.id}',
+				product_id : '${productInfo.product_id}',
+				quantity : ''
+			};
+			
+			$(".cart_Btn").on("click", function () {
+				form.quantity = $(".quantity_input").val();
+				
+			// 선택한 상품수량과 상품재고를 비교해서 선택수량이 상품재고보다 많을 시 알림 메시지를 띄운다.
+				
+			if(${empty sessionScope.user}){
+				
+				// 로그인에 성공 후 현재 페이지로 다시 돌아오기 위해 현재 URL을 저장한다.
+				let currentUrl = encodeURIComponent(window.location.href);
+				alert("로그인 후 이용해주세요, 로그인 화면으로 이동합니다.");
+				location.href = '/shop/login/getLogin?toURL='+currentUrl;
+				return false;
+			}
+			
+			if(stock < form.quantity){
+					alert("선택된 수량이 상품의 재고보다 많습니다.");
+					return false;
+				}else{
+					$.ajax({
+						url : '/shop/cart/register',
+						type : 'POST',
+						data : form,
+						success : function (result) {
+							alert(result)
+							// 사용자에게 장바구니로 이동할껀지 묻는다.				
+							if(!confirm("장바구니로 이동하시겠습니까?")){
+								location.href='/shop/cart/getcart';	
+								// 로그인 후 원래 있던 페이지로 이동하는 것이 자연스럽다.
+							}
+							
+						}
+					})
+				}
+			})
+			
+		// 즉시주문 버튼 클릭 시
+		$(".buyNow_Btn").on("click", function () {
+			
+		})	
+			
+			
+			
 		});
 		
 		$(".removeProduct_Btn").on("click", function () {

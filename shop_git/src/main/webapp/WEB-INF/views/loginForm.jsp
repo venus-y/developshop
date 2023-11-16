@@ -28,8 +28,8 @@
 			<label for="rememberId" class="rememberId-label">아이디 기억</label>
 			<input class="rememberId-check" id="rememberId" type="checkbox" name="rememberId" value="on" ${empty cookie.id.value ? "" : "checked" }>
 		</div>
+		<input type="hidden" name="toURL" value="${param.toURL}">
 		<button>로그인</button>
 	</form>
-	
 </body>
 </html>

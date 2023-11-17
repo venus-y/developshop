@@ -11,4 +11,7 @@ public interface OrderDao {
 	
 	int update(Product product);
 	
+	User user(String id);
+	
+	Product product(int product_id);
 }

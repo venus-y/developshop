@@ -57,8 +57,10 @@ public class LoginController {
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 		}
+		System.out.println("toURL: [" + toURL + "]");
+		System.out.println("toURL is empty: " + toURL.isEmpty());
 		
-		return toURL == null ? "redirect:/" : "redirect:" + toURL;
+		return toURL.isEmpty() ? "redirect:/" : "redirect:" + toURL;
 	}
 	
 	//로그아웃 요청

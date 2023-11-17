@@ -5,8 +5,20 @@
 		
 		<!-- 장바구니 등록 -->
 		<insert id="registerCart" parameterType="Cart">
-			insert into cart (product_id, user_id, quantity)
-			values (#{product_id}, #{user_id}, #{quantity});
+			insert into cart (product_id, user_id, quantity, product_name,
+			 discount, price, totalprice, saleprice, totalsavepoint, product_image, product_thumbimage, savepoint)
+			values (#{product_id}, #{user_id}, #{quantity}, #{product_name}, #{discount}, #{price}, #{totalprice},
+			#{saleprice}, #{totalsavepoint}, #{product_image}, #{product_thumbimage}, #{savepoint});
 		</insert>
 		
+		<!-- 장바구니 상품 이미지 가져오기  -->
+		<select id="cartProductImage" parameterType="int" resultType="Product">
+			select product_image, product_thumbimage from product
+			where product_id = #{product_id}
+		</select>
+		
+		<!-- 해당 유저의 장바구니 목록 가져오기 -->
+		<select id="cartList" parameterType="String" resultType="Cart">
+			select * from cart where user_id = #{user_id}
+		</select>
 	</mapper>	

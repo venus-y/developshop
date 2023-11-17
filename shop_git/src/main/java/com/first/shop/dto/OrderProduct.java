@@ -2,7 +2,7 @@ package com.first.shop.dto;
 
 public class OrderProduct {
 	private int order_product_id;
-	private int order_id;
+	private String order_id;
 	private int product_id;
 	private int quantity;
 	private int price;
@@ -13,10 +13,10 @@ public class OrderProduct {
 	public void setOrder_product_id(int order_product_id) {
 		this.order_product_id = order_product_id;
 	}
-	public int getOrder_id() {
+	public String getOrder_id() {
 		return order_id;
 	}
-	public void setOrder_id(int order_id) {
+	public void setOrder_id(String order_id) {
 		this.order_id = order_id;
 	}
 	public int getProduct_id() {

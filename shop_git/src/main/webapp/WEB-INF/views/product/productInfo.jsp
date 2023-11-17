@@ -54,6 +54,8 @@
 			<td class="savepoint"></td>
 		</tr>
 		<tr>
+			
+		
 			<td colspan="2">			
 				<button type="button" onclick="location.href='/shop/product/productList?page=${param.page}&pageSize=${param.pageSize}'">상품 목록</button>
 			
@@ -63,14 +65,20 @@
 			<span>
 				<button class="plus_Btn">+</button>
 				<button class="minus_Btn">-</button>
-			<!-- 장바구니 영역 -->	
-			<!-- 로그인 했을 경우에 장바구니를 사용할 수 있다.  -->	
+			<!-- 장바구니 영역 -->				
+			<!-- 로그인 했을 경우에 장바구니를 사용할 수 있다.  -->				
 				<button class="cart_Btn">장바구니 담기</button>
-			<!--  즉시 구매 -->
-				<button class="buyNow_Btn">즉시 구매</button>
+			<!--  즉시 구매, form에 필요한 정보를 담아 요청을 보낸다. -->				
+				<button class="buyNow_Btn" type="button">즉시 구매</button>
 			</span>
-				
-				
+			<form id="order_form" action="<c:url value="/order/postOrder"/>" method="post">
+				<!-- 상품 주문에 필요한 데이터(유저 아이디, 상품 수량, 상품 아이디)  -->
+				<input type="hidden" class="id" name="id" value="${sessionScope.user.id}">
+				<input type="hidden" class="quantity" name="quantity" value="">
+				<input type="hidden" class="product_id" name="product_id" value="${productInfo.product_id}">				
+			</form>
+			
+						
 				<!-- 유저가 관리자일 경우에만 상품 수정버튼이 보인다. -->
 			<c:if test="${sessionScope.user.admincheck == 1 }">
 			  <button type="button" onclick="location.href='/shop/admin/updateProduct?product_id=${productInfo.product_id}&page=${param.page}&pageSize=${param.pageSize}'">상품 수정</button>
@@ -87,7 +95,7 @@
 		
 </body>
 	<script type="text/javascript">
-		$(document).ready(function () {
+		$(document).ready(function () {			
 			
 			// 상품 할인율 
 			let discountRate = ${productInfo.discount};
@@ -137,8 +145,17 @@
 			let form = {
 				user_id : '${sessionScope.user.id}',
 				product_id : '${productInfo.product_id}',
-				quantity : ''
+				quantity : '',
+				product_name : '${productInfo.product_name}',
+				discount : '${productInfo.discount}',
+				savepoint : '${productInfo.savepoint}',
+				price : '${productInfo.price}'
+				
+				
 			};
+			
+			
+
 			
 			$(".cart_Btn").on("click", function () {
 				form.quantity = $(".quantity_input").val();
@@ -151,6 +168,7 @@
 				let currentUrl = encodeURIComponent(window.location.href);
 				alert("로그인 후 이용해주세요, 로그인 화면으로 이동합니다.");
 				location.href = '/shop/login/getLogin?toURL='+currentUrl;
+				// 로그인 후 원래 있던 페이지로 이동하는 것이 자연스럽다.
 				return false;
 			}
 			
@@ -165,9 +183,9 @@
 						success : function (result) {
 							alert(result)
 							// 사용자에게 장바구니로 이동할껀지 묻는다.				
-							if(!confirm("장바구니로 이동하시겠습니까?")){
-								location.href='/shop/cart/getcart';	
-								// 로그인 후 원래 있던 페이지로 이동하는 것이 자연스럽다.
+							if(confirm("장바구니로 이동하시겠습니까?")){
+								location.href='/shop/cart/getCart';	
+								
 							}
 							
 						}
@@ -177,8 +195,16 @@
 			
 		// 즉시주문 버튼 클릭 시
 		$(".buyNow_Btn").on("click", function () {
+			// form으로 전송할 선택수량 정보를 셋팅해줘야 한다.
+			let form = $("#order_form");
+			let quantity = $(".quantity_input").val();
+			let Form_quantity = $(".quantity");
 			
-		})	
+			Form_quantity.val(quantity);
+			form.submit();
+			
+			/* 요청은 잘 전달된다! */
+		});	
 			
 			
 			

@@ -33,5 +33,18 @@ public class OrderDaoImpl implements OrderDao {
 	public int update(Product product) {
 		return session.update(namespace+"update_stock", product);
 	}
+	
+	
+	// 주문 유저 정보 받아오기
+	@Override
+	public User user(String id) {
+		return session.selectOne(namespace+"orderUser_info", id);
+	}
+
+	// 주문 상품 정보 받아오기
+	@Override
+	public Product product(int product_id) {
+		return session.selectOne(namespace+"orderProduct_info", product_id);		
+	}
 
 }

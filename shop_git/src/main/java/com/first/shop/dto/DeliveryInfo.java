@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class DeliveryInfo {
 	private int shipping_id;
-	private int order_id;
+	private String order_id;
 	private Date shipping_date;
 	private String shipping_address;
 	private String tracking_number;
@@ -15,10 +15,10 @@ public class DeliveryInfo {
 	public void setShipping_id(int shipping_id) {
 		this.shipping_id = shipping_id;
 	}
-	public int getOrder_id() {
+	public String getOrder_id() {
 		return order_id;
 	}
-	public void setOrder_id(int order_id) {
+	public void setOrder_id(String order_id) {
 		this.order_id = order_id;
 	}
 	public Date getShipping_date() {

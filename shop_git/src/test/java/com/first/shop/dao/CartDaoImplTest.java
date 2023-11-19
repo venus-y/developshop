@@ -33,5 +33,17 @@ public class CartDaoImplTest {
 			System.out.println("등록 실패");
 		}
 	}
-
+	
+	// 장바구니 수정
+	@Test
+	public void testUpdate() {
+		Cart cart = new Cart();
+		cart.setCart_id(27);
+		cart.setUser_id("geumsung7769");
+		cart.setQuantity(10);
+		
+		cartDao.update(cart);
+		
+		
+	}
 }

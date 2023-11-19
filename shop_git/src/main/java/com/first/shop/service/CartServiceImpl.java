@@ -37,5 +37,23 @@ public class CartServiceImpl implements CartService {
 	public List<Cart> getCartList(String user_id) {
 		return cartDao.list(user_id);
 	}
+	
+	// 장바구니 정보 업데이트
+	@Override
+	public int updateCart(Cart cart) {
+		// 장바구니 페이지에서 넘겨받은 cart객체의 정보로 기존 DB에 있던 장바구니의 정보를 다시 세팅한다.
+		Cart dbCart = cartDao.cartInfo(cart.getCart_id());
+		// 장바구니의 init 메서드로 가격, 총 적립포인트를 최신화한다.
+		dbCart.setQuantity(cart.getQuantity());
+		dbCart.init();		
+		// 세팅된 값으로 갱신한다.
+		return cartDao.update(dbCart);
+	}
+	
+	// 개별 장바구니 정보 가져오기
+	@Override
+	public Cart getCartInfo(int cart_id) {
+		return cartDao.cartInfo(cart_id);
+	}
 
 }

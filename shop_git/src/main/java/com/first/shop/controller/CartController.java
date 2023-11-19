@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,6 +23,7 @@ import com.first.shop.service.CartService;
 @Controller
 @RequestMapping("/cart")
 public class CartController {
+	
 	
 	private final CartService cartService;
 	
@@ -60,4 +63,17 @@ public class CartController {
 		
 		return "success";
 	}
+	
+	// 장바구니 수정
+	@PostMapping("/update")
+	@ResponseBody
+	public String update(@RequestBody Cart cart, BindingResult result) {
+		System.out.println("result="+result);
+		// 장바구니 페이지로부터 들어온 정보에 맞게 기존의 장바구니를 새롭게 수정한다.
+		System.out.println("장바구니 객체 확인" + cart);
+		cartService.updateCart(cart);
+		return "success";
+	}
+	
+	
 }

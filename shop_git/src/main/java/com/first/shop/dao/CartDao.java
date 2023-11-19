@@ -11,4 +11,8 @@ public interface CartDao {
 	Product productImage(int product_id);
 	
 	List<Cart> list(String user_id);
+	
+	int update(Cart cart);
+	
+	Cart cartInfo(int cart_id);
 }

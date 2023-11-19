@@ -21,4 +21,15 @@
 		<select id="cartList" parameterType="String" resultType="Cart">
 			select * from cart where user_id = #{user_id}
 		</select>
+		
+		<!-- 장바구니 수정 -->
+		<update id="updateCart" parameterType="Cart">
+			update cart set quantity = #{quantity}, totalprice = #{totalprice}
+			, totalsavepoint = #{totalsavepoint} where cart_id = #{cart_id} and user_id = #{user_id}
+		</update>
+		
+		<!-- 개별 장바구니 정보 가져오기 -->
+		<select id="cartInfo" parameterType="int" resultType="Cart">
+			select * from cart where cart_id = #{cart_id}
+		</select>
 	</mapper>	

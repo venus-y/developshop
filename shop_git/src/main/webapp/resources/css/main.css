@@ -9,9 +9,9 @@ a { text-decoration: none;  }
 
 ul {
     list-style-type: none;
-    height: 48px;
+    height: 80px;
     width: 100%;
-    background-color: #30426E;
+    background-color: navy;
     display: flex;
 }
 
@@ -24,11 +24,13 @@ ul > li {
 }
 
 ul > li > a {
-    color: lightgray;
+    color:silver;
     margin:auto;
     padding: 10px;
     font-size:20px;
+    justify-content: center; /* 가로 중앙 정렬 */
     align-items: center;
+    box-sizing: border-box; /* 내부의 padding을 box 크기에 포함시킴 */
 }
 
 ul > li > a:hover {

@@ -11,4 +11,8 @@ public interface CartService {
 	Product CartProductImage(int product_id);
 	
 	List<Cart> getCartList(String user_id);
+	
+	int updateCart(Cart cart);
+	
+	Cart getCartInfo(int cart_id);
 }

@@ -35,5 +35,17 @@ public class CartDaoImpl implements CartDao {
 	public List<Cart> list(String user_id) {
 		return session.selectList(namespace+"cartList", user_id);	
 		}
+	
+	// 장바구니 수정
+	@Override
+	public int update(Cart cart) {
+		return session.update(namespace+"updateCart", cart);
+	}
+	
+	// 개별 장바구니 정보 가져오기
+	@Override
+	public Cart cartInfo(int cart_id) {
+		return session.selectOne(namespace+"cartInfo", cart_id);
+	}
 
 }

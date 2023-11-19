@@ -7,7 +7,9 @@
 <c:set var="loginOutLink" value="${empty loginId ? '/login/getLogin' : '/login/logout'  }"/>
 <c:set var="registerText" value="${empty loginId ? 'Register' : 'MyPage' }"/>
 <c:set var="registerLink" value="${empty loginId ? '/register/getRegister' : '' }"/>
-<c:set var="AdminText" value="${sessionScope.user.admincheck == 1 ? '상품 등록' : '' }"/>
+<c:set var="CartLink" value="${empty loginId ?  '' : '/cart/getCart'  }"/>
+<c:set var="CartText" value="${empty loginId ?  '' : 'Cart'  }"/>
+<c:set var="AdminText" value="${sessionScope.user.admincheck == 1 ? 'Register Product' : '' }"/>
 <c:set var="AdminLink" value="${sessionScope.user.admincheck == 1 ? '/admin/registerProductForm' : '' }"/>
 
 <%-- <%@ page session="false" %> --%>
@@ -25,7 +27,8 @@
 	    <li><a href="<c:url value='${AdminLink}'/>">${AdminText}</a></li> 
 	    <li><a href="<c:url value='${loginOutLink}'/>">${loginOutText}</a></li>    
 	    <li><a href="<c:url value='${registerLink}'/>">${registerText}</a></li>
-	    <li><a href="<c:url value='/product/productList'/>">상품 목록</a></li>
+	    <li><a href="<c:url value='${CartLink}'/>">${CartText}</a></li>
+	    <li><a href="<c:url value='/product/productList'/>">Product List</a></li>
 	</ul> 
 </div>
 <!-- for commit22   -->

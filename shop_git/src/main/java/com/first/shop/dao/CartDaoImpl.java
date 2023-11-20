@@ -47,5 +47,11 @@ public class CartDaoImpl implements CartDao {
 	public Cart cartInfo(int cart_id) {
 		return session.selectOne(namespace+"cartInfo", cart_id);
 	}
+	
+	// 장바구니 삭제
+	@Override
+	public int remove(Integer cart_id) {
+		return session.delete(namespace+"removeCart", cart_id);
+	}
 
 }

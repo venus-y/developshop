@@ -82,7 +82,7 @@
 				<label for="product_image">파일 등록</label>
 		<!-- 이미지 파일 등록 -->
 				<input type="file" name="file" id="product_image">
-				<img src="">
+				<img src="" alt="이미지를 등록해주세요.">
 			</div>
 		<!-- 파일 공백 시 출력 메시지 -->
 			<span class="product_image_empty">이미지파일을 등록해주세요.</span>	

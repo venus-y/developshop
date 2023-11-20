@@ -15,4 +15,6 @@ public interface CartDao {
 	int update(Cart cart);
 	
 	Cart cartInfo(int cart_id);
+	
+	int remove(Integer cart_id);
 }

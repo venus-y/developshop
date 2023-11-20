@@ -3,7 +3,7 @@
 /* 입력 양식 폼 */
 form{
 	width:800px;
-            height:800px;
+            height:600px;
             display : flex;
             flex-direction: column;
             align-items:center;
@@ -31,8 +31,8 @@ form{
 		/* align-items 설정을 사용하려면 flex 설정을 먼저 해주어야 함. */
 		display:flex;		
 		align-items: center;
-		width: 500px;
-		height: auto;
+		width: 300px;
+		height: 100px;
 }
 
 /* 유효성 검사 메시지 */

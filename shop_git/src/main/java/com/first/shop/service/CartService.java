@@ -14,5 +14,7 @@ public interface CartService {
 	
 	int updateCart(Cart cart);
 	
+	int removeCart(Integer cart_id);
+	
 	Cart getCartInfo(int cart_id);
 }

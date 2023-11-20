@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,5 +76,16 @@ public class CartController {
 		return "success";
 	}
 	
-	
+	// 장바구니 삭제
+	@PostMapping("/remove/{cart_id}")
+	@ResponseBody
+	public String remove(@PathVariable Integer cart_id) {
+		
+//		System.out.println("BindingResult:"+result);
+		// 장바구니 번호 잘 넘어왔는지 확인
+		System.out.println("cart_id:"+cart_id);
+		// 삭제 요청
+		cartService.removeCart(cart_id);
+		return "success";
+	}
 }

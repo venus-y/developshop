@@ -28,8 +28,16 @@
 			, totalsavepoint = #{totalsavepoint} where cart_id = #{cart_id} and user_id = #{user_id}
 		</update>
 		
+		<!-- 장바구니 삭제 -->
+		<delete id="removeCart" parameterType="int">
+			delete from cart where cart_id = #{cart_id}
+		</delete>
+		
 		<!-- 개별 장바구니 정보 가져오기 -->
-		<select id="cartInfo" parameterType="int" resultType="Cart">
+		<select id="cartInfo" parameterType="Integer" resultType="Cart">
 			select * from cart where cart_id = #{cart_id}
 		</select>
+		
+		
+		
 	</mapper>	

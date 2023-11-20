@@ -5,9 +5,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.first.shop.dto.Cart;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 public class CartDaoImplTest {
@@ -43,7 +45,13 @@ public class CartDaoImplTest {
 		cart.setQuantity(10);
 		
 		cartDao.update(cart);
-		
-		
 	}
+	
+	// 장바구니 삭제
+	@Test
+	public void testRemove() {
+		int rowCnt = cartDao.remove(27);
+		System.out.println("rowCnt:"+rowCnt);
+	}
+	
 }

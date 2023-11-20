@@ -2,16 +2,43 @@ package com.first.shop.dto;
 
 public class InstantOrderProduct {
 	// 주문 생성하는데 필요한 상품정보
+	private int instant_id;
 	private int product_id;
 	private int quantity;
 	private String product_name;
 	private int discount;
 	private int price;
+	private int saleprice;
+	private int totalprice;
 	private int savepoint;
-	private int salePrice;
+	private int totalsavepoint;
 	private String product_image;
 	private String product_thumbimage;
 	
+	public int getSaleprice() {
+		return saleprice;
+	}
+	public void setSaleprice(int saleprice) {
+		this.saleprice = saleprice;
+	}
+	public int getTotalprice() {
+		return totalprice;
+	}
+	public void setTotalprice(int totalprice) {
+		this.totalprice = totalprice;
+	}
+	public int getTotalsavepoint() {
+		return totalsavepoint;
+	}
+	public void setTotalsavepoint(int totalsavepoint) {
+		this.totalsavepoint = totalsavepoint;
+	}
+	public int getInstant_id() {
+		return instant_id;
+	}
+	public void setInstant_id(int instant_id) {
+		this.instant_id = instant_id;
+	}
 	public int getProduct_id() {
 		return product_id;
 	}
@@ -49,10 +76,10 @@ public class InstantOrderProduct {
 		this.savepoint = savepoint;
 	}
 	public int getSalePrice() {
-		return salePrice;
+		return saleprice;
 	}
 	public void setSalePrice(int salePrice) {
-		this.salePrice = salePrice;
+		this.saleprice = salePrice;
 	}
 	public String getProduct_image() {
 		return product_image;
@@ -68,9 +95,9 @@ public class InstantOrderProduct {
 	}
 	@Override
 	public String toString() {
-		return "InstantOrderProduct [product_id=" + product_id + ", quantity=" + quantity + ", product_name="
-				+ product_name + ", discount=" + discount + ", price=" + price + ", savepoint=" + savepoint
-				+ ", salePrice=" + salePrice + ", product_image=" + product_image + ", product_thumbimage="
+		return "InstantOrderProduct [instant_id=" + instant_id + ", product_id=" + product_id + ", quantity=" + quantity
+				+ ", product_name=" + product_name + ", discount=" + discount + ", price=" + price + ", savepoint="
+				+ savepoint + ", salePrice=" + saleprice + ", product_image=" + product_image + ", product_thumbimage="
 				+ product_thumbimage + "]";
 	}
 	

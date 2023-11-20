@@ -50,10 +50,19 @@ public class CartServiceImpl implements CartService {
 		return cartDao.update(dbCart);
 	}
 	
+	// 장바구니 삭제
+	@Override
+	public int removeCart(Integer cart_id) {
+		return cartDao.remove(cart_id);		
+	}
+	
+	
 	// 개별 장바구니 정보 가져오기
 	@Override
 	public Cart getCartInfo(int cart_id) {
 		return cartDao.cartInfo(cart_id);
 	}
+
+	
 
 }

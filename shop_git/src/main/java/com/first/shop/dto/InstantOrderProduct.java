@@ -96,9 +96,10 @@ public class InstantOrderProduct {
 	@Override
 	public String toString() {
 		return "InstantOrderProduct [instant_id=" + instant_id + ", product_id=" + product_id + ", quantity=" + quantity
-				+ ", product_name=" + product_name + ", discount=" + discount + ", price=" + price + ", savepoint="
-				+ savepoint + ", salePrice=" + saleprice + ", product_image=" + product_image + ", product_thumbimage="
-				+ product_thumbimage + "]";
+				+ ", product_name=" + product_name + ", discount=" + discount + ", price=" + price + ", saleprice="
+				+ saleprice + ", totalprice=" + totalprice + ", savepoint=" + savepoint + ", totalsavepoint="
+				+ totalsavepoint + ", product_image=" + product_image + ", product_thumbimage=" + product_thumbimage
+				+ "]";
 	}
 	
 	

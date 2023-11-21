@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.first.shop.dto.InstantOrderProduct;
 import com.first.shop.dto.InstantOrderProducts;
+import com.first.shop.dto.User;
 import com.first.shop.service.OrderService;
 
 @Controller
@@ -28,17 +29,23 @@ public class OrderController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/getOrder/{user_id}")
-	public String getOrder(@PathVariable String user_id, InstantOrderProducts instantOrderProducts, Model model) {
+	@GetMapping("/instantOrder/{user_id}")
+	public String instantOrder(@PathVariable String user_id, InstantOrderProducts instantOrderProducts, Model model) {
 
 		System.out.println("받아온 값 테스트 : "+ instantOrderProducts);
 		// 전달할 상품 정보를 리스트로 만들어 반환한다.
 		List<InstantOrderProduct> list = instantOrderProducts.getOrderProducts();
+		// 주문한 유저 정보도 반환
+		User user = orderService.getUserInfo(user_id);
+		
 		model.addAttribute("instantList", list);
+		model.addAttribute("orderUser", user);
+		
 		
 		
 		return "/order/orderPage";
 	}
+	
 	
 	
 }

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,11 +38,17 @@ public class CartController {
 		HttpSession session = request.getSession();
 		// 세션에서 유저 아이디를 받아온다.
 		User connectUser = (User)session.getAttribute("user");
-		String user_id = connectUser.getId();
 		
-		List<Cart> cartList = cartService.getCartList(user_id);
-		model.addAttribute("cartList", cartList);
-		
+		// 세션 만료될 경우 재로그인 처리
+		try {			
+			String user_id = connectUser.getId();
+			List<Cart> cartList = cartService.getCartList(user_id);
+			model.addAttribute("cartList", cartList);
+		} catch(NullPointerException e) {
+			System.out.println("세션이 만료됐습니다!");
+			return "redirect:/login/getLogin";
+		}
+			
 		return "cartPage";
 		
 	}
@@ -68,11 +73,15 @@ public class CartController {
 	// 장바구니 수정
 	@PostMapping("/update")
 	@ResponseBody
-	public String update(@RequestBody Cart cart, BindingResult result) {
-		System.out.println("result="+result);
+	public String update(@RequestBody Cart cart) {
 		// 장바구니 페이지로부터 들어온 정보에 맞게 기존의 장바구니를 새롭게 수정한다.
 		System.out.println("장바구니 객체 확인" + cart);
-		cartService.updateCart(cart);
+		int checkResult = cartService.updateCart(cart);
+		
+		if(checkResult == 0) {
+			return "failed";
+		}
+
 		return "success";
 	}
 	
@@ -87,5 +96,17 @@ public class CartController {
 		// 삭제 요청
 		cartService.removeCart(cart_id);
 		return "success";
+	}
+	
+	// 장바구니에 담긴 상품에 실재고를 조회한 후 뷰로 반환
+	@GetMapping("/check/{product_id}")
+	@ResponseBody
+	public int check(@PathVariable Integer product_id) {
+		System.out.println("넘어간 상품 아이디:" + product_id);
+		
+		int stock = cartService.getStock_int(product_id);
+		System.out.println("재고수량:"+stock);
+		
+		return stock;
 	}
 }

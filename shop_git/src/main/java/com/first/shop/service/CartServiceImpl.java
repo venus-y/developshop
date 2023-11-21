@@ -41,6 +41,14 @@ public class CartServiceImpl implements CartService {
 	// 장바구니 정보 업데이트
 	@Override
 	public int updateCart(Cart cart) {
+		// 요청한 수량과 상품 재고를 비교하여 재고가 넉넉할 경우에만 업데이트 처리한다.
+		int stock = cartDao.stock_int(cart.getProduct_id());
+		
+		if(cart.getQuantity() > stock) {
+			return 0;
+		}
+		
+		
 		// 장바구니 페이지에서 넘겨받은 cart객체의 정보로 기존 DB에 있던 장바구니의 정보를 다시 세팅한다.
 		Cart dbCart = cartDao.cartInfo(cart.getCart_id());
 		// 장바구니의 init 메서드로 가격, 총 적립포인트를 최신화한다.
@@ -61,6 +69,17 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public Cart getCartInfo(int cart_id) {
 		return cartDao.cartInfo(cart_id);
+	}
+	
+	// 장바구니에 담긴 상품의 실재고 조회
+	@Override
+	public int getStock_Integer(Integer product_id) {
+		return cartDao.stock_Integer(product_id);
+	}
+
+	@Override
+	public int getStock_int(int product_id) {
+		return cartDao.stock_int(product_id);
 	}
 
 	

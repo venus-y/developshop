@@ -17,4 +17,9 @@ public interface CartDao {
 	Cart cartInfo(int cart_id);
 	
 	int remove(Integer cart_id);
+	
+	int stock_Integer(Integer product_id);
+	
+	int stock_int(int product_id);
+
 }

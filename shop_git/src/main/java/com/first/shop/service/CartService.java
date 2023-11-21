@@ -17,4 +17,8 @@ public interface CartService {
 	int removeCart(Integer cart_id);
 	
 	Cart getCartInfo(int cart_id);
+	
+	int getStock_Integer(Integer product_id);
+	
+	int getStock_int(int product_id);
 }

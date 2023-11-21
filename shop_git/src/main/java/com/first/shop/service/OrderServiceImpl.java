@@ -67,6 +67,13 @@ public class OrderServiceImpl implements OrderService {
 		return 1;
 	}
 
+	
+	// 유저정보 받아오기
+	@Override
+	public User getUserInfo(String user_id) {
+		return orderDao.user(user_id);
+	}
+
 //	@Override
 //	public int updateUser(User user) {
 //		// TODO Auto-generated method stub

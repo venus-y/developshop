@@ -38,6 +38,22 @@
 			select * from cart where cart_id = #{cart_id}
 		</select>
 		
+		<sql id="stock">
+			select stock from Product where product_id = #{product_id}
+		</sql>
 		
+		<!-- 장바구니에 담긴 상품의 실 재고 조회하기 -->
+		<select id="checkStock_Integer" parameterType="Integer" resultType="int">
+			<include refid="stock"></include>
+		</select>
+		
+		<!-- 재고 정보 가져오기2 -->
+		<!-- 위에 있는 코드는 PathVarible로 처리하다 보니 Integer로 받고
+			밑에 있는 코드는 객체 상태로 전달받아서 int를 썼는데 결과적으론
+			중복코드를 만들게 됐음. 더 나은 방법이 있는지 고려해야 한다.
+		 -->
+		<select id="checkStock_int" parameterType="int" resultType="int">
+			<include refid="stock"></include>	
+		</select>
 		
 	</mapper>	

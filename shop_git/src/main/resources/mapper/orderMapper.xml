@@ -28,6 +28,6 @@
 		<select id="orderProduct_info" parameterType="int" resultType="Product">
 			select * from product where product_id = #{product_id}
 		</select>
-			
+
 			
 	</mapper>	

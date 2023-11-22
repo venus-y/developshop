@@ -6,12 +6,12 @@
    background-color: #f4f4f4;
 }
 
-header {
+/* header {
     background-color: #333;
     color: #fff;
     padding: 10px;
     text-align: center;
-}
+} */
 
 /* css 설정 추가로 해야함 */
 
@@ -28,6 +28,7 @@ header {
 
 .order_h2{
 	display: flex;
+	justify-content : center;
 	text-align: center;
 }
 
@@ -50,6 +51,95 @@ th, td {
     height: auto;
 }
 
+/* 주문 버튼 설정  */
+.order_Btn{
+    display: flex;
+    font-size: 30px;
+    justify-content : center;
+    width: 200px;
+    height: 50px;
+    background-color: blue;
+    color: #fff;
+    font-weight: bold;
+	text-align: center;
+}
+
+
+
+/* 주소지 수정 버튼 */
+.address_Btn1{
+	background-color: black;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 50%;
+  /*   display: inline-block;
+    font-size: 10px;
+    width: 100px;
+    height: 35px;
+    background-color: orange;
+    color: black;
+    font-weight: bold;
+    text-align: center; */
+}
+
+
+.address_Btn2{
+	background-color: gray;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 50%;
+  /*   display: inline-block;
+    font-size: 10px;
+    width: 100px;
+    height: 35px;
+    background-color: orange;
+    color: black;
+    font-weight: bold;
+    text-align: center; */
+}
+
+
+/* 주소지 영역 */
+.addressInfo_input_1{
+	display: block;
+}
+
+.addressInfo_input_2{
+	display: none;
+}
+
+/* 신규 주소 입력창 크기 설정  */
+.newAddress1{
+	width : 100px;
+}
+.newAddress2{
+	width : 450px;
+}
+.newAddress3{
+	width : 200px;
+}
+
+/* 포인트 사용 취소 버튼 */
+.cancelpoint_Btn{
+	display: none;
+}
+
+/* 결제금액 표시 */
+.finaltotalprice_span{
+	color: blue;
+	font-weight: bold;
+}
+}
 
  .user_info {
         width: 100%;

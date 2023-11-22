@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.first.shop.dto.InstantOrderProduct;
 import com.first.shop.dto.InstantOrderProducts;
+import com.first.shop.dto.OrderProductList;
+import com.first.shop.dto.OrdersList;
 import com.first.shop.dto.User;
 import com.first.shop.service.OrderService;
 
@@ -29,6 +32,17 @@ public class OrderController {
 		return "redirect:/";
 	}
 	
+	
+	// 장바구니 -> 주무페이지 -> 주문
+	@PostMapping("/postOrder2")
+	public String order(OrderProductList orderProductList, OrdersList ordersList, BindingResult result) {
+		System.out.println("객체검증:" + result);
+		System.out.println("주문 상품 :" + orderProductList);
+		System.out.println("주문 정보 :" + ordersList);
+		
+		return "redirect:/";
+	}
+	
 	@GetMapping("/instantOrder/{user_id}")
 	public String instantOrder(@PathVariable String user_id, InstantOrderProducts instantOrderProducts, Model model) {
 
@@ -40,9 +54,6 @@ public class OrderController {
 		
 		model.addAttribute("instantList", list);
 		model.addAttribute("orderUser", user);
-		
-		
-		
 		return "/order/orderPage";
 	}
 	

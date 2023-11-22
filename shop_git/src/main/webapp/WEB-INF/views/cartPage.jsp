@@ -65,6 +65,7 @@
 			        		    <input type="hidden" name="user_id" class="user_id" value="${sessionScope.user.id}">		              		
 			              	</form>
                             </td>
+                            </tr>
                             <tr>
                         <!-- 상품의 정보 -->
                         	<td>제품명 : ${cart.product_name}</td>
@@ -86,7 +87,7 @@
                        			</div>
                        		</td>	
                         </tr>
-                        </tr>
+                      
                         
                     </c:forEach>                   
                 	 	
@@ -293,20 +294,19 @@
 							// 받아온 재고 정보
 							let stock = response;
 							
-							if(quantity > stock) {
+							 alert("재고를 검사해야 할 횟수 " + totalChecked);
+							
+							 if(quantity > stock) {
 								stock_check = false;
 								// alert을 위에 두면 아래 코드가 실행되기를 기다리지 않고 이후의 처리를 진행하므로 순서에 유의
-								alert("from 요청수량 > 재고 현재 통과된 횟수: " + checkedCount);
-						        alert("폼제출가능여부: " + stock_check);
-						        alert("총 통과돼야 할 횟수 " + totalChecked);
+								alert("요청수량이 재고보다 많음 -> 현재 통과된 횟수: " + checkedCount);
+						        alert("주문form 제출가능여부: " + stock_check);						       
 								alert($(element).find(".product_name").val() + "의 재고가 부족합니다.");		       
 							}else if(quantity <= stock){
 								// 통과할 경우 카운트 증가
 								checkedCount ++;
-								alert("from 요청수량 <= 재고 현재 통과된 횟수: " + checkedCount);
-						        alert("폼제출가능여부: " + stock_check);
-						        alert("총 통과돼야 할 횟수 " + totalChecked);
-								
+								alert("재고가 충분함 -> 현재 통과된 횟수: " + checkedCount);
+						        alert("주문form 제출가능여부: " + stock_check);								
 							}
 							
 							

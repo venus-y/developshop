@@ -20,6 +20,15 @@ public class CartServiceImpl implements CartService {
 	// 장바구니 등록
 	@Override
 	public int registerCart(Cart cart) {
+		// 등록할 장바구니의 유저아이디, 상품 아이디가 이미 DB에 존재하는지 확인한다.
+		int checkSame =  cartDao.same_product(cart);
+		
+		// 조회결과가 1이면 이미 존재하는 것이다
+		if(checkSame == 1) {
+			// 컨트롤러쪽으로 0을 반환 
+			return 0;
+		}
+		
 		// 총 적립포인트, 총 가격정보를 초기화해준다.
 		cart.init();
 		System.out.println("cart정보:"+cart);
@@ -81,6 +90,7 @@ public class CartServiceImpl implements CartService {
 	public int getStock_int(int product_id) {
 		return cartDao.stock_int(product_id);
 	}
+	
 
 	
 

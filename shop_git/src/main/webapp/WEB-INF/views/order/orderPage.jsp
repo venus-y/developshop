@@ -78,6 +78,7 @@
       				<td>
 	      			<!-- 이미지 영역 -->
 						<img alt="이미지가 없습니다." src="/shop/upload${instantInfo.product_thumbimage}">      					
+      					
       					<!-- 상품 아이디 참조하기 위해 위치시킴 -->
       					<input class="product_id" type="hidden" value="${instantInfo.product_id}">
       					<!-- 상품 정가 참조용-->
@@ -86,6 +87,10 @@
       					<input class="user_id" type="hidden" value="${orderUser.id}">
       					<!-- 상품 수량 참조 -->
       					<input class="check_quantity" type="hidden" value="${instantInfo.quantity}">
+      					<!-- 상품 세일가 참조 -->
+      					<input class="sale_price" type="hidden" value="${instantInfo.totalprice}">
+      					<!-- 유저의 잔액 참조 -->
+      					<input class="user_money" type="hidden" value="${orderUser.money}">
       				</td>      	
       				<td class="product_name">${instantInfo.product_name}</td>
       				<td class="quantity">${instantInfo.quantity}</td>
@@ -250,6 +255,19 @@
 		// 최종적으로 재고 검사를 실시
 		$(".order_Btn").on("click", function () {
 			
+			// 유저 보유 금액
+			let user_money = parseInt($(".user_money").val());
+			// 결제해야 할 금액
+			let pay_money = parseInt($(".finaltotalprice_span").text());
+			
+			// if문으로 비교
+			// 유저의 잔액이 결제금액보다 적을 경우 return;
+			if(user_money < pay_money){
+				alert("잔액이 부족합니다.");
+				return;
+			}
+			
+			
 			// 주문 폼에 넣어줄 정보를 담을 변수
 			let order_form = '';
 			
@@ -262,25 +280,103 @@
 			let arrayCount = 0;
 			
 		 	/* 주문처리컨트롤러로 넘겨주는 폼 데이터 만들어주는 것 부터 */
-			
+		 
+		 	//. 사용한 포인트 정보는 한번만 담아주면 되므로 반복문 안에 포함시키지 않는다.
+		 	
+		 	// 입력한 포인트가 유저의 잔여포인트를 초과할 경우 return;
+			let used_point = $(".point_zone").val();
+		 	let user_point = parseInt(${orderUser.point});
+		 	
+			// 공백이 아닐 경우 -> 값이 입력된 것이므로 비교를 위해 정수로 형변환
+			if(used_point != ""){
+				used_point = parseInt(used_point);
+			}			
+					 			 	
+		 	// 입력한 포인트가 공백이 아닐 경우에 비교
+		 	
+		 	if(used_point!= ""  && used_point > user_point){
+		 		alert("입력한 포인트가 잔여포인트보다 많습니다.");
+		 		return;
+		 	}
+		 	
+		 	let used_point_input = "<input name='used_point' type='hidden' value='" + used_point + "'>";
+								
+			order_form += used_point_input;
+		 	
 				$(".order_info").each(function (index, element) {
 					// 넣어줄 값들을 받아와 input 형식의 데이터로 만들어준다.				
 					
 					// 재고가 상품 수량보다 부족하면 false;
 					let stock_check = false;
 					
-					// 주문정보 테이블 들어갈 데이터 
+					//1. 주문정보 테이블 들어갈 데이터 
 					let user_id = $(element).find(".user_id").val();
 					
-					let total_amount = $(element).find(".quantity").val();
+					let user_id_input = "<input name='ordersList[" + arrayCount + "].user_id' type='hidden' value='" + user_id + "'>";
+					
+					// 유저 아이디
+					order_form += user_id_input;
+					
+					let total_amount = $(element).find(".quantity").text();
+
+					let total_amount_input = "<input name='ordersList[" + arrayCount + "].total_amount' type='hidden' value='" + total_amount + "'>";
+					
+					// 총 상품 수량
+					order_form += total_amount_input;
+					
 					
 					let delivery_cost = $(".deliverycost_span").text();
 					
-					// 주문_상품 테이블에 들어갈 데이터
+					let delivery_cost_input = "<input name='ordersList[" + arrayCount + "].delivery_cost' type='hidden' value='" + delivery_cost + "'>";
+					
+					// 배송료
+					order_form += delivery_cost_input;
+					/*---------------------------------------------------------------------------------------*/
+					//2. 주문_상품 테이블에 들어갈 데이터
 					
 					let product_id = $(element).find(".product_id").val();
 					
-					let quantity = $(element).find(".quantity").val();
+					let product_id_input = "<input name='orderProductList[" + arrayCount + "].product_id' type='hidden' value='" + product_id + "'>";
+					
+					// 주문_상품 아이디
+					order_form += product_id_input;
+					
+					let quantity = $(element).find(".quantity").text();
+					
+					let quantity_input = "<input name='orderProductList[" + arrayCount + "].quantity' type='hidden' value='" + quantity + "'>";
+									
+					// 주문_상품 수량
+					order_form += quantity_input;
+					
+					let price = $(element).find(".sale_price").val();
+										
+					let price_input = "<input name='orderProductList[" + arrayCount + "].price' type='hidden' value='" + price + "'>";
+					
+					// 주문_상품 가격
+					order_form += price_input;
+										
+					let point = $(element).find(".totalsavepoint").text();
+										
+					let point_input = "<input name='orderProductList[" +  arrayCount + "].savepoint' type='hidden' value='" + point +"'>";
+										
+					// 주문_상품 적립포인트
+					order_form += point_input;
+					/*---------------------------------------------------------------------------------------*/
+					//3. 삭제할 장바구니 정보
+					let cart_product_id = product_id;
+					
+					let cart_user_id = user_id;
+					
+					let cart_product_id_input = "<input name='cartList[" + arrayCount + "].product_id' type='hidden' value='"+ product_id +"'>";
+					
+					let cart_user_id_input = "<input name='cartList["+ arrayCount +"].user_id' type='hidden' value='" + cart_user_id + "'>";
+					
+					order_form += cart_product_id_input;
+					
+					order_form += cart_user_id_input;
+									
+					// 주문 폼에 추가한 데이터들을 담아준다.
+					$(".order_form").html(order_form);
 					
 					// ajax 요청으로 상품의 재고정보를 받아온 후 재고가 넉넉할 경우에만 진행시키고 아닐 경우 return으로 종료
 					$.ajax({
@@ -321,6 +417,9 @@
 							return false;
 						}
 					});
+					
+					// 배열의 다음요소를 넣기 위해 arrayCount를 증가시킨다.
+					arrayCount ++;
 							
 			})
 			

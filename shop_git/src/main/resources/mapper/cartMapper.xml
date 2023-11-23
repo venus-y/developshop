@@ -47,6 +47,12 @@
 			<include refid="stock"></include>
 		</select>
 		
+		<!-- 동일한 유저 아이디와 상품 아이디가 DB에 존재하는지 확인 -->
+		<select id="prevent_Same" parameterType="Cart" resultType="int">
+			select count(*) from cart where user_id = #{user_id} and product_id = #{product_id}
+		</select>
+		
+		
 		<!-- 재고 정보 가져오기2 -->
 		<!-- 위에 있는 코드는 PathVarible로 처리하다 보니 Integer로 받고
 			밑에 있는 코드는 객체 상태로 전달받아서 int를 썼는데 결과적으론

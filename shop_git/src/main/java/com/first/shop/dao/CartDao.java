@@ -21,5 +21,6 @@ public interface CartDao {
 	int stock_Integer(Integer product_id);
 	
 	int stock_int(int product_id);
-
+	
+	int same_product(Cart cart);
 }

@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.first.shop.dto.CartList;
 import com.first.shop.dto.InstantOrderProduct;
 import com.first.shop.dto.InstantOrderProducts;
 import com.first.shop.dto.OrderProductList;
@@ -33,12 +35,19 @@ public class OrderController {
 	}
 	
 	
-	// 장바구니 -> 주무페이지 -> 주문
+	// 장바구니 -> 주문페이지 -> 주문
 	@PostMapping("/postOrder2")
-	public String order(OrderProductList orderProductList, OrdersList ordersList, BindingResult result) {
+	public String order( OrdersList ordersList, OrderProductList orderProductList, CartList cartList,@RequestParam(defaultValue = "0", required = false) int used_point, BindingResult result) {
 		System.out.println("객체검증:" + result);
-		System.out.println("주문 상품 :" + orderProductList);
 		System.out.println("주문 정보 :" + ordersList);
+		System.out.println("==================================================================================");
+		System.out.println("주문 상품 :" + orderProductList);
+		System.out.println("==================================================================================");
+		System.out.println("삭제할 장바구니 정보:" + cartList);
+		System.out.println("==================================================================================");
+		System.out.println("사용 포인트 정보 : "+ used_point);
+		
+		orderService.registerOrders2(ordersList , orderProductList , cartList, used_point);
 		
 		return "redirect:/";
 	}

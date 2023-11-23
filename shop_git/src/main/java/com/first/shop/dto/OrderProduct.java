@@ -6,7 +6,14 @@ public class OrderProduct {
 	private int product_id;
 	private int quantity;
 	private int price;
+	private int savepoint;
 	
+	public int getSavepoint() {
+		return savepoint;
+	}
+	public void setSavepoint(int savepoint) {
+		this.savepoint = savepoint;
+	}
 	public int getOrder_product_id() {
 		return order_product_id;
 	}
@@ -40,7 +47,7 @@ public class OrderProduct {
 	@Override
 	public String toString() {
 		return "OrderProduct [order_product_id=" + order_product_id + ", order_id=" + order_id + ", product_id="
-				+ product_id + ", quantity=" + quantity + ", price=" + price + "]";
+				+ product_id + ", quantity=" + quantity + ", price=" + price + ", savepoint=" + savepoint + "]";
 	}
 	
 	

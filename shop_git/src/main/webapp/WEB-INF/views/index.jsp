@@ -23,11 +23,11 @@
 <div id="main">
 	<ul>
 	    <li id="logo">shop main</li>
-	    <li><a href="<c:url value='/'/>">Home</a></li>
 	    <li><a href="<c:url value='${AdminLink}'/>">${AdminText}</a></li> 
+	    <li><a href="<c:url value='${CartLink}'/>">${CartText}</a></li>
+	    <li><a href="<c:url value='/'/>">Home</a></li>
 	    <li><a href="<c:url value='${loginOutLink}'/>">${loginOutText}</a></li>    
 	    <li><a href="<c:url value='${registerLink}'/>">${registerText}</a></li>
-	    <li><a href="<c:url value='${CartLink}'/>">${CartText}</a></li>
 	    <li><a href="<c:url value='/product/productList'/>">Product List</a></li>
 	</ul> 
 </div>

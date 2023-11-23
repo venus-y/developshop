@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.first.shop.dto.Cart;
 import com.first.shop.dto.Orders;
 import com.first.shop.dto.Product;
 import com.first.shop.dto.User;
@@ -45,6 +46,12 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public Product product(int product_id) {
 		return session.selectOne(namespace+"orderProduct_info", product_id);		
+	}
+	
+	// 주문이 완료된 상품을 장바구니에서 제거
+	@Override
+	public int delete(Cart cart) {
+		return session.delete(namespace+"delete_Ordered_Cart", cart);
 	}
 
 }

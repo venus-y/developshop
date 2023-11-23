@@ -68,6 +68,12 @@ public class CartDaoImpl implements CartDao {
 			
 		return session.selectOne(namespace+"checkStock_int", product_id);
 	}
+	
+	// 동일한 유저와 상품아이디가 DB에 있나 체크
+	@Override
+	public int same_product(Cart cart) {
+		return session.selectOne(namespace+"prevent_Same", cart);
+	}
 
 
 }

@@ -1,6 +1,5 @@
 package com.first.shop.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +56,7 @@ public class CartController {
 	// 장바구니 등록
 	@ResponseBody
 	@PostMapping("/register")
-	public String register(Cart cart) throws UnsupportedEncodingException {
+	public String register(Cart cart) throws Exception {
 		// 뷰에서 이미지정보를 JSON으로 요청하니 값이 이상하게 온다.
 		// 뷰에서 받아온 상품아이디를 통해 해당 상품의 이미지를 얻어오는 것으로 대체
 		Product forCart = cartService.CartProductImage(cart.getProduct_id());
@@ -65,7 +64,11 @@ public class CartController {
 		cart.setProduct_image(forCart.getProduct_image());
 		cart.setProduct_thumbimage(forCart.getProduct_thumbimage());
 		
-		cartService.registerCart(cart);
+		int result = cartService.registerCart(cart);
+		// result가 0일 경우 이미 DB에 동일한 유저가 동일한 상품을 등록하려고 시도한 경우
+		if(result == 0) {
+			return "same product already exists";
+		}
 		
 		return "success";
 	}

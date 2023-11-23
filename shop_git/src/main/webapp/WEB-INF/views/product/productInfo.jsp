@@ -172,7 +172,8 @@
 				return false;
 			}
 			
-			if(stock < form.quantity){
+			if(parseInt(stock) < parseInt(form.quantity)){
+					alert("선택 수량:"+ form.quantity);
 					alert("선택된 수량이 상품의 재고보다 많습니다.");
 					return false;
 				}else{
@@ -180,15 +181,25 @@
 						url : '/shop/cart/register',
 						type : 'POST',
 						data : form,
-						success : function (result) {
-							alert(result)
-							// 사용자에게 장바구니로 이동할껀지 묻는다.				
-							if(confirm("장바구니로 이동하시겠습니까?")){
-								location.href='/shop/cart/getCart';	
-								
+						success : function (result) {	
+							
+							// 동일한 상품이 장바구니에 존재할 경우						
+							let same = $.trim(result);
+							if(same == "same product already exists"){
+								alert(result);
+								return;
 							}
 							
+							// 잘 등록됐을 경우 등록 메세지 출력
+							alert(result)
+							
+							// 사용자에게 장바구니로 이동할껀지 묻는다.	
+							if(confirm("장바구니로 이동하시겠습니까?")){
+								location.href='/shop/cart/getCart';	
+							}
 						}
+							
+						
 					})
 				}
 			})

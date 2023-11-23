@@ -2,6 +2,7 @@ package com.first.shop.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.first.shop.dao.OrderDao;
+import com.first.shop.dto.Cart;
+import com.first.shop.dto.CartList;
+import com.first.shop.dto.OrderProduct;
+import com.first.shop.dto.OrderProductList;
 import com.first.shop.dto.Orders;
+import com.first.shop.dto.OrdersList;
 import com.first.shop.dto.Product;
 import com.first.shop.dto.User;
 
@@ -61,8 +67,6 @@ public class OrderServiceImpl implements OrderService {
 		orders.setStatus("배송준비");
 		// 주문정보 등록
 		orderDao.register(orders);
-	
-		
 		
 		return 1;
 	}
@@ -72,6 +76,84 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public User getUserInfo(String user_id) {
 		return orderDao.user(user_id);
+	}
+
+	// 주문 처리
+	@Override
+	@Transactional
+	public int registerOrders2(OrdersList ordersList, OrderProductList orderProductList, CartList cartList, int used_point) {
+		// 동시에 주문한 상품들이기 때문에 배송비는 한번만 계산한다.
+		// 맨 앞에 요소의 배송비만큼 할당한다.
+		int deliveryCost = ordersList.getOrdersList().get(0).getDelivery_cost();
+		
+		System.out.println("배송비 출력:" + deliveryCost);
+		System.out.println("==========================");
+
+		// 주문상품 목록을 순회하면서 상품가격과 적립포인트를 구해준다.
+		int totalPrice = 0;
+		int totalSavePoint = 0;
+		
+		List<OrderProduct> opList = orderProductList.getOrderProductList();
+		
+		for(int i = 0; i < opList.size();  i++) {
+			// 각 주문상품별 총 상품가격과 총 적립포인트를 각각 더해주고 상품의 재고를 차감한다.
+			totalPrice += opList.get(i).getPrice();
+			totalSavePoint += opList.get(i).getSavepoint();
+			
+			// 재고를 갱신할 상품의 정보를 받아온다.
+			Product product = orderDao.product(opList.get(i).getProduct_id());
+			System.out.println("상품 재고 갱신 전:" + product.getStock() + product.getProduct_name());
+			System.out.println("현재 순회중인 상품명:" + product.getProduct_name());
+			// 상품수량만큼 차감한다.
+			product.setStock(product.getStock()-opList.get(i).getQuantity());
+			
+			// db에 있는 상품정보를 갱신
+			orderDao.update(product);
+			System.out.println("======================");
+			
+			System.out.println("상품 재고 갱신 후:" + product.getStock());
+			
+			
+		}
+		
+		System.out.println("총 합산 가격:" + totalPrice);
+		System.out.println("==========================");
+		System.out.println("총 합산 포인트:" + totalSavePoint);
+		
+		
+		// 결제할 유저 정보를 가져온다.
+		User user = orderDao.user(ordersList.getOrdersList().get(0).getUser_id());
+		// 유저의 잔액에서 결제금액만큼 차감한다.
+		
+		//유저 잔액 출력
+		System.out.println("유저의 잔액(before):"+ user.getMoney());
+		System.out.println("==========================");
+
+		user.setMoney(user.getMoney() - totalPrice + deliveryCost - used_point);
+		System.out.println("유저의 잔액(after):"+ user.getMoney());
+		System.out.println("==========================");
+
+		//유저의 사용한 포인트를 차감시키고 남은 포인트를 출력
+		
+		user.setPoint(user.getPoint() - used_point);
+		System.out.println("유저의 잔여포인트(before)"+ user.getPoint());
+		System.out.println("==========================");
+
+		//장바구니에 담겨있던 상품정보를 지운다.
+		List<Cart> deleteList = cartList.getCartList();
+		for(int i=0; i<deleteList.size(); i++) {
+			orderDao.delete(deleteList.get(i));
+		}
+		
+		
+		// 유저의 잔여포인트에 총적립포인트만큼 가산
+		user.setPoint(user.getPoint() + totalSavePoint);
+		System.out.println("유저의 잔여포인트(after)"+ user.getPoint());
+		
+		
+		
+		
+		return 1;
 	}
 
 //	@Override

@@ -10,6 +10,7 @@
 		<typeAlias alias="Category" type="com.first.shop.dto.Category"/>
 		<typeAlias alias="ProductImage" type="com.first.shop.dto.ProductImage"/>																					
 		<typeAlias alias="Cart" type="com.first.shop.dto.Cart"/>
-		<typeAlias alias="Orders" type="com.first.shop.dto.Orders"/>		
+		<typeAlias alias="Orders" type="com.first.shop.dto.Orders"/>
+		<typeAlias alias="OrderProduct" type="com.first.shop.dto.OrderProduct"/>						
 	</typeAliases>
 </configuration>

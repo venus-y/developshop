@@ -39,7 +39,7 @@
 		
 		<!-- 상품 재고 -->
 		<label>재고</label>
-			<input class="product-Input" type="number" name="stock" id="stock">
+			<input class="product-Input" type="number" min="1" name="stock" id="stock">
 		<!-- 상품명 공백 시 출력 메시지 -->
 			<span class="stock_empty">재고를 입력해주세요.</span>
 		

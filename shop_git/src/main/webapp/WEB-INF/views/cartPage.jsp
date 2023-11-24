@@ -20,7 +20,7 @@
     <div class="cart-container">
         <h2>장바구니</h2>
         <!-- 전체 체크박스 -->
-        <div>
+        <div class="all_cart_checkbox_div">
 	        <input type="checkbox" class="all_cart_checkbox" checked="checked"><span class="all_check_span">전체선택</span>
         </div>
         
@@ -122,8 +122,19 @@
     <!-- 여기에 필요한 스크립트 등을 추가할 수 있습니다. -->
 </body>
 	<script type="text/javascript">
+		
+	
+		
 	
 		$(document).ready(function () {
+			
+			// 장바구니가 비어있을 경우 체크박스 영역을 안보이게한다.
+			let CartEmptyCheck = ${empty cartList};
+			
+			if(CartEmptyCheck){
+				$(".all_cart_checkbox_div").hide();
+			}
+			
 			// 페이지가 처음 로드됐을 때 전체 체크박스의 상태가 체크돼있을 경우 하위 체크박스도 체크 상태로 바꿔준다.
 			 let isAllChecked = $(".all_cart_checkbox").prop("checked");
 			

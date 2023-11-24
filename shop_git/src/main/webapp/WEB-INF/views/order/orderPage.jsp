@@ -130,6 +130,7 @@
    			 		<!-- 적립 포인트 사용 -->
    			 			<span>포인트 사용 : </span>
    			 			<input type="text" class="point_zone">
+   			 			<button class="input_point_Btn">포인트 사용</button>	
    			 			<button class="allpoint_Btn">포인트 전부 사용</button>	
    			 			<button class="cancelpoint_Btn">사용 취소</button>
    					</td>				     				
@@ -210,6 +211,30 @@
 			daum_address();
 		})
         
+		// 사용할 포인트를 입력하고 포인트 사용 버튼을 눌렀을 때
+		$(".input_point_Btn").on("click", function () {
+			// 포인트 정보를 표시해줄 영역
+			let point_zone = parseInt($(".point_zone").val());
+			// 유저의 보유 포인트를 가져온다.
+			let user_point = parseInt(${orderUser.point}); 
+		
+			// 입력한 포인트가 보유포인트보다 적을 경우  return;
+			if(point_zone > user_point){
+				alert("입력한 포인트가 잔여포인트를 초과했습니다.");	
+				// 입력한 값을 지운다.
+				$(".point_zone").val("");
+				return;
+			}else if(user_point >= point_zone) {
+				// 잔여포인트가 충분할 경우 기존의 결제금액에서 포인트만큼 빼준 상태로 업데이트한다.
+				let finalprice = parseInt($(".finaltotalprice_span").text());
+				let new_finalprice = finalprice - point_zone; 
+				$(".finaltotalprice_span").text(new_finalprice);				
+			}	
+			
+		})
+		
+		
+		
 		// 포인트 전부 사용 버튼 눌렀을 때
 		$(".allpoint_Btn").on("click", function () {
 			// 포인트 정보를 표시해줄 영역
@@ -294,10 +319,10 @@
 					 			 	
 		 	// 입력한 포인트가 공백이 아닐 경우에 비교
 		 	
-		 	if(used_point!= ""  && used_point > user_point){
+		 	/* if(used_point!= ""  && used_point > user_point){
 		 		alert("입력한 포인트가 잔여포인트보다 많습니다.");
 		 		return;
-		 	}
+		 	} */
 		 	
 		 	let used_point_input = "<input name='used_point' type='hidden' value='" + used_point + "'>";
 								
@@ -407,7 +432,8 @@
 								 stock_check = true;
 								 if(stock_check){
 								 alert("다 통과됐을 때 실행");
-								 $(".order_form").submit();	        										 
+								 $(".order_form").submit();	   
+								 alert("주문이 처리중입니다... 잠시만 기다려주세요");
 								 } 
 						     } 
 							

@@ -9,6 +9,12 @@
 			values (#{order_id}, #{user_id}, #{total_amount}, #{delivery_cost}, #{status});
 		</insert>
 		
+		<!-- 주문_상품 테이블에 데이터 삽입 -->
+		<insert id="register_order_product" parameterType="OrderProduct">
+			insert into order_product (order_id, product_id, quantity, price, savepoint)
+			values (#{order_id}, #{product_id}, #{quantity}, #{price}, #{savepoint}) 
+		</insert>
+		
 		<!-- 유저가 사용한 금액,포인트정보 업데이트-->
 		<update id="update_user" parameterType="User">
 			update user set money = #{money} , point = #{point}
@@ -16,7 +22,7 @@
 		
 		<!-- 상품 재고 변경-->
 		<update id="update_stock" parameterType="Product">
-			update product set stock = #{stock}
+			update product set stock = #{stock} where product_id = #{product_id}
 		</update>	
 		
 		<!-- 주문 유저 정보를 가져온다 * 사실 이미 다른 매퍼에 정의돼있는 코드라 중복이 발생한다는 점이 아쉬움 -->

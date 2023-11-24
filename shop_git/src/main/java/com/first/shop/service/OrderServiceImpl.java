@@ -43,6 +43,13 @@ public class OrderServiceImpl implements OrderService {
 		orderDao.update(user);
 		orderDao.update(product);
 		
+		orderInfoRegister(quantity, user);
+		
+		return 1;
+	}
+
+	// 주문정보 생성 메서드
+	private void orderInfoRegister(int quantity, User user) {
 		// 주문정보를 생성한다.
 		Orders orders = new Orders();
 		// 주문번호를 생성한다.
@@ -67,8 +74,6 @@ public class OrderServiceImpl implements OrderService {
 		orders.setStatus("배송준비");
 		// 주문정보 등록
 		orderDao.register(orders);
-		
-		return 1;
 	}
 
 	
@@ -86,8 +91,8 @@ public class OrderServiceImpl implements OrderService {
 		// 맨 앞에 요소의 배송비만큼 할당한다.
 		int deliveryCost = ordersList.getOrdersList().get(0).getDelivery_cost();
 		
-		System.out.println("배송비 출력:" + deliveryCost);
 		System.out.println("==========================");
+		System.out.println("배송비 출력:" + deliveryCost);
 
 		// 주문상품 목록을 순회하면서 상품가격과 적립포인트를 구해준다.
 		int totalPrice = 0;
@@ -102,7 +107,8 @@ public class OrderServiceImpl implements OrderService {
 			
 			// 재고를 갱신할 상품의 정보를 받아온다.
 			Product product = orderDao.product(opList.get(i).getProduct_id());
-			System.out.println("상품 재고 갱신 전:" + product.getStock() + product.getProduct_name());
+			System.out.println("상품 재고 갱신 전:" + product.getStock());
+			System.out.println("==========================");
 			System.out.println("현재 순회중인 상품명:" + product.getProduct_name());
 			// 상품수량만큼 차감한다.
 			product.setStock(product.getStock()-opList.get(i).getQuantity());
@@ -112,14 +118,15 @@ public class OrderServiceImpl implements OrderService {
 			System.out.println("======================");
 			
 			System.out.println("상품 재고 갱신 후:" + product.getStock());
-			
+			System.out.println("======================");
 			
 		}
 		
 		System.out.println("총 합산 가격:" + totalPrice);
 		System.out.println("==========================");
-		System.out.println("총 합산 포인트:" + totalSavePoint);
 		
+		System.out.println("총 합산 포인트:" + totalSavePoint);
+		System.out.println("======================");
 		
 		// 결제할 유저 정보를 가져온다.
 		User user = orderDao.user(ordersList.getOrdersList().get(0).getUser_id());
@@ -128,8 +135,12 @@ public class OrderServiceImpl implements OrderService {
 		//유저 잔액 출력
 		System.out.println("유저의 잔액(before):"+ user.getMoney());
 		System.out.println("==========================");
-
-		user.setMoney(user.getMoney() - totalPrice + deliveryCost - used_point);
+		
+		// 최종 결제 금액
+		System.out.println("최종 결제 금액:" + (totalPrice + deliveryCost));
+		System.out.println("===========================");
+		
+		user.setMoney(user.getMoney() - (totalPrice + deliveryCost) - used_point);
 		System.out.println("유저의 잔액(after):"+ user.getMoney());
 		System.out.println("==========================");
 
@@ -152,9 +163,57 @@ public class OrderServiceImpl implements OrderService {
 		
 		
 		
-		
+		// 주문 정보, 주문 상품 정보 생성
+		List<Orders> oList = ordersList.getOrdersList();
+		for(int i=0; i<oList.size(); i++) {
+			Orders orders = oList.get(i);
+			
+			// 주문정보 등록
+			int ordersInfoCheck = orderInfoRegister2(orders);
+			// 주문상품정보 등록
+			int orderProductCheck = orderProductRegister(orders.getOrder_id(), opList.get(i));
+			
+			if(ordersInfoCheck == 1 && orderProductCheck == 1) {
+				System.out.println("주문정보 및 주문상품정보 등록 완료!");
+			}
+		}
+				
 		return 1;
 	}
+	// 주문정보 생성 메서드
+		private int orderInfoRegister2(Orders orderInfo) {
+			// 주문번호를 생성한다.
+			// UUID 클래스로 랜덤한 문자열 생성
+			UUID uuId = UUID.randomUUID();
+			// 주문번호의 앞에는 날짜정보가 올 수 있게 한다. 날짜정보를 얻어오기 위해 Calendar 객체를 생성
+			Calendar cal = Calendar.getInstance();
+			// 출력하고 싶은 날짜 형식을 만든다.
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			// 날짜를 지정한 양식의 문자열로 변환한다.
+			String calString = sdf.format(cal.getTime());
+			
+			
+			String orderId = calString + "_" + uuId;
+			System.out.println("orderId: "+orderId);
+			
+			// 주문번호, 배송상태를 셋팅한다.
+			// 이것도 총수량이 돼야한다. 현재는 상품 하나를 기준으로 주문하고 있음
+			orderInfo.setOrder_id(orderId);
+			orderInfo.setStatus("배송준비");
+			
+			System.out.println("주문 정보 출력:" + orderInfo);
+			// 주문정보 등록
+			return orderDao.register(orderInfo);
+		}
+		
+		// 주문상품정보 등록
+		private int orderProductRegister(String order_id, OrderProduct orderProduct) {
+			orderProduct.setOrder_id(order_id);
+			System.out.println("주문상품 정보 출력:" + orderProduct);
+			
+			return orderDao.order_product(orderProduct);
+			
+		}
 
 //	@Override
 //	public int updateUser(User user) {

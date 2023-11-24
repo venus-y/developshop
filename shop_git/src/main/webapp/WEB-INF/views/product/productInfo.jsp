@@ -60,7 +60,7 @@
 				<button type="button" onclick="location.href='/shop/product/productList?page=${param.page}&pageSize=${param.pageSize}'">상품 목록</button>
 			
 			<span>주문수량</span>
-			<input type="number" class="quantity_input" value="1">			
+			<input type="number" min="1" class="quantity_input" value="1">			
 			<!-- 상품 수량 조절 -->	
 			<span>
 				<button class="plus_Btn">+</button>

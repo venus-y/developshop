@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.first.shop.dto.Cart;
+import com.first.shop.dto.OrderProduct;
 import com.first.shop.dto.Orders;
 import com.first.shop.dto.Product;
 import com.first.shop.dto.User;
@@ -22,7 +23,13 @@ public class OrderDaoImpl implements OrderDao {
 	public int register(Orders orders) {
 		return session.insert(namespace+"register_product", orders); 
 	}
-
+	
+	// 주문상품정보 등록
+	@Override
+	public int order_product(OrderProduct orderProduct) {
+		return session.insert(namespace+"register_order_product", orderProduct);
+	}
+	
 	// 유저 금액, 포인트정보 업데이트
 	@Override
 	public int update(User user) {
@@ -53,5 +60,7 @@ public class OrderDaoImpl implements OrderDao {
 	public int delete(Cart cart) {
 		return session.delete(namespace+"delete_Ordered_Cart", cart);
 	}
+
+	
 
 }

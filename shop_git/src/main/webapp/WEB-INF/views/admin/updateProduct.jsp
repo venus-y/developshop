@@ -41,18 +41,22 @@
 			<td>가격</td>
 			<td>
 				<!-- 정가 -->
-				<input type="number" name="price" value="${productInfo.price}">원
+				<input type="number" min="1" name="price" value="${productInfo.price}">원
 			</td>    
 		</tr>
 		
 		<tr>
 			<td>할인율</td>
-			<td><input type="number" name="discount" value="${productInfo.discount}">  %</td>
+			<td><input type="number" min="1" name="discount" value="${productInfo.discount}">  %</td>
+		</tr>
+		<tr>
+			<td>재고</td>
+			<td><input type="number" min="1" name="stock" value="${productInfo.stock}">  개</td>
 		</tr>
 		
 		<tr>
 			<td>적립포인트</td>
-			<td><input type="number" name="savepoint" value="${productInfo.savepoint}">포인트</td>
+			<td><input type="number" min="1" name="savepoint" value="${productInfo.savepoint}">포인트</td>
 		</tr>
 		<tr>
 			<td colspan="2">			

@@ -59,7 +59,7 @@
 			
 		<!-- 나이 입력 -->
 		<label for="age">나이</label>
-			<input class="input-field" type="number" name="age" placeholder="나이를 입력" maxlength="2">
+			<input class="input-field" type="number" min="1" max="120" name="age" placeholder="나이를 입력" maxlength="2">
 			<!-- 공백 여부 검사 메시지 -->
 			<span class="ageEmpty">나이를 입력해주세요.</span>
 			

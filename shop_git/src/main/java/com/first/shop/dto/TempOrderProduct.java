@@ -1,8 +1,8 @@
 package com.first.shop.dto;
 
-public class InstantOrderProduct {
+public class TempOrderProduct {
 	// 주문 생성하는데 필요한 상품정보
-	private int instant_id;
+	private int temp_id;
 	private int product_id;
 	private int quantity;
 	private String product_name;
@@ -15,6 +15,19 @@ public class InstantOrderProduct {
 	private String product_image;
 	private String product_thumbimage;
 	
+	// 총 합계 포인트, 합산 가격 생성 메서드
+	public void setTotal() {
+		this.saleprice = (int)(price - (price * (discount/100.0)));
+		this.totalprice = saleprice * quantity;
+		this.totalsavepoint = savepoint * quantity;
+	}
+		
+	public int getTemp_id() {
+		return temp_id;
+	}
+	public void setTemp_id(int temp_id) {
+		this.temp_id = temp_id;
+	}
 	public int getSaleprice() {
 		return saleprice;
 	}
@@ -32,12 +45,6 @@ public class InstantOrderProduct {
 	}
 	public void setTotalsavepoint(int totalsavepoint) {
 		this.totalsavepoint = totalsavepoint;
-	}
-	public int getInstant_id() {
-		return instant_id;
-	}
-	public void setInstant_id(int instant_id) {
-		this.instant_id = instant_id;
 	}
 	public int getProduct_id() {
 		return product_id;
@@ -95,7 +102,7 @@ public class InstantOrderProduct {
 	}
 	@Override
 	public String toString() {
-		return "InstantOrderProduct [instant_id=" + instant_id + ", product_id=" + product_id + ", quantity=" + quantity
+		return "TempOrderProduct [temp_id=" + temp_id + ", product_id=" + product_id + ", quantity=" + quantity
 				+ ", product_name=" + product_name + ", discount=" + discount + ", price=" + price + ", saleprice="
 				+ saleprice + ", totalprice=" + totalprice + ", savepoint=" + savepoint + ", totalsavepoint="
 				+ totalsavepoint + ", product_image=" + product_image + ", product_thumbimage=" + product_thumbimage

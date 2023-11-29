@@ -16,7 +16,8 @@
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/index.jsp" />
-    
+    <script>
+    </script>
     <div class="cart-container">
         <h2>장바구니</h2>
         <!-- 전체 체크박스 -->
@@ -99,9 +100,11 @@
 		    	                <td>총 적립 예상 포인트 :<span class="totalsavepoint_span"></span>포인트</td>
                 	    		<td>배송비 :<span class="deliverycost_span"></span>원</td>
                     			<td>주문 예상 금액 : <span class="finaltotalprice_span"></span>원</td>
-		                    	<!-- 주문 form -->
-		                    	<form action="/shop/order/instantOrder/${sessionScope.user.id}" method="get" class="order_form">
-		                    	</form>
+		                    	<td>
+			                    	<!-- 주문 form -->
+		                    		<form action="/shop/order/getOrder/${sessionScope.user.id}" method="get" class="order_form">
+		                    		</form>
+		                    	</td>
 		                    	<!-- 주문 버튼 -->
 		                    	<td>
 			                    	<button type="button" class="orderBtn">주문 페이지로 이동</button>
@@ -260,8 +263,8 @@
 			
 			// 주문 폼에 넣을 값을 담아주는 변수
 			let order_form = '';
-			// instant_id는 상품정보를 배열에 담을 때마다 1씩 증가시킨다.
-			let instant_id = 0;
+			// temp_id는 상품정보를 배열에 담을 때마다 1씩 증가시킨다.
+			let temp_id = 0;
 			// 재고체크를 통과해야 할 총 횟수
 			let totalChecked = $(".cart_checkbox:checked").length;
 			// 체크를 통과할 때마다 증가하는 변수
@@ -279,14 +282,14 @@
 					// 재고가 장바구니 상품 수량보다 부족하면 false;
 					let stock_check = false;
 					
-					let instant_id_input = "<input name='orderProducts[" + instant_id + "].instant_id' type='hidden' value='" + instant_id +"'>";
+					let temp_id_input = "<input name='orderProducts[" + temp_id + "].temp_id' type='hidden' value='" + temp_id +"'>";
 					
 					// 인스턴트 id
-					order_form += instant_id_input;
+					order_form += temp_id_input;
 						
 					let product_id = $(element).find(".product_id").val();
 										
-					let product_id_input = "<input name='orderProducts[" + instant_id +"].product_id' type='hidden' value='" + product_id +"'>"; 
+					let product_id_input = "<input name='orderProducts[" + temp_id +"].product_id' type='hidden' value='" + product_id +"'>"; 
 					
 					// 상품 id
 					order_form += product_id_input;
@@ -329,7 +332,7 @@
 								 $(".order_form").submit();			        										 
 								 }
 								 
-						       }
+						    }
 							
 						}, error : function () {
 							alert("재고 정보를 가져오는 도중 오류가 발생했습니다.");
@@ -337,63 +340,63 @@
 						}
 					});
 					
-					let quantity_input = "<input name='orderProducts[" + instant_id + "].quantity' type='hidden' value='" + quantity + "'>";
+					let quantity_input = "<input name='orderProducts[" + temp_id + "].quantity' type='hidden' value='" + quantity + "'>";
 					
 					// 상품 수량
 					order_form += quantity_input;
 					
 					let product_name = $(element).find(".product_name").val();
 					
-					let product_name_input = "<input name='orderProducts[" + instant_id + "].product_name' type='hidden' value='" + product_name + "'>";
+					let product_name_input = "<input name='orderProducts[" + temp_id + "].product_name' type='hidden' value='" + product_name + "'>";
 					
 					// 상품명
 					order_form += product_name_input;
 					
 					let discount = $(element).find(".discount").val();
 					
-					let discount_input = "<input name='orderProducts[" + instant_id + "].discount' type='hidden' value='" + discount + "'>";
+					let discount_input = "<input name='orderProducts[" + temp_id + "].discount' type='hidden' value='" + discount + "'>";
 					
 					// 할인률
 					order_form += discount_input;
 					
 					let price = $(element).find(".price").val();
 					
-					let price_input = "<input name='orderProducts[" + instant_id + "].price' type='hidden' value='" + price + "'>";
+					let price_input = "<input name='orderProducts[" + temp_id + "].price' type='hidden' value='" + price + "'>";
 					
 					// 가격
 					order_form += price_input;
 					
 					let saleprice = $(element).find(".sale_price").val();
 					
-					let saleprice_input = "<input name='orderProducts[" + instant_id + "].saleprice' type='hidden' value = '" + saleprice + "'>";
+					let saleprice_input = "<input name='orderProducts[" + temp_id + "].saleprice' type='hidden' value = '" + saleprice + "'>";
 					
 					// 세일가
 					order_form += saleprice_input;
 					
 					let totalprice = $(element).find(".total_price").val();
 					
-					let totalprice_input = "<input name='orderProducts[" + instant_id + "].totalprice' type='hidden' value = '" + totalprice + "'>";
+					let totalprice_input = "<input name='orderProducts[" + temp_id + "].totalprice' type='hidden' value = '" + totalprice + "'>";
 					
 					// 총 가격
 					order_form += totalprice_input;
 			
 					let savepoint = $(element).find(".savepoint").val();
 					
-					let savepoint_input = "<input name='orderProducts[" + instant_id + "].savepoint' type='hidden' value = '" + savepoint + "'>"; 
+					let savepoint_input = "<input name='orderProducts[" + temp_id + "].savepoint' type='hidden' value = '" + savepoint + "'>"; 
 					
 					// 적립포인트
 					order_form += savepoint_input;
 					
 					let totalsavepoint = $(element).find(".total_save_point").val();
 					
-					let totalsavepoint_input = "<input name='orderProducts[" + instant_id + "].totalsavepoint' type='hidden' value = '" + totalsavepoint + "'>";
+					let totalsavepoint_input = "<input name='orderProducts[" + temp_id + "].totalsavepoint' type='hidden' value = '" + totalsavepoint + "'>";
 					
 					// 총 적립포인트
 					order_form += totalsavepoint_input;
 					
 					let product_thumbimage = $(element).find(".product_thumbimage").val(); 
 					
-					let product_thumbimage_input = "<input name='orderProducts[" + instant_id + "].product_thumbimage' type='hidden' value = '" + product_thumbimage + "'>";
+					let product_thumbimage_input = "<input name='orderProducts[" + temp_id + "].product_thumbimage' type='hidden' value = '" + product_thumbimage + "'>";
 					
 					// 썸네일 이미지
 					order_form += product_thumbimage_input;
@@ -402,20 +405,20 @@
 						 
 						 
 						 
-			               /*  <input type="hidden" name="orderProducts[${instant_id}].product_id" value="${product_id}">
-			                <input type="hidden" name="orderProducts[${instant_id}].quantity" value="${quantity}">
-			                <input type="hidden" name="orderProducts[${instant_id}].productName" value="${product_name}">
-			                <input type="hidden" name="orderProducts[${instant_id}].discount" value="${discount}">
-			                <input type="hidden" name="orderProducts[${instant_id}].price" value="${price}">
-			                <input type="hidden" name="orderProducts[${instant_id}].saleprice" value="${saleprice}">
-			                <input type="hidden" name="orderProducts[${instant_id}].totalprice" value="${totalprice}">
-			                <input type="hidden" name="orderProducts[${instant_id}].savepoint" value="${savepoint}">
-			                <input type="hidden" name="orderProducts[${instant_id}].totalsavepoint" value="${totalsavepoint}">
-			                <input type="hidden" name="orderProducts[${instant_id}].productThumbimage" value="${product_thumbimage}"> */
+			               /*  <input type="hidden" name="orderProducts[${temp_id}].product_id" value="${product_id}">
+			                <input type="hidden" name="orderProducts[${temp_id}].quantity" value="${quantity}">
+			                <input type="hidden" name="orderProducts[${temp_id}].productName" value="${product_name}">
+			                <input type="hidden" name="orderProducts[${temp_id}].discount" value="${discount}">
+			                <input type="hidden" name="orderProducts[${temp_id}].price" value="${price}">
+			                <input type="hidden" name="orderProducts[${temp_id}].saleprice" value="${saleprice}">
+			                <input type="hidden" name="orderProducts[${temp_id}].totalprice" value="${totalprice}">
+			                <input type="hidden" name="orderProducts[${temp_id}].savepoint" value="${savepoint}">
+			                <input type="hidden" name="orderProducts[${temp_id}].totalsavepoint" value="${totalsavepoint}">
+			                <input type="hidden" name="orderProducts[${temp_id}].productThumbimage" value="${product_thumbimage}"> */
 			            
 					
 			        // 인스턴트id를 하나 증가시킨다.
-			        instant_id++; 
+			        temp_id++; 
 			            
 			        // 생성한 order_form의 값들을 html 내에 만들어준 주문 폼에 넣어준다.
 					$(".order_form").html(order_form);

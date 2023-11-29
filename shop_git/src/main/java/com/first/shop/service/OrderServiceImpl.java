@@ -165,20 +165,28 @@ public class OrderServiceImpl implements OrderService {
 		
 		// 주문 정보, 주문 상품 정보 생성
 		List<Orders> oList = ordersList.getOrdersList();
+		int ordersInfoCheck = 0;
+		int orderProductCheck = 0;
 		for(int i=0; i<oList.size(); i++) {
 			Orders orders = oList.get(i);
 			
 			// 주문정보 등록
-			int ordersInfoCheck = orderInfoRegister2(orders);
+			ordersInfoCheck = orderInfoRegister2(orders);
 			// 주문상품정보 등록
-			int orderProductCheck = orderProductRegister(orders.getOrder_id(), opList.get(i));
+			orderProductCheck = orderProductRegister(orders.getOrder_id(), opList.get(i));
 			
 			if(ordersInfoCheck == 1 && orderProductCheck == 1) {
 				System.out.println("주문정보 및 주문상품정보 등록 완료!");
-			}
-		}
 				
-		return 1;
+			}
+		}	
+		   // 정상적으로 처리됐을 경우 1을 반환
+		   if(ordersInfoCheck == 1 && orderProductCheck == 1)
+			   return 1;
+		   
+		   // 잘 안됐을 경우엔 0 반환한다.
+		   	   return 0;
+		   
 	}
 	// 주문정보 생성 메서드
 		private int orderInfoRegister2(Orders orderInfo) {

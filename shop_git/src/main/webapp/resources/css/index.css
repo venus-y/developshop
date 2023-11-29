@@ -1,0 +1,107 @@
+@charset "UTF-8";
+* { 
+    box-sizing: border-box; 
+    margin : 0;
+    padding: 0;
+}
+
+a { 	
+	text-decoration: none;  }
+
+ul {
+    list-style-type: none;
+    height: 80px;
+    width: 100%;
+    background-color: navy;
+    display: flex;
+}
+
+ul > li {
+    color: lightgray;
+    height : 100%;
+    width:90px;
+    display:flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* 브랜드 메뉴 정렬 관련 설정 */
+
+ul > li:hover > a {
+   	color: red;
+}
+
+
+.m1:hover > .m2 {
+    display: flex;
+}
+
+.m1{
+	position: relative;
+	height: 80px;
+}
+
+.clothes_cate{
+	align-items: center;
+}
+
+.m2{
+	display: none;
+	position: absolute;
+	top: 100%;
+    left: 0;
+    background-color: navy; 
+    flex-direction: column; /* 세로 방향으로 정렬되도록 수정 */
+}
+
+.m2 > li {
+	width: 120px;
+	color: white;
+	text-align: center;
+	background-color: navy;
+}
+
+/*  */
+
+ul > li > a {
+	display:flex;
+    color:silver;
+    margin:auto;
+    padding: 10px;
+    font-size:20px;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center;
+    box-sizing: border-box; /* 내부의 padding을 box 크기에 포함시킴 */
+    text-decoration: none;
+}
+
+ul > li > a:hover {
+    border-bottom: 3px solid rgb(209, 209, 209);
+}
+
+/* 계층형 메뉴 관련 설정 */
+/* main_menu {
+	height: 0;
+	overflow: hidden;
+}
+
+.main_menu > li {
+	line-height: 50px;
+	background-color: black;
+}
+
+.main_menu > li:hover {
+	background-color: black;
+	transition-duration : 0.5s;
+} */
+
+
+
+
+#logo {
+	color:white;
+    font-size: 18px;
+    padding-left:40px; 
+    margin-right:auto;
+    display: flex;
+}

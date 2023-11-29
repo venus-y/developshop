@@ -33,7 +33,7 @@
 		
 		<!-- 상품 할인률 -->
 		<label>할인률</label>
-			<input class="product-Input" type="number" name="discount" id="discount">
+			<input class="product-Input" type="number" name="discount" id="discount" min="1" max="99">
 		<!-- 할인률 공백 시 출력 메시지 -->
 			<span class="discount_empty">상품명을 입력해주세요.</span>
 		
@@ -96,13 +96,30 @@
 	$(document).ready(function () {
 		console.log('${cateList}'); 
 		
+
+		// 테스트
+		const cateArrays = [[], [], []];  // Arrays for categories with lengths 1, 2, and 3
+
+		makeCategoryTierList(cateList, cateArrays);
+		
+		
+		console.log(cate)
+		
 		// 넘겨줘야 할 값 : 찾을 분류코드, 비교할 분류코드리스트, 분류코드 정보를 담아줄 객체, 분류코드를 저장할 배열
-		makeCategoryTierList(1, cateList, cate1Array, 1);
+		/* makeCategoryTierList(1, cateList, cate1Array, 1);
 		makeCategoryTierList(2, cateList, cate1Array, 1);
+		makeCategoryTierList(3, cateList, cate1Array, 1);
+		makeCategoryTierList(4, cateList, cate1Array, 1);
+		
 		makeCategoryTierList(11, cateList, cate2Array, 2);
 		makeCategoryTierList(22, cateList, cate2Array, 2);
+		makeCategoryTierList(33, cateList, cate2Array, 2);
+		makeCategoryTierList(44, cateList, cate2Array, 2);
+		
 		makeCategoryTierList(111, cateList, cate3Array, 3);
 		makeCategoryTierList(222, cateList, cate3Array, 3);
+		makeCategoryTierList(333, cateList, cate3Array, 3);
+		makeCategoryTierList(444, cateList, cate3Array, 3); */
 		// 중복 코드 
 
 
@@ -293,8 +310,8 @@
 	
 	// 카테고리 분류코드가 n인 데이터들을 찾는다
 	// 필요한 값 : 찾을 분류코드, 비교할 분류코드리스트, 분류코드 정보를 담아줄 객체, 분류코드를 저장할 배열, 분류코드길이
-	function makeCategoryTierList(cateCode, cateList,cateArray, codeLength) {
-		for(let i = 0; i < cateList.length; i++){
+	/* function makeCategoryTierList(cateCode, cateList,cateArray, codeLength) {
+		for(let i = 0; i < cateList.length; i++){z
 			if(cateCode === cateList[i].category_code &&  cateCode.toString().length === codeLength){
 				// 찾을 분류코드 값과 순회중인 요소의 분류코드 값이 같고 지정한 분류코드의 길이와 같을 경우 객체에 담아준다.
 				let  cateObj = {
@@ -310,7 +327,24 @@
 		
 		/* cate1의 코드와 일치하는 cate2의 코드 추가 해주는 것까지 했어 여기서부터 다시 ㄱㄱ */
 		
+	 
+	
+	//테스트
+	function makeCategoryTierList(cateList, categoryArrays) {
+	    for (let i = 0; i < cateList.length; i++) {
+	        const catCodeLength = cateList[i].category_code.toString().length;
+
+	        if (catCodeLength <= categoryArrays.length) {
+	            categoryArrays[catCodeLength - 1].push({
+	                category_name: cateList[i].category_name,
+	                category_code: cateList[i].category_code,
+	                category_parent_code: cateList[i].category_parent_code
+	            });
+	        }
+	    }
 	}
+
+	
 	
 	// 이미지 파일을 등록하려하면 실행되는 함수
 	$("#product_image").change(function () {

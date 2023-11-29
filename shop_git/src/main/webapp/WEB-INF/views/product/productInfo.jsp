@@ -71,11 +71,16 @@
 			<!--  즉시 구매, form에 필요한 정보를 담아 요청을 보낸다. -->				
 				<button class="buyNow_Btn" type="button">즉시 구매</button>
 			</span>
-			<form id="order_form" action="<c:url value="/order/postOrder"/>" method="post">
+			<form id="order_form" action="/shop/order/getOrder/${sessionScope.user.id}" method="get">
 				<!-- 상품 주문에 필요한 데이터(유저 아이디, 상품 수량, 상품 아이디)  -->
-				<input type="hidden" class="id" name="id" value="${sessionScope.user.id}">
-				<input type="hidden" class="quantity" name="quantity" value="">
-				<input type="hidden" class="product_id" name="product_id" value="${productInfo.product_id}">				
+				<input type="hidden" class="quantity" name="orderProducts[0].quantity" value="">
+				<input type="hidden" class="product_id" name="orderProducts[0].product_id" value="${productInfo.product_id}">				
+				<input type="hidden" class="product_name" name="orderProducts[0].product_name" value="${productInfo.product_name}">
+				<input type="hidden" class="discount" name="orderProducts[0].discount" value="${productInfo.discount}">
+				<input type="hidden" class="price" name="orderProducts[0].price" value="${productInfo.price}">
+				<input type="hidden" class="savepoint" name="orderProducts[0].savepoint" value="${productInfo.savepoint}">
+				<input type="hidden" class="product_image" name="orderProducts[0].product_image" value="${productInfo.product_image}">
+				<input type="hidden" class="product_thumbimage" name="orderProducts[0].product_thumbimage" value="${productInfo.product_thumbimage}">
 			</form>
 			
 						
@@ -208,13 +213,13 @@
 		$(".buyNow_Btn").on("click", function () {
 			// form으로 전송할 선택수량 정보를 셋팅해줘야 한다.
 			let form = $("#order_form");
+			
 			let quantity = $(".quantity_input").val();
-			let Form_quantity = $(".quantity");
-			
-			Form_quantity.val(quantity);
+			let Form_quantity = $(".quantity"); 
+
+			Form_quantity.val(quantity); 
 			form.submit();
-			
-			/* 요청은 잘 전달된다! */
+
 		});	
 			
 			

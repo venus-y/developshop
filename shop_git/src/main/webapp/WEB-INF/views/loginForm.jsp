@@ -21,8 +21,8 @@
 		<c:if test="${not empty param.msg }">
 			<span class="msg">${URLDecoder.decode(param.msg)}</span>
 		</c:if>
-		<input class="login-Input" type="text" name="id" value="${cookie.id.value ? '' : cookie.id.value }">
-		<input class="login-Input" type="password" name="password">
+		<input class="login-Input" type="text" name="id" value="${cookie.id.value ? '' : cookie.id.value }" placeholder="Enter ID">
+		<input class="login-Input" type="password" name="password" placeholder="Enter PassWord">
 		<!-- 아이디 기억 -->
 		<div class="rememberIdDiv">
 			<label for="rememberId" class="rememberId-label">아이디 기억</label>

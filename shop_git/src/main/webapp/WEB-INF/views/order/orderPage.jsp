@@ -65,7 +65,7 @@
         </div>
       	<table>
       		<!-- 받아온 상품정보를 페이지에 뿌려준다. -->
-      		<c:forEach items="${instantList}" var="instantInfo">
+      		<c:forEach items="${tempList}" var="tempInfo">
       			<tr>
       				<th>상품 이미지</th>
                     <th>상품명</th>
@@ -77,30 +77,30 @@
       			<tr class="order_info">
       				<td>
 	      			<!-- 이미지 영역 -->
-						<img alt="이미지가 없습니다." src="/shop/upload${instantInfo.product_thumbimage}">      					
+						<img alt="이미지가 없습니다." src="/shop/upload${tempInfo.product_thumbimage}">      					
       					
       					<!-- 상품 아이디 참조하기 위해 위치시킴 -->
-      					<input class="product_id" type="hidden" value="${instantInfo.product_id}">
+      					<input class="product_id" type="hidden" value="${tempInfo.product_id}">
       					<!-- 상품 정가 참조용-->
-      					<input class="price" type="hidden" value="${instantInfo.price}">
+      					<input class="price" type="hidden" value="${tempInfo.price}">
       					<!-- 유저 아이디 참조 -->
       					<input class="user_id" type="hidden" value="${orderUser.id}">
       					<!-- 상품 수량 참조 -->
-      					<input class="check_quantity" type="hidden" value="${instantInfo.quantity}">
+      					<input class="check_quantity" type="hidden" value="${tempInfo.quantity}">
       					<!-- 상품 세일가 참조 -->
-      					<input class="sale_price" type="hidden" value="${instantInfo.totalprice}">
+      					<input class="sale_price" type="hidden" value="${tempInfo.totalprice}">
       					<!-- 유저의 잔액 참조 -->
       					<input class="user_money" type="hidden" value="${orderUser.money}">
       				</td>      	
-      				<td class="product_name">${instantInfo.product_name}</td>
-      				<td class="quantity">${instantInfo.quantity}</td>
-      				<td class="totalsavepoint">${instantInfo.totalsavepoint}</td>
+      				<td class="product_name">${tempInfo.product_name}</td>
+      				<td class="quantity">${tempInfo.quantity}</td>
+      				<td class="totalsavepoint">${tempInfo.totalsavepoint}</td>
       				<!-- 자바코드로 값을 계산하고 해당 값을 출력해야 한다. -->
-      				<td><c:out value="${instantInfo.price * instantInfo.quantity - instantInfo.totalprice}"/></td>
-      				<td class="totalprice" data-value="${instantInfo.totalprice}">
-      					<del><c:out value="${instantInfo.price * instantInfo.quantity}"/></del>
+      				<td><c:out value="${tempInfo.price * tempInfo.quantity - tempInfo.totalprice}"/></td>
+      				<td class="totalprice" data-value="${tempInfo.totalprice}">
+      					<del><c:out value="${tempInfo.price * tempInfo.quantity}"/></del>
       					<br>
-      					${instantInfo.totalprice}
+      					${tempInfo.totalprice}
       				</td>
       			</tr>
       		</c:forEach>    			
@@ -139,7 +139,7 @@
       				<!-- 결제버튼  -->
       				<td>
       				<!-- 주문 폼 -->
-      					<form id="order_form" class="order_form" action="/shop/order/postOrder2" method="post">
+      					<form id="order_form" class="order_form" action="/shop/order/postOrder" method="post">
       					</form>
       					<button type="button" class="order_Btn">주문하기</button>	
       				</td>	
@@ -225,7 +225,13 @@
 				$(".point_zone").val("");
 				return;
 			}else if(user_point >= point_zone) {
-				// 잔여포인트가 충분할 경우 기존의 결제금액에서 포인트만큼 빼준 상태로 업데이트한다.
+				// 포인트 사용, 전부 사용 버튼을 비활성화 시킨다.
+				$(".input_point_Btn").css("display", "none");
+				$(".allpoint_Btn").css("display","none");
+				// 사용취소 버튼을 활성화시킨다.
+				$(".cancelpoint_Btn").css("display", "inline"); 
+			    // 잔여포인트가 충분할 경우 기존의 결제금액에서 포인트만큼 빼준 상태로 업데이트한다
+				
 				let finalprice = parseInt($(".finaltotalprice_span").text());
 				let new_finalprice = finalprice - point_zone; 
 				$(".finaltotalprice_span").text(new_finalprice);				
@@ -245,8 +251,9 @@
 			// 포인트 정보를 화면에 띄운다.
 			point_zone.val(user_point);
 			
-			// 사용 취소 버튼을 활성화시키고 포인트 전부 사용 버튼을 비활성화시킨다.
+			// 사용 취소 버튼을 활성화시키고 포인트 전부 사용, 포인트 사용 버튼을 비활성화시킨다.
 		    $(".allpoint_Btn").css("display", "none");
+		    $(".input_point_Btn").css("display", "none");
 			$(".cancelpoint_Btn").css("display","inline");
 			
 			// 결제정보에서 포인트 금액 만큼 차감
@@ -261,19 +268,21 @@
 		$(".cancelpoint_Btn").on("click", function () {
 			let point_zone = $(".point_zone");
 						
-			// 포인트 칸을 비운다.
-			point_zone.val("");
-			
+		
 			// 사용 취소 버튼을 비활성화시키고 포인트 전부 사용 버튼을 활성화시킨다.
 			$(".cancelpoint_Btn").css("display", "none");
 			$(".allpoint_Btn").css("display", "inline");
-			
+			$(".input_point_Btn").css("display", "inline");
+
 			// 사용했던 포인트 만큼 다시 금액에 더한다.
-			let user_point = parseInt(${orderUser.point});
+			let used_point = parseInt(point_zone.val());
 			let FinalTotalPrice1 = parseInt($(".finaltotalprice_span").text());
-			let FinalTotalPrice2 = FinalTotalPrice1 + user_point;
+			let FinalTotalPrice2 = FinalTotalPrice1 + used_point;
 			// 다시 화면에 업데이트
 			$(".finaltotalprice_span").text(FinalTotalPrice2);
+			// 포인트 칸을 비운다.
+			point_zone.val("");
+			
 			
 		})
 		

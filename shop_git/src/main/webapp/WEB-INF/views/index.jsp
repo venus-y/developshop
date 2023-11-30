@@ -23,9 +23,10 @@
 <div id="main">
 	<ul>
 	    <li id="logo">shop main</li>
-   		<li class="m1"><a>Top</a>
+   		<li class="m1"><a href="<c:url value='/product/categorySet?category_code=1&viewName=top'/>">Top</a>
    			<ul class="m2">
-   				<li class="clothes_cate"><a href="<c:url value='/'/>">셔츠</a></li>
+   				<li class="clothes_cate">
+   					<a href="<c:url value='/product/categorySet?category_code=1&viewName=top&detail=Tshirts'/>">셔츠</a></li>
    				<li class="clothes_cate"><a href="<c:url value='/'/>">티셔츠</a></li>
    			</ul>
    		</li>

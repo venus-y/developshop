@@ -41,6 +41,19 @@ public class ProductDaoImpl implements ProductDao {
 		return session.selectOne(namespace+"getProductInfo", product_id);
 	}
 	
+	// 같은 카테고리에 속하는 상품들을 반환
+	@Override
+	public List<Product> categorySet(Map map) {
+		return session.selectList(namespace+"getProduct_CategorySet", map);
+	}
+	
+	// 카테고리에 속한 상품들의 총 개수 반환
+	@Override
+	public int categoryCount(int category_id) {
+		return session.selectOne(namespace+"getProduct_CategorySet_Count", category_id);
+
+	}
+	
 	
 
 }

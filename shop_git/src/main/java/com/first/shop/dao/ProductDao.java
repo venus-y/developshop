@@ -14,4 +14,7 @@ public interface ProductDao {
 	
 	Product productInfo(int product_id);
 	
+	List<Product> categorySet(Map map);
+	
+	int categoryCount(int category_id);
 }

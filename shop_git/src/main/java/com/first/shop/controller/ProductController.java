@@ -74,5 +74,47 @@ public class ProductController {
 		return "/product/productInfo";
 	}
 	
+	//카테고리별 상품 조회
+	@GetMapping("/categorySet")
+	public String categorySet(int category_code, String viewName, String detail, Model model, Integer page, Integer pageSize) {
+				
+		// 페이지와 페이지사이즈정보가 없을 경우 각각 1, 8로 세팅
+		if(page == null && pageSize == null) {
+			page = 1;
+			pageSize = 2;
+		}
+		// 상품들의 총 개수를 받아온다.
+		int productCount = productService.getProduct_CategorySet_Count(category_code);
+		
+		// 페이징
+		PageHandler ph = new PageHandler(page, pageSize, productCount);
+		
+		
+		
+		// 상품을 받아올 때 필요한 조건들을 맵에 담는다.
+		Map map = new HashMap();
+		// 페이지 오프셋, 페이지 사이즈, 카테고리 코드 
+		map.put("offset", (page-1)*pageSize);
+		map.put("pageSize", pageSize);
+		map.put("category_code", category_code);
+		
+		//카테고리별로 분류한 상품페이지 정보를 받아온다.
+		List<Product> productList = productService.getPageList(map);
+		
+		System.out.println(productList);
+		
+		// 상품목록을 모델에 담는다.
+		model.addAttribute("productList", productList);
+		// 페이지 정보를 담는다.
+		model.addAttribute("ph", ph);
+		
+		
+		//2차 분류가 있을 경우
+		if(detail != null) {
+			return "/category/"+viewName + "/" + detail;
+		}
+		
+		return "/category/"+viewName;
+	}
 	
 }

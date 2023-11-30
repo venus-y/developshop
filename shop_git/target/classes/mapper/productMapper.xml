@@ -26,9 +26,18 @@
 			where product_id = #{product_id}
 		</select>
 		
-		<!-- 메인 화면에서 메뉴 클릭시 해당 상품들(ex ->  상의 클릭시 상의들만 모여있는 페이지로 이동) -->
-		<select id="getProduct_CategorySet" parameterType="int" resultType="Product">
-			select * from product where category_code like concat('_',#{category_id});
+		<!-- 카테고리별 상품 분류 페이지 가져오기 -->
+		<select id="getProduct_CategorySet" parameterType="Map" resultType="Product">
+			select * from product where category_code like concat('_',#{category_code},'%')
+			order by product_id desc
+			limit #{offset}, #{pageSize};
 		</select>
+		
+		<!-- 카테고리별 분류해야할 상품의 총 개수 -->
+		<select id="getProduct_CategorySet_Count" parameterType="int" resultType="int">
+			select count(*) from product where category_code like concat('_',#{category_code},'%');
+		</select>
+		
+		
 		
 	</mapper>	

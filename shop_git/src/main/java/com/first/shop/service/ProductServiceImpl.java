@@ -42,4 +42,18 @@ public class ProductServiceImpl implements ProductService {
 		return productInfo;
 	}
 
+	
+	// 카테코리 코드별로 상품정보를 가져온다.
+	@Override
+	public List<Product> getProduct_CategorySet(int category_code) {
+		List<Product> productList = productDao.categorySet(category_code);
+		return productList;
+	}
+
+	// 카테고리로 분류된 상품들의 총 개수를 가져온다.
+	@Override
+	public int getProduct_CategorySet_Count(int category_code) {
+		return productDao.categoryCount(category_code);
+	}
+
 }

@@ -67,6 +67,28 @@ public class ProductDaoImplTest {
 	}
 	
 	
+	//카테고리별 상품 조회
+	@Test
+	public void getCategorySet() {
+		
+		Map map = new HashMap();
+		map.put("pageSize", 8);
+		map.put("offset", 0);
+		map.put("category_code", 11);
+		
+		List<Product> list = productDao.categorySet(map);
+		
+		for(int i=0; i<list.size(); i++) {
+			System.out.print(i+"번째");
+			System.out.println(list.get(i));
+			System.out.println("------------------------");
+		}
+		
+		
+		
+		
+	}
+	
 	
 	
 }

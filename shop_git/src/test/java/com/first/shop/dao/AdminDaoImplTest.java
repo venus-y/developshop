@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.first.shop.dto.DeliveryInfo;
+import com.first.shop.dto.Orders;
 import com.first.shop.dto.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -72,14 +74,25 @@ public class AdminDaoImplTest {
 		System.out.println("결과:"+rowCnt);
 	}
 	
-	// 상품 삭제
+	//  배송정보 등록 테스트
 	@Test
-	public void deleteProduct() {
-		Product product = productDao.productInfo(244);
-		adminDao.delete(product);
+	public void testRegisterDelivery(){
+		DeliveryInfo deliveryInfo = new DeliveryInfo();
+		deliveryInfo.setCompany_id(1);
+		deliveryInfo.setOrder_id("20231202_13209913-236d-48ac-82c3-e0f898be3a00");
+		deliveryInfo.setShipping_address("test");
+		deliveryInfo.setTracking_number("33");
 		
+		adminDao.deliveryInfo(deliveryInfo);
 	}
 	
-	
+	@Test
+	public void testGetOrderInfo() {
+		Orders orders = new Orders();
+		orders.setOrder_id("20231202_13209913-236d-48ac-82c3-e0f898be3a00");
+		Orders orders2 = adminDao.orderInfo(orders);
+		System.out.println(orders2);
+		
+	}
 
 }

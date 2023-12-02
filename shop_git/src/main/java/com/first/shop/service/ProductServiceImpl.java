@@ -45,8 +45,8 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 카테코리 코드별로 상품정보를 가져온다.
 	@Override
-	public List<Product> getProduct_CategorySet(int category_code) {
-		List<Product> productList = productDao.categorySet(category_code);
+	public List<Product> getProduct_CategorySet(Map map) {
+		List<Product> productList = productDao.categorySet(map);
 		return productList;
 	}
 

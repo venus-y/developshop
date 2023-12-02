@@ -14,7 +14,7 @@ public interface ProductService {
 	
 	Product getProductInfo(int product_id);
 	
-	List<Product> getProduct_CategorySet(int category_code);
+	List<Product> getProduct_CategorySet(Map map);
 	
 	int getProduct_CategorySet_Count(int category_code);
 }

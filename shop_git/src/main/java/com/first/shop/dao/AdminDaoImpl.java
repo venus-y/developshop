@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.first.shop.dto.Category;
+import com.first.shop.dto.DeliveryInfo;
+import com.first.shop.dto.Orders;
 import com.first.shop.dto.Product;
 import com.first.shop.dto.ProductImage;
 
@@ -49,5 +51,25 @@ public class AdminDaoImpl implements AdminDao {
 	public int delete(int product_id) {
 		return session.delete(namespace+"delete_product", product_id);
 	}
+	
+	// 주문 정보 가져오기
+	@Override
+	public Orders orderInfo(Orders orders) {
+		return session.selectOne(namespace+"get_orderinfo", orders);
+	}
+	
+	// 주문 정보 목록 가져오기
+	@Override
+	public List<Orders> orderInfoList() {
+		return session.selectList(namespace+"get_orderinfolist");
+	}
+	
+	// 배송 정보 등록
+	@Override
+	public int deliveryInfo(DeliveryInfo deliveryInfo) {
+		return session.insert(namespace+"register_delivery_info", deliveryInfo);
+	}
+
+	
 
 }

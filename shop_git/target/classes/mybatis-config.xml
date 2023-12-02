@@ -12,5 +12,6 @@
 		<typeAlias alias="Cart" type="com.first.shop.dto.Cart"/>
 		<typeAlias alias="Orders" type="com.first.shop.dto.Orders"/>
 		<typeAlias alias="OrderProduct" type="com.first.shop.dto.OrderProduct"/>						
+		<typeAlias alias="DeliveryInfo" type="com.first.shop.dto.DeliveryInfo"/>									
 	</typeAliases>
 </configuration>

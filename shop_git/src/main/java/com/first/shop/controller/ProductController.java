@@ -99,7 +99,7 @@ public class ProductController {
 		map.put("category_code", category_code);
 		
 		//카테고리별로 분류한 상품페이지 정보를 받아온다.
-		List<Product> productList = productService.getPageList(map);
+		List<Product> productList = productService.getProduct_CategorySet(map);
 		
 		System.out.println(productList);
 		

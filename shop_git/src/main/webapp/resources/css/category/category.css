@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+
+/* 테이블 크기 설정 */
+table{
+	width: 80%;
+	margin: auto;
+}
+
+td{
+	border: 1px solid black;
+	padding: 10px;
+	text-align: center;
+}
+
+img{
+	max-width: 100%;
+	height: auto;
+}
+
+/* 페이지 영역 */
+#pageDiv{
+	text-align: center;
+}
+#pageDiv a {
+	display: inline-block;
+	padding: 8px;
+	border: 1px solid #ccc;
+	text-decoration: none;
+	color: #333;
+}
+#pageDiv a:hover{
+	background-color: #f0f0f0;
+}

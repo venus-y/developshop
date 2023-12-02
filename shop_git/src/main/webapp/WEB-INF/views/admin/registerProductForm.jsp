@@ -96,14 +96,81 @@
 	$(document).ready(function () {
 		console.log('${cateList}'); 
 		
+		// 카테고리 정보를 받아온다. JSON.parse로 자바스크립트 객체로 변환
+		let cateList = JSON.parse('${cateList}');
 
+		// 카테고리 정보를 담을 배열
+		let cate1Array = new Array();
+		let cate2Array = new Array();
+		let cate3Array = new Array();
+		
+		// 카테고리 정보를 담을 변수
+		let cate1Obj = new Object();
+		let cate2Obj = new Object();
+		let cate3Obj = new Object();
+		
+		// 카테고리 분류코드를 선택할 수 있는 옵션 클래스를 선택자로 참조
+		let cateSelect1 = $(".cate1");
+		let cateSelect2 = $(".cate2");
+		let cateSelect3 = $(".cate3");
+
+
+		// 옵션에 카테고리 분류코드를 추가해주기 위한 변수	
+		let cate1 = $(".cate1");
+		let cate2 = $(".cate2");
+		let cate3 = $(".cate3");
+		 
+		
 		// 테스트
-		const cateArrays = [[], [], []];  // Arrays for categories with lengths 1, 2, and 3
-
-		makeCategoryTierList(cateList, cateArrays);
+		makeCategoryTierList(cateList, cate1Array, cate2Array, cate3Array);
 		
+		/* // 대분류가 선택되면 기존에 있던 중분류 데이터가 사라지면서 새로운 중분류 옵션이 추가된다. */
+		$(".cate1").on("change", function () {
+				// 대분류에서 선택된 데이터를 가져온다.
+				 let selectVal1 = $(this).find("option:selected").val();
+				
+				// 기존에 설정돼있었거나 선택되었던던 소분류,중분류 데이터를 지워준다.
+				
+				let cate2 = $(".cate2");
+				let cate3 = $(".cate3");
+				
+				cate2.empty();
+				cate3.empty();
+				// 위에 코드는 사실 지금 크게 의미가 없어서 지우는 것도 고려
+				
+				//  기존에 있던 분류코드 데이터를 제외하고 option을 추가
+				cate2.append("<option value='none'>선택</option>");
+				cate3.append("<option value='none'>선택</option>");
+				
+				
+				// 선택된 cate1의 카테고리 분류코드와 cate2의 부모카테고리코드가 일치할 경우 cate2의 카테고리를 추가
+				for(let i = 0; i < cate2Array.length; i++){
+					if(selectVal1 === cate2Array[i].category_parent_code.toString()){
+				        console.log('부모 코드: ' + cate2Array[i].category_parent_code + ', 분류 코드: ' + cate2Array[i].category_code);
+						cate2.append("<option value='"+cate2Array[i].category_code+"'>" + cate2Array[i].category_name + "</option>");
+					}
+				}
+		})
 		
-		console.log(cate)
+		// 중분류가 선택되면 기존에 있던 소분류 데이터가 사라지면서 새로운 소분류 옵션이 추가된다.
+		$(".cate2").on("change", function () {
+				// 대분류에서 선택된 데이터를 가져온다.
+				 let selectVal2 = $(this).find("option:selected").val();
+				// 중분류에 추가된 데이터를 지워준다.
+				cate3.empty();
+				
+				
+				// option을 추가
+				cate3.append("<option value='none'>선택</option>");
+				// 선택된 cate2의 카테고리 분류코드와 cate3의 부모카테고리코드가 일치할 경우 cate3의 카테고리를 추가
+				 for(let i = 0; i < cate3Array.length; i++){
+					if(selectVal2 === cate3Array[i].category_parent_code.toString()){
+				        console.log('부모 코드: ' + cate3Array[i].category_parent_code + ', 분류 코드: ' + cate3Array[i].category_code);
+						cate3.append("<option value='" +cate3Array[i].category_code+ "'>" + cate3Array[i].category_name + "</option>");
+					}
+				} 
+		})
+		
 		
 		// 넘겨줘야 할 값 : 찾을 분류코드, 비교할 분류코드리스트, 분류코드 정보를 담아줄 객체, 분류코드를 저장할 배열
 		/* makeCategoryTierList(1, cateList, cate1Array, 1);
@@ -267,6 +334,8 @@
 			console.log("분류 체크" + sort_check);
 			
 			
+			alert("카테고리 코드 확인:" + $("#sort").val());
+			
 			if(product_name_check && price_check && discount_check && stock_check
 				&& brand_check && clothes_check && sort_check && savepoint_check && product_image_check) {		
 				$("#form").attr("action", "/shop/admin/registerProduct");
@@ -279,35 +348,38 @@
 	
 	
 	
+	function makeCategoryTierList(cateList, cate1Array, cate2Array, cate3Array) {
+		
+		
+		for(let i=0; i<cateList.length; i++){
+			// 코드의 길이의 따라 다른 배열에 넣어준다.
+			let categoryCode = String(cateList[i].category_code);
+			
+			let  cateObj = {
+					category_name : cateList[i].category_name,
+					category_code : cateList[i].category_code,
+					category_parent_code : cateList[i].category_parent_code
+			};
+			
+			
+			if(categoryCode.length === 1){
+				
+				cate1Array.push(cateObj);
+			}else if(categoryCode.length === 2){
+				
+				cate2Array.push(cateObj);
+			}else if(categoryCode.length === 3){
+				
+				cate3Array.push(cateObj);
+			}
+		}
+	}
 	
 	
 	
 	
-	// 카테고리 정보를 받아온다. JSON.parse로 자바스크립트 객체로 변환
-	let cateList = JSON.parse('${cateList}');
-
-	// 카테고리 정보를 담을 배열
-	let cate1Array = new Array();
-	let cate2Array = new Array();
-	let cate3Array = new Array();
-	
-	// 카테고리 정보를 담을 변수
-	let cate1Obj = new Object();
-	let cate2Obj = new Object();
-	let cate3Obj = new Object();
-	
-	// 카테고리 분류코드를 선택할 수 있는 옵션 클래스를 선택자로 참조
-	let cateSelect1 = $(".cate1");
-	let cateSelect2 = $(".cate2");
-	let cateSelect3 = $(".cate3");
-
-
-	// 옵션에 카테고리 분류코드를 추가해주기 위한 변수	
-	let cate1 = $(".cate1");
-	let cate2 = $(".cate2");
-	let cate3 = $(".cate3");
 	 
-	
+	 
 	// 카테고리 분류코드가 n인 데이터들을 찾는다
 	// 필요한 값 : 찾을 분류코드, 비교할 분류코드리스트, 분류코드 정보를 담아줄 객체, 분류코드를 저장할 배열, 분류코드길이
 	/* function makeCategoryTierList(cateCode, cateList,cateArray, codeLength) {
@@ -330,7 +402,7 @@
 	 
 	
 	//테스트
-	function makeCategoryTierList(cateList, categoryArrays) {
+	/* function makeCategoryTierList(cateList, categoryArrays) {
 	    for (let i = 0; i < cateList.length; i++) {
 	        const catCodeLength = cateList[i].category_code.toString().length;
 
@@ -342,7 +414,7 @@
 	            });
 	        }
 	    }
-	}
+	} */
 
 	
 	
@@ -367,48 +439,7 @@
 	
 		
 	
-	/* // 대분류가 선택되면 기존에 있던 중분류 데이터가 사라지면서 새로운 중분류 옵션이 추가된다. */
-	$(".cate1").on("change", function () {
-			// 대분류에서 선택된 데이터를 가져온다.
-			 let selectVal1 = $(this).find("option:selected").val();
-			
-			// 기존에 설정돼있었거나 선택되었던던 소분류,중분류 데이터를 지워준다.
-			cate2.empty();
-			cate3.empty();
-			// 위에 코드는 사실 지금 크게 의미가 없어서 지우는 것도 고려
-			
-			//  기존에 있던 분류코드 데이터를 제외하고 option을 추가
-			cate2.append("<option value='none'>선택</option>");
-			cate3.append("<option value='none'>선택</option>");
-			
-			
-			// 선택된 cate1의 카테고리 분류코드와 cate2의 부모카테고리코드가 일치할 경우 cate2의 카테고리를 추가
-			for(let i = 0; i < cate2Array.length; i++){
-				if(selectVal1 === cate2Array[i].category_parent_code.toString()){
-			        console.log('부모 코드: ' + cate2Array[i].category_parent_code + ', 분류 코드: ' + cate2Array[i].category_code);
-					cate2.append("<option value='"+cate2Array[i].category_code+"'>" + cate2Array[i].category_name + "</option>");
-				}
-			}
-	})
 	
-	// 중분류가 선택되면 기존에 있던 소분류 데이터가 사라지면서 새로운 소분류 옵션이 추가된다.
-	$(".cate2").on("change", function () {
-			// 대분류에서 선택된 데이터를 가져온다.
-			 let selectVal2 = $(this).find("option:selected").val();
-			// 중분류에 추가된 데이터를 지워준다.
-			cate3.empty();
-			
-			
-			// option을 추가
-			cate3.append("<option value='none'>선택</option>");
-			// 선택된 cate2의 카테고리 분류코드와 cate3의 부모카테고리코드가 일치할 경우 cate3의 카테고리를 추가
-			 for(let i = 0; i < cate3Array.length; i++){
-				if(selectVal2 === cate3Array[i].category_parent_code.toString()){
-			        console.log('부모 코드: ' + cate3Array[i].category_parent_code + ', 분류 코드: ' + cate3Array[i].category_code);
-					cate3.append("<option value='" +cate3Array[i].category_code+ "'>" + cate3Array[i].category_name + "</option>");
-				}
-			} 
-	})
 	
 		 /* for(let i = 0; i < cate2Array.length; i++){
 					cate2.append("<option value='"+cate2Array[i].category_code+"'>" + cate2Array[i].category_name + "</option>");

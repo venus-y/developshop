@@ -2,8 +2,8 @@
 
 /* 입력 양식 폼 */
 form{
-	width:800px;
-            height:600px;
+			width:600px;
+            height:450px;
             display : flex;
             flex-direction: column;
             align-items:center;

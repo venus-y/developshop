@@ -1,11 +1,14 @@
 package com.first.shop.service;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.first.shop.dto.Orders;
 import com.first.shop.dto.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -48,9 +51,11 @@ Product product = new Product();
 	}
 	
 	@Test
-	public void testDelete() {
-		Product product = productService.getProductInfo(245);
-		adminService.deleteProductInfo(product);
+	public void testGetOrderInfoList() {
+		// 주문정보 목록 가져오기
+		List<Orders> list = adminService.getOrderInfoList();
+		
+		System.out.println(list);
 	}
 
 }

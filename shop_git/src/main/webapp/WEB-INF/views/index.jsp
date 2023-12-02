@@ -11,6 +11,10 @@
 <c:set var="CartText" value="${empty loginId ?  '' : 'Cart'  }"/>
 <c:set var="AdminText" value="${sessionScope.user.admincheck == 1 ? 'Register Product' : '' }"/>
 <c:set var="AdminLink" value="${sessionScope.user.admincheck == 1 ? '/admin/registerProductForm' : '' }"/>
+<c:set var="OrderInfoText" value="${sessionScope.user.admincheck == 1 ? 'OrderInfo Manage' : '' }"/>
+<c:set var="OrderInfoLink" value="${sessionScope.user.admincheck == 1 ? '/admin/getOrderList' : '' }"/>
+
+
 
 <%-- <%@ page session="false" %> --%>
 <html>
@@ -26,28 +30,29 @@
    		<li class="m1"><a href="<c:url value='/product/categorySet?category_code=1&viewName=top'/>">Top</a>
    			<ul class="m2">
    				<li class="clothes_cate">
-   					<a href="<c:url value='/product/categorySet?category_code=1&viewName=top&detail=Tshirts'/>">셔츠</a></li>
-   				<li class="clothes_cate"><a href="<c:url value='/'/>">티셔츠</a></li>
+   					<a href="<c:url value='/product/categorySet?category_code=11&viewName=top&detail=Tshirts'/>">셔츠</a></li>
+   				<li class="clothes_cate"><a href="<c:url value='/product/categorySet?category_code=13&viewName=top&detail=Tshirts'/>">티셔츠</a></li>
    			</ul>
    		</li>
-    	<li class="m1"><a>Bottom</a>
+    	<li class="m1"><a href="<c:url value='/product/categorySet?category_code=2&viewName=bottom'/>">Bottom</a>
     		<ul class="m2">
    				<li class="clothes_cate"><a href="<c:url value='/'/>">반바지</a></li>
    				<li class="clothes_cate"><a href="<c:url value='/'/>">청바지</a></li>
    			</ul>
     	</li>
-    	<li class="m1"><a>Shoes</a>
+    	<li class="m1"><a href="<c:url value='/product/categorySet?category_code=3&viewName=shoes'/>">Shoes</a>
     		<ul class="m2">
    				<li class="clothes_cate"><a href="<c:url value='/'/>">스니커즈</a></li>
    				<li class="clothes_cate"><a href="<c:url value='/'/>">구두</a></li>
    			</ul>
     	</li>
-    	<li class="m1"><a>Acc</a>
+    	<li class="m1"><a href="<c:url value='/product/categorySet?category_code=4&viewName=accessory'/>">Acc</a>
     		<ul class="m2">
    				<li class="clothes_cate"><a href="<c:url value='/'/>">반지</a></li>
    				<li class="clothes_cate"><a href="<c:url value='/'/>">귀걸이</a></li>
    			</ul>
     	</li>
+    	<li><a href="<c:url value='${OrderInfoLink}'/>">${OrderInfoText}</a></li>
 	    <li><a href="<c:url value='${AdminLink}'/>">${AdminText}</a></li> 
 	    <li><a href="<c:url value='${CartLink}'/>">${CartText}</a></li>
 	    <li><a href="<c:url value='/'/>">Home</a></li>

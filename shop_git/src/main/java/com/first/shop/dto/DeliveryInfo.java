@@ -9,6 +9,11 @@ public class DeliveryInfo {
 	private String shipping_address;
 	private String tracking_number;
 	private int company_id;
+	
+	public DeliveryInfo() {
+		
+	}
+	
 	public int getShipping_id() {
 		return shipping_id;
 	}

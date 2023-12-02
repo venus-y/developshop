@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.first.shop.dao.AdminDao;
 import com.first.shop.dto.Category;
+import com.first.shop.dto.Orders;
 import com.first.shop.dto.Product;
 import com.first.shop.dto.ProductImage;
 
@@ -48,6 +49,23 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int deleteProductInfo(int product_id) {
 		return adminDao.delete(product_id);
+	}
+	
+	// 주문정보 목록 가져오기
+	@Override
+	public List<Orders> getOrderInfoList() {
+		return adminDao.orderInfoList();
+	}
+	
+	// 배송정보 등록하기
+	@Override
+	public int registerDeliveryInfo(Orders orders) {
+		// 뷰로부터 넘겨받은 orders의 주문번호로 db에 있는 주문정보를 조회해온다.
+		// 배송상태를 바꿔줘야 하기 때문
+		Orders updateOrders = adminDao.orderInfo(orders);
+		여기서부터 다시 하면 된다!
+		
+		return 0;
 	}
 
 }

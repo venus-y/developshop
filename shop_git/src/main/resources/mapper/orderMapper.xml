@@ -38,6 +38,10 @@
 		<!-- 주문이 완료된 상품들을 장바구니에서 제거한다.  -->
 		<delete id="delete_Ordered_Cart" parameterType="cart">
 			delete from cart where user_id = #{user_id} and product_id = #{product_id}
-		</delete>	
+		</delete>
+		
+		
+		
+		
 		
 	</mapper>	

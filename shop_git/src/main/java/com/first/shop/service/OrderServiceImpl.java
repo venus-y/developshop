@@ -149,7 +149,10 @@ public class OrderServiceImpl implements OrderService {
 		user.setPoint(user.getPoint() - used_point);
 		System.out.println("유저의 잔여포인트(before)"+ user.getPoint());
 		System.out.println("==========================");
-
+		
+		
+		
+		
 		//장바구니에 담겨있던 상품정보를 지운다.
 		List<Cart> deleteList = cartList.getCartList();
 		for(int i=0; i<deleteList.size(); i++) {
@@ -163,10 +166,12 @@ public class OrderServiceImpl implements OrderService {
 		
 		
 		
-		// 주문 정보, 주문 상품 정보 생성
+		// 주문 정보, 주문 상품 정보 생성, 배송정보 생성
 		List<Orders> oList = ordersList.getOrdersList();
+		
 		int ordersInfoCheck = 0;
 		int orderProductCheck = 0;
+		
 		for(int i=0; i<oList.size(); i++) {
 			Orders orders = oList.get(i);
 			
@@ -222,6 +227,9 @@ public class OrderServiceImpl implements OrderService {
 			return orderDao.order_product(orderProduct);
 			
 		}
+		
+		// 배송정보 등록
+		
 
 //	@Override
 //	public int updateUser(User user) {

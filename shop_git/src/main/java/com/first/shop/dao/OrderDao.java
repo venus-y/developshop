@@ -1,6 +1,7 @@
 package com.first.shop.dao;
 
 import com.first.shop.dto.Cart;
+import com.first.shop.dto.DeliveryInfo;
 import com.first.shop.dto.OrderProduct;
 import com.first.shop.dto.Orders;
 import com.first.shop.dto.Product;
@@ -20,5 +21,7 @@ public interface OrderDao {
 	int delete(Cart cart);
 
 	int order_product(OrderProduct orderProduct);
-	// 주문 상품 정보 등록
+	
+	int delivery_info(DeliveryInfo deliveryInfo);
+	
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.first.shop.dto.Cart;
+import com.first.shop.dto.DeliveryInfo;
 import com.first.shop.dto.OrderProduct;
 import com.first.shop.dto.Orders;
 import com.first.shop.dto.Product;
@@ -59,6 +60,12 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public int delete(Cart cart) {
 		return session.delete(namespace+"delete_Ordered_Cart", cart);
+	}
+	
+	// 배송정보 등록
+	@Override
+	public int delivery_info(DeliveryInfo deliveryInfo) {
+		return session.insert(namespace+"register_delivery_info", deliveryInfo);
 	}
 
 	

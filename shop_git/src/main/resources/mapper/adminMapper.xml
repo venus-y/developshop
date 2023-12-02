@@ -36,4 +36,22 @@
 		<delete id="delete_product" parameterType="Product">
 			delete from product where product_id = #{product_id}
 		</delete>
+		
+		<!-- 주문 정보목록을 가져온다. -->
+		<select id="get_orderinfolist" resultType="Orders">
+			select * from orders;
+		</select>
+		
+		<!-- 주문 정보 1개를 가져온다. -->
+		<select id="get_orderinfo" parameterType="Orders" resultType="Orders">
+			select * from orders where order_id = #{order_id};
+		</select>	
+			
+			
+		<!-- 배송 정보 등록 -->
+		<insert id="register_delivery_info" parameterType="DeliveryInfo">
+			insert into delivery_info (order_id, shipping_address,
+			tracking_number, company_id) values(#{order_id}, #{shipping_address},
+			#{tracking_number}, #{company_id}); 		
+		</insert>
 	</mapper>	

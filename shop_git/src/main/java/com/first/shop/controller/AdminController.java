@@ -9,13 +9,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.first.shop.dto.Category;
+import com.first.shop.dto.Orders;
 import com.first.shop.dto.Product;
 import com.first.shop.service.AdminService;
 import com.first.shop.service.ProductService;
@@ -76,11 +79,7 @@ public class AdminController {
 	// 매개변수로 상품정보와 파일정보를 받는다.
 	public String postRegister(Product product, MultipartFile file) throws IOException {
 		
-		System.out.println("상품정보 담기는지 테스트:"+product);
-		System.out.println("상품이미지:"+file);
-		System.out.println("경로 잘 가져오는지 테스트:" + uploadPath);
-		
-		System.out.println("파일 잘 넘어오나 테스트 " + file);
+		System.out.println("상품 카테고리 코드 확인:" + product.getCategory_code());
 		
 		// uploadPath 값을 imgUploadPath에 넣어준다.
 		String imgUploadPath = uploadPath;
@@ -170,7 +169,25 @@ public class AdminController {
 	}
 	
 	
+	// 주문목록 불러오기
+	@GetMapping("/getOrderList")
+	public String getOrderList(Model model) {
+		// 받아온 주문목록 정보를 모델에 담아 뷰와 같이 반환
+		List<Orders> orderInfoList = adminService.getOrderInfoList();
+		model.addAttribute("oiList", orderInfoList);
+		
+		return "/admin/orderList";
+	}
 	
+	// 배송정보 등록
+	@PostMapping("/deliveryInfo")
+	@ResponseBody
+	public String deliveryInfo(@RequestBody Orders orders) {
+//		System.out.println("비동기처리 전달 ? :" + orders);	
+		
+		
+		return "success";
+	}
 	
 	
 	// 카테고리 불러오기

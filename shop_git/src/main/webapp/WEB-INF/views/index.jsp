@@ -30,26 +30,57 @@
    		<li class="m1"><a href="<c:url value='/product/categorySet?category_code=1&viewName=top'/>">Top</a>
    			<ul class="m2">
    				<li class="clothes_cate">
-   					<a href="<c:url value='/product/categorySet?category_code=11&viewName=top&detail=Tshirts'/>">셔츠</a></li>
-   				<li class="clothes_cate"><a href="<c:url value='/product/categorySet?category_code=13&viewName=top&detail=Tshirts'/>">티셔츠</a></li>
+   					<a href="<c:url value='/product/categorySet?category_code=11&viewName=top&detail=shirt'/>">
+   					셔츠
+   					</a>
+   				</li>
+   				<li class="clothes_cate">
+   					<a href="<c:url value='/product/categorySet?category_code=13&viewName=top&detail=t-shirt'/>">
+   					티셔츠
+   					</a>
+   				</li>
    			</ul>
    		</li>
     	<li class="m1"><a href="<c:url value='/product/categorySet?category_code=2&viewName=bottom'/>">Bottom</a>
     		<ul class="m2">
-   				<li class="clothes_cate"><a href="<c:url value='/'/>">반바지</a></li>
-   				<li class="clothes_cate"><a href="<c:url value='/'/>">청바지</a></li>
+   				<li class="clothes_cate">
+   					<a href="<c:url value='/product/categorySet?category_code=23&viewName=bottom&detail=shorts'/>">
+   					반바지
+   					</a>
+   				</li>
+   				<li class="clothes_cate">
+   					<a href="<c:url value='/product/categorySet?category_code=22&viewName=bottom&detail=jeans'/>">
+   					청바지
+   					</a>
+   				</li>
    			</ul>
     	</li>
     	<li class="m1"><a href="<c:url value='/product/categorySet?category_code=3&viewName=shoes'/>">Shoes</a>
     		<ul class="m2">
-   				<li class="clothes_cate"><a href="<c:url value='/'/>">스니커즈</a></li>
-   				<li class="clothes_cate"><a href="<c:url value='/'/>">구두</a></li>
+   				<li class="clothes_cate">
+   					<a href="<c:url value='/product/categorySet?category_code=34&viewName=shoes&detail=sneakers'/>">
+   						스니커즈
+   					</a>
+   				</li>
+   				<li class="clothes_cate">
+   					<a href="<c:url value='/product/categorySet?category_code=33&viewName=shoes&detail=shoes'/>">
+   						구두
+   					</a>
+   				</li>
    			</ul>
     	</li>
     	<li class="m1"><a href="<c:url value='/product/categorySet?category_code=4&viewName=accessory'/>">Acc</a>
     		<ul class="m2">
-   				<li class="clothes_cate"><a href="<c:url value='/'/>">반지</a></li>
-   				<li class="clothes_cate"><a href="<c:url value='/'/>">귀걸이</a></li>
+    			<li class="clothes_cate">
+   					<a href="<c:url value='/product/categorySet?category_code=43&viewName=accessory&detail=earrings'/>">
+   						귀걸이
+   					</a>
+   				</li>
+   				<li class="clothes_cate">
+   					<a href="<c:url value='/product/categorySet?category_code=44&viewName=accessory&detail=ring'/>">
+   						반지
+   					</a>
+   				</li>  				
    			</ul>
     	</li>
     	<li><a href="<c:url value='${OrderInfoLink}'/>">${OrderInfoText}</a></li>

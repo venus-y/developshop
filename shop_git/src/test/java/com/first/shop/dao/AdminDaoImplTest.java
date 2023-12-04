@@ -19,7 +19,9 @@ public class AdminDaoImplTest {
 	@Autowired 
 	AdminDao adminDao;
 	@Autowired
-	ProductDao productDao;
+	ProductDao productDao;	
+	@Autowired
+	OrderDao orderDao;
 	
 	// 상품등록 테스트
 	@Test
@@ -94,5 +96,17 @@ public class AdminDaoImplTest {
 		System.out.println(orders2);
 		
 	}
-
+	
+	// 주문정보 변경
+	@Test
+	public void updateOrders() {
+		Orders orders = new Orders();
+		orders.setOrder_id("20231202_85cf0698-8223-4fe2-a0f7-5a78df55d8da");
+		
+		Orders updateOrder = adminDao.orderInfo(orders);
+		updateOrder.setStatus("배송중테스트");
+		
+		adminDao.updateOrders(updateOrder);
+	}
+	
 }

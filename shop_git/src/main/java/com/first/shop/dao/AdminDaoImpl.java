@@ -62,12 +62,18 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public List<Orders> orderInfoList() {
 		return session.selectList(namespace+"get_orderinfolist");
-	}
+	}	
 	
 	// 배송 정보 등록
 	@Override
 	public int deliveryInfo(DeliveryInfo deliveryInfo) {
 		return session.insert(namespace+"register_delivery_info", deliveryInfo);
+	}
+	
+	// 주문 정보 업데이트
+	@Override
+	public int updateOrders(Orders orders) {
+		return session.update(namespace+"update_orderinfo", orders);
 	}
 
 	

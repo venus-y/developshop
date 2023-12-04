@@ -183,9 +183,8 @@ public class AdminController {
 	@PostMapping("/deliveryInfo")
 	@ResponseBody
 	public String deliveryInfo(@RequestBody Orders orders) {
-//		System.out.println("비동기처리 전달 ? :" + orders);	
-		
-		
+		System.out.println("비동기처리 전달 ? :" + orders);	
+		adminService.registerDeliveryInfo(orders);		
 		return "success";
 	}
 	

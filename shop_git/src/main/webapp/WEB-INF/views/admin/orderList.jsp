@@ -60,7 +60,9 @@
             <li class="status"><strong>배송 상태:</strong> ${orderInfo.status}</li>
         </ul>
         
-        <button class="ship-button" value="${orderInfo.order_id}">상품 발송</button>
+        <c:if test="${orderInfo.status == '배송준비' }">
+	        <button class="ship-button" value="${orderInfo.order_id}">상품 발송</button>
+        </c:if>
         
         
           <%-- 구분선 추가 (마지막 주문 정보 컨테이너 제외) --%>
@@ -76,6 +78,9 @@
 		// 변경해줄 주문정보의 주문번호
 		let order_id = $(this).val(); 
 		
+		// 현재 버튼에 대한 참조를 저장
+	    let currentButton = $(this);
+		
 		//발송처리할 것인지 물어본 후 이후의 처리를 진행한다.
 		if(!confirm("상품을 발송하시겠습니까?"))return;
 		
@@ -88,9 +93,9 @@
 				order_id : order_id
 			}),
 			success: function (result) {
-				alert("result:"+result);
-				alert("배송정보 등록을 완료했습니다.");	
+				alert("배송정보 등록 및 배송정보 등록메일 발송 완료!");	
 				location.reload(true);
+				// 상품 발송 버튼을 화면에서 없앤다 -> 이후의 처리는 고민해야 할 필요가 있다.
 			}, error: function (error) {
 				alert("배송정보 등록 중 오류가 발생했습니다.");
 			}

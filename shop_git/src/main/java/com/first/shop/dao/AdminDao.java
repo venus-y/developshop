@@ -25,4 +25,6 @@ public interface AdminDao {
 	Orders orderInfo(Orders orders);
 	
 	int deliveryInfo(DeliveryInfo deliveryInfo);
+	
+	int updateOrders(Orders orders);
 }

@@ -47,15 +47,15 @@ pageEncoding="UTF-8"%>
 	<div id="pageDiv">
 	<!--  페이징 영역 -->
 	<c:if test="${ph.prevPage}">
-		<a href="<c:url value="/product/categorySet?category_code=1&viewName=top&page=${ph.startPage-1}&pageSize=${ph.pageSize}"/>">&lt</a>
+		<a href="<c:url value="/product/categorySet?category_code=2&viewName=bottom&page=${ph.startPage-1}&pageSize=${ph.pageSize}"/>">&lt</a>
 	</c:if>
 
 	<c:forEach var="i" begin="${ph.startPage}" end="${ph.endPage}">
-		<a href="<c:url value="/product/categorySet?category_code=1&viewName=top&page=${i}&pageSize=${ph.pageSize}"/>">${i}</a>
+		<a href="<c:url value="/product/categorySet?category_code=2&viewName=bottom&page=${i}&pageSize=${ph.pageSize}"/>">${i}</a>
 	</c:forEach>
 	
 	<c:if test="${ph.nextPage}">
-		<a href="<c:url value="/product/categorySet?category_code=1&viewName=top&page=${ph.endPage+1}&pageSize=${ph.pageSize}"/>">&gt</a>
+		<a href="<c:url value="/product/categorySet?category_code=2&viewName=bottom&page=${ph.endPage+1}&pageSize=${ph.pageSize}"/>">&gt</a>
 	</c:if>
 	</div>
 </body>

@@ -9,6 +9,7 @@ public class DeliveryInfo {
 	private String shipping_address;
 	private String tracking_number;
 	private int company_id;
+	private String company_name;
 	
 	public DeliveryInfo() {
 		
@@ -50,12 +51,21 @@ public class DeliveryInfo {
 	public void setCompany_id(int company_id) {
 		this.company_id = company_id;
 	}
+	public String getCompany_name() {
+		return company_name;
+	}
+
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
+	}
 	@Override
 	public String toString() {
 		return "DeliveryInfo [shipping_id=" + shipping_id + ", order_id=" + order_id + ", shipping_date="
 				+ shipping_date + ", shipping_address=" + shipping_address + ", tracking_number=" + tracking_number
-				+ ", company_id=" + company_id + "]";
+				+ ", company_id=" + company_id + ", company_name=" + company_name + "]";
 	}
+
+	
 	
 	
 	

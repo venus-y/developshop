@@ -46,12 +46,16 @@
 		<select id="get_orderinfo" parameterType="Orders" resultType="Orders">
 			select * from orders where order_id = #{order_id};
 		</select>	
-			
+		
+		<!-- 주문 정보를 수정한다(배송상태 변경을 위해)-->
+		<update id="update_orderinfo" parameterType="Orders">
+			update orders set status = #{status} where order_id = #{order_id};
+		</update>
 			
 		<!-- 배송 정보 등록 -->
 		<insert id="register_delivery_info" parameterType="DeliveryInfo">
 			insert into delivery_info (order_id, shipping_address,
-			tracking_number, company_id) values(#{order_id}, #{shipping_address},
-			#{tracking_number}, #{company_id}); 		
+			tracking_number, company_id, company_name) values(#{order_id}, #{shipping_address},
+			#{tracking_number}, #{company_id}, #{company_name}); 		
 		</insert>
 	</mapper>	

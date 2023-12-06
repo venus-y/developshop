@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.first.shop.dto.Category;
 import com.first.shop.dto.Product;
 
 @Repository
@@ -52,6 +53,12 @@ public class ProductDaoImpl implements ProductDao {
 	public int categoryCount(int category_id) {
 		return session.selectOne(namespace+"getProduct_CategorySet_Count", category_id);
 
+	}
+	
+	// 브랜드별 상품 분류
+	@Override
+	public List<Category> sortBrand() {
+		return session.selectList(namespace+"sort_Brand");
 	}
 	
 	

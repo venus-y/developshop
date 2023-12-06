@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.first.shop.dto.Category;
 import com.first.shop.dto.PageHandler;
 import com.first.shop.dto.Product;
 import com.first.shop.service.ProductService;
@@ -116,5 +117,16 @@ public class ProductController {
 		
 		return "/category/"+viewName;
 	}
+	
+	// 브랜드별 상품 분류
+	@GetMapping("/sortBrand")
+	public String sortBrand(Model model) {
+		List<Category> brandList = productService.sortByBrand();
+		
+		model.addAttribute("brandList", brandList);
+		
+		return "/category/brand";
+	}
+	
 	
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.first.shop.dto.Category;
 import com.first.shop.dto.PageHandler;
 import com.first.shop.dto.Product;
 
@@ -69,8 +70,7 @@ public class ProductDaoImplTest {
 	
 	//카테고리별 상품 조회
 	@Test
-	public void getCategorySet() {
-		
+	public void getCategorySet() {		
 		Map map = new HashMap();
 		map.put("pageSize", 8);
 		map.put("offset", 0);
@@ -82,11 +82,15 @@ public class ProductDaoImplTest {
 			System.out.print(i+"번째");
 			System.out.println(list.get(i));
 			System.out.println("------------------------");
-		}
+		}		
+	}
+	
+	//브랜드별 분류
+	@Test
+	public void getBrandSort() {
+		List<Category> list = productDao.sortBrand();
 		
-		
-		
-		
+		System.out.println(list);
 	}
 	
 	

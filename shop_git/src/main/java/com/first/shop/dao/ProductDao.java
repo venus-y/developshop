@@ -3,6 +3,7 @@ package com.first.shop.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.first.shop.dto.Category;
 import com.first.shop.dto.Product;
 
 public interface ProductDao {
@@ -17,4 +18,6 @@ public interface ProductDao {
 	List<Product> categorySet(Map map);
 	
 	int categoryCount(int category_id);
+	
+	List<Category> sortBrand();
 }

@@ -38,6 +38,11 @@
 			select count(*) from product where category_code like concat('_',#{category_code},'%');
 		</select>
 		
+		<!-- 브랜드별 분류 -->
+		<select id="sort_Brand" resultType="Category">
+			select * from category where tier_no = 1
+			order by category_name;
+		</select>
 		
 		
 	</mapper>	

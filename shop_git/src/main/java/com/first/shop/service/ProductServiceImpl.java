@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.first.shop.dao.ProductDao;
+import com.first.shop.dto.Category;
 import com.first.shop.dto.Product;
 
 @Service
@@ -54,6 +55,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int getProduct_CategorySet_Count(int category_code) {
 		return productDao.categoryCount(category_code);
+	}
+
+	// 브랜드별로 상품 분류
+	@Override
+	public List<Category> sortByBrand() {
+		return productDao.sortBrand();
 	}
 
 }

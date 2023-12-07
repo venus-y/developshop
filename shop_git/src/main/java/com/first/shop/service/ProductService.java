@@ -20,4 +20,6 @@ public interface ProductService {
 	int getProduct_CategorySet_Count(int category_code);
 	
 	List<Category> sortByBrand();
+	
+	List<Product> getBrandPage(Integer category_code);
 }

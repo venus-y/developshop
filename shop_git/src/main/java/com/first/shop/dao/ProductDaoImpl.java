@@ -61,6 +61,12 @@ public class ProductDaoImpl implements ProductDao {
 		return session.selectList(namespace+"sort_Brand");
 	}
 	
+	// 브랜드 상품 페이지
+	@Override
+	public List<Product> getBrand(Integer category_code) {
+		return session.selectList(namespace+"get_Brand_Page", category_code);
+	}
+	
 	
 
 }

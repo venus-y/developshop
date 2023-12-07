@@ -93,6 +93,13 @@ public class ProductDaoImplTest {
 		System.out.println(list);
 	}
 	
+	// 브랜드 상품 목록 가져오기
+	@Test
+	public void getBrandPage() {
+		List<Category> cList = productDao.getBrand(1);
+		System.out.println(cList);
+	}
+	
 	
 	
 }

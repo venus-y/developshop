@@ -20,4 +20,6 @@ public interface ProductDao {
 	int categoryCount(int category_id);
 	
 	List<Category> sortBrand();
+	
+	List<Product> getBrand(Integer category_code);
 }

@@ -118,7 +118,7 @@ public class ProductController {
 		return "/category/"+viewName;
 	}
 	
-	// 브랜드별 상품 분류
+	// 브랜드별 분류 페이지
 	@GetMapping("/sortBrand")
 	public String sortBrand(Model model) {
 		List<Category> brandList = productService.sortByBrand();
@@ -128,5 +128,13 @@ public class ProductController {
 		return "/category/brand";
 	}
 	
+	// 브랜드 상품페이지로 이동
+	@GetMapping("/brandPage")
+	public String brandPage(Integer category_code,Model model) {
+		System.out.println("요청전달 확인" + category_code);
+		List<Product> productList = productService.getBrandPage(category_code);
+		model.addAttribute("productList", productList);
+		return "/category/brandProduct";
+	}
 	
 }

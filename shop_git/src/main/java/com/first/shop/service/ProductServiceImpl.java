@@ -63,4 +63,10 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.sortBrand();
 	}
 
+	// 브랜드 상품 페이지로 이동
+	@Override
+	public List<Product> getBrandPage(Integer category_code) {
+		return productDao.getBrand(category_code);
+	}
+
 }

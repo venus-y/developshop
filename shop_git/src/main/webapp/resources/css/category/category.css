@@ -3,8 +3,9 @@
 
 /* 테이블 크기 설정 */
 table{
-	width: 80%;
+	width: 70%;
 	margin: auto;
+	height: 50%;
 }
 
 td{
@@ -32,3 +33,38 @@ img{
 #pageDiv a:hover{
 	background-color: #f0f0f0;
 }
+
+/* 검색창과 검색버튼이 나란히 놓일 수 있게 설정 */
+#pageDiv form{
+	display: flex;
+	align-items: center;
+	justify-content: center; /* 추가 */
+}
+
+
+/* 검색 영역 설정 */
+ .search-input {
+      color: gray;
+      background-color: white;
+      border: 1px solid #ccc;
+      height: 100%;
+      width: 300px;
+      font-size: 15px;
+      padding: 5px 7px;
+    }
+ .search-input::placeholder {
+      color: gray;
+    }
+.search-button {
+      /* 메뉴바의 검색 버튼 아이콘  */
+    background-color: rgb(22, 22, 22);
+    color: rgb(209, 209, 209);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    padding: 5px 10px;
+    } 
+.search-button:hover {
+      color: rgb(165, 165, 165);
+} 

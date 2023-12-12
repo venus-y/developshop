@@ -23,18 +23,27 @@ public class AdminDaoImplTest {
 	@Autowired
 	OrderDao orderDao;
 	
+	// 상품 테스트용으로 많이 등록
+	@Test
+	public void registerTest() {
+		for(int i=0; i<50; i++) {
+			testRegister_product();
+		}
+	}
+	
 	// 상품등록 테스트
 	@Test
 	public void testRegister_product() {
 		Product product = new Product();
 		
-		product.setProduct_name("테스트");
-		product.setProduct_name("상품");
-		product.setPrice(5000);
+		product.setProduct_name("테스트청바지");
+		product.setPrice(50000);
 		product.setDiscount(10);
 		product.setStock(10);
-		product.setCategory_code(1);
-		product.setSavepoint(10);
+		product.setCategory_code(222);
+		product.setSavepoint(1000);
+		product.setProduct_image("\\2023\\12\\10\\0476341b-18da-4590-ad51-219508f7409b_다운로드 (13).jpg");
+		product.setProduct_thumbimage("\\2023\\12\\10\\s\\s_0476341b-18da-4590-ad51-219508f7409b_다운로드 (13).jpg");
 		
 		// 행의 개수가 1일 반환되면 잘 등록됨
 		int rowcnt = adminDao.register(product);

@@ -9,8 +9,9 @@
 <c:set var="registerLink" value="${empty loginId ? '/register/getRegister' : '' }"/>
 <c:set var="CartLink" value="${empty loginId ?  '' : '/cart/getCart'  }"/>
 <c:set var="CartText" value="${empty loginId ?  '' : 'Cart'  }"/>
-<c:set var="AdminText" value="${sessionScope.user.admincheck == 1 ? 'Register Product' : '' }"/>
-<c:set var="AdminLink" value="${sessionScope.user.admincheck == 1 ? '/admin/registerProductForm' : '' }"/>
+<c:set var="registerProductText" value="${sessionScope.user.admincheck == 1 ? 'Register Product' : '' }"/>
+<c:set var="registerProductLink" value="${sessionScope.user.admincheck == 1 ? '/admin/registerProductForm' : '' }"/>
+<c:set var="adminText" value="${sessionScope.user.admincheck == 1 ? 'Admin Menu' : '' }"/>
 <c:set var="OrderInfoText" value="${sessionScope.user.admincheck == 1 ? 'OrderInfo Manage' : '' }"/>
 <c:set var="OrderInfoLink" value="${sessionScope.user.admincheck == 1 ? '/admin/getOrderList' : '' }"/>
 
@@ -22,6 +23,11 @@
 	<title>메인 페이지</title>
 	    <link rel="stylesheet" href="<c:url value='/css/index.css'/>">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>    		
+		 <!-- 부트스트랩 CSS 링크 추가 -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		 <!-- 부트스트랩 JS 링크 추가 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div id="main">
@@ -30,67 +36,81 @@
 	    <li><a href="<c:url value ='/product/sortBrand'/>">Brand</a></li>
    		<li class="m1"><a href="<c:url value='/product/categorySet?category_code=1&viewName=top'/>">Top</a>
    			<ul class="m2">
-   				<li class="clothes_cate">
    					<a href="<c:url value='/product/categorySet?category_code=11&viewName=top&detail=shirt'/>">
    					셔츠
    					</a>
-   				</li>
-   				<li class="clothes_cate">
    					<a href="<c:url value='/product/categorySet?category_code=13&viewName=top&detail=t-shirt'/>">
    					티셔츠
    					</a>
-   				</li>
    			</ul>
    		</li>
     	<li class="m1"><a href="<c:url value='/product/categorySet?category_code=2&viewName=bottom'/>">Bottom</a>
     		<ul class="m2">
-   				<li class="clothes_cate">
    					<a href="<c:url value='/product/categorySet?category_code=23&viewName=bottom&detail=shorts'/>">
    					반바지
    					</a>
-   				</li>
-   				<li class="clothes_cate">
    					<a href="<c:url value='/product/categorySet?category_code=22&viewName=bottom&detail=jeans'/>">
    					청바지
    					</a>
-   				</li>
    			</ul>
-    	</li>
     	<li class="m1"><a href="<c:url value='/product/categorySet?category_code=3&viewName=shoes'/>">Shoes</a>
     		<ul class="m2">
-   				<li class="clothes_cate">
    					<a href="<c:url value='/product/categorySet?category_code=34&viewName=shoes&detail=sneakers'/>">
    						스니커즈
    					</a>
-   				</li>
-   				<li class="clothes_cate">
    					<a href="<c:url value='/product/categorySet?category_code=33&viewName=shoes&detail=shoes'/>">
    						구두
    					</a>
-   				</li>
+   				
    			</ul>
     	</li>
     	<li class="m1"><a href="<c:url value='/product/categorySet?category_code=4&viewName=accessory'/>">Acc</a>
     		<ul class="m2">
-    			<li class="clothes_cate">
+    			
    					<a href="<c:url value='/product/categorySet?category_code=43&viewName=accessory&detail=earrings'/>">
    						귀걸이
    					</a>
-   				</li>
-   				<li class="clothes_cate">
+   				
+   				
    					<a href="<c:url value='/product/categorySet?category_code=44&viewName=accessory&detail=ring'/>">
    						반지
-   					</a>
-   				</li>  				
+   					</a> 				
    			</ul>
-    	</li>
-    	<li><a href="<c:url value='${OrderInfoLink}'/>">${OrderInfoText}</a></li>
-	    <li><a href="<c:url value='${AdminLink}'/>">${AdminText}</a></li> 
-	    <li><a href="<c:url value='${CartLink}'/>">${CartText}</a></li>
-	    <li><a href="<c:url value='/'/>">Home</a></li>
-	    <li><a href="<c:url value='${loginOutLink}'/>">${loginOutText}</a></li>    
-	    <li><a href="<c:url value='${registerLink}'/>">${registerText}</a></li>
-	    <li><a href="<c:url value='/product/productList'/>">Product List</a></li>
+    	</li>   	
+	   <%--  <li><a href="<c:url value='${CartLink}'/>">${CartText}</a></li> --%>
+	   	
+	   	
+	   	<!-- 관리자용 드롭다운 메뉴 추가 -->
+	   	<c:if test="${sessionScope.user.admincheck == 1 }">
+            <li class="dropdown">
+              <a class="dropdown-toggle" href=""
+                role="button" id="menuDropdown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                ${adminText}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="menuDropdown">
+                <a href="<c:url value='${OrderInfoLink}'/>">${OrderInfoText}</a>
+	    		<a href="<c:url value='${registerProductLink}'/>">${registerProductText}</a>
+              </div>           
+            </li>
+        </c:if>
+	    <!-- 회원용 드롭다운 메뉴 추가 -->	    	
+            <li class="dropdown">
+              <a class="dropdown-toggle" href="#" role="button" id="menuDropdown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Menu
+              </a>
+              <div class="dropdown-menu" aria-labelledby="menuDropdown">
+                <a class="dropdown-item" href="<c:url value='/'/>">Home</a>
+                <a class="dropdown-item" href="<c:url value='${CartLink}'/>">${CartText}</a>
+                <a class="dropdown-item" href="<c:url value='${loginOutLink}'/>">${loginOutText}</a>
+                <a class="dropdown-item" href="<c:url value='${registerLink}'/>">${registerText}</a>
+              </div>           
+            </li>
+            
+            <!-- ... 나머지 메뉴 항목 ... -->
+	    <%-- <li><a href="<c:url value='${loginOutLink}'/>">${loginOutText}</a></li>    
+	    <li><a href="<c:url value='${registerLink}'/>">${registerText}</a></li> --%>
 	</ul> 
 </div>
 <script>

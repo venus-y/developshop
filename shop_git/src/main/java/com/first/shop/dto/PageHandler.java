@@ -2,24 +2,36 @@ package com.first.shop.dto;
 
 public class PageHandler {
 	
-	int totalCnt;
-	int page;
-	int pageSize;
-	int navSize = 10;
-	int totalPageCnt;
-	int startPage;
-	int endPage;
-	int minPage = 1;
-	int maxPage;
-	boolean prevPage;
-	boolean nextPage;
+	private int totalCnt;
+//	int page;
+//	int pageSize;	
+	private int navSize = 10;
+	private int totalPageCnt;
+	private int startPage;
+	private int endPage;
+	private int minPage = 1;
+	private int maxPage;
+	private boolean prevPage;
+	private boolean nextPage;
+	// 검색조건 
+	private BrandSearchCondition bsc;
+	
+	
 	
 	//페이지값에 대한 정보가 없을 시 현재페이지 0으로 설정
 
-	public PageHandler() {
-		this.page = 1;
-		this.pageSize = 2;
-		this.navSize = 10;
+	public BrandSearchCondition getBsc() {
+		return bsc;
+	}
+
+	public void setBsc(BrandSearchCondition bsc) {
+		this.bsc = bsc;
+	}
+
+	public PageHandler(int totalCount, BrandSearchCondition bsc) {
+		this.totalCnt = totalCount;
+		this.bsc = bsc;
+		Paging(totalCount, bsc);
 	}
 	
 	public int getStartPage() {
@@ -37,60 +49,23 @@ public class PageHandler {
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
 	}
-
-	public PageHandler(int page, int pageSize, int totalCnt) {
-		Paging(page, pageSize, totalCnt);
-	}
-	
-	
-	
+		
 	public int getNavSize() {
 		return navSize;
 	}
-
-
 
 	public void setNavSize(int navSize) {
 		this.navSize = navSize;
 	}
 
 
-
 	public int getTotalCnt() {
 		return totalCnt;
 	}
 
-
-
 	public void setTotalCnt(int totalCnt) {
 		this.totalCnt = totalCnt;
 	}
-
-
-
-	public int getPage() {
-		return page;
-	}
-
-
-
-	public void setPage(int page) {
-		this.page = page;
-	}
-
-
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-
-
 
 	public int getTotalPageCnt() {
 		return totalPageCnt;
@@ -151,20 +126,20 @@ public class PageHandler {
 	}
 
 	
-	public void Paging(int page, int pageSize, int totalCnt) {
-		this.page = page;
-		this.pageSize = pageSize;
+	public void Paging(int totalCount, BrandSearchCondition bsc) {
+//		this.page = page;
+//		this.pageSize = pageSize;
 		this.totalCnt = totalCnt;
 		
 		// 게시물수/페이지사이즈로 페이지 개수를 정한다.
-		totalPageCnt =   (int)(Math.ceil(((double)totalCnt/pageSize)));
+		totalPageCnt =   (int)(Math.ceil(((double)totalCnt/bsc.getPageSize())));
 		// 페이지 개수가 딱 나누어떨어지지 않을 수 있다.
 		// 예를 들어 총 게시물 수가 155개 페이지 사이즈가 10이라면 155/10 -> 15.5가 된다.
 		// 이럴 경우 페이지 개수롤 16개로 만들어주어야 155번째 게시물까지 조회할 수 있다.
 		 
 		
 		//시작페이지는 (현재 페이지-1)/navSize  * navSize + 1로 한다.
-		startPage = ((page-1)/navSize)*navSize + 1;
+		startPage = ((bsc.getPage()-1)/navSize)*navSize + 1;
 		System.out.println(startPage + " 시작페이지체크");
 		
 
@@ -197,10 +172,9 @@ public class PageHandler {
 
 	@Override
 	public String toString() {
-		return "PageHandler [totalCnt=" + totalCnt + ", page=" + page + ", pageSize=" + pageSize + ", navSize="
-				+ navSize + ", totalPageCnt=" + totalPageCnt + ", startPage=" + startPage + ", endPage=" + endPage
-				+ ", minPage=" + minPage + ", maxPage=" + maxPage + ", prevPage=" + prevPage + ", nextPage=" + nextPage
-				+ "]";
+		return "PageHandler [totalCnt=" + totalCnt + ", navSize=" + navSize + ", totalPageCnt=" + totalPageCnt
+				+ ", startPage=" + startPage + ", endPage=" + endPage + ", minPage=" + minPage + ", maxPage=" + maxPage
+				+ ", prevPage=" + prevPage + ", nextPage=" + nextPage + ", bsc=" + bsc + "]";
 	}
 	
 	

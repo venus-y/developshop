@@ -13,5 +13,7 @@
 		<typeAlias alias="Orders" type="com.first.shop.dto.Orders"/>
 		<typeAlias alias="OrderProduct" type="com.first.shop.dto.OrderProduct"/>						
 		<typeAlias alias="DeliveryInfo" type="com.first.shop.dto.DeliveryInfo"/>									
+		<typeAlias alias="BrandSearchCondition" type="com.first.shop.dto.BrandSearchCondition"/>										
+		<typeAlias alias="Review" type="com.first.shop.dto.Review"/>										
 	</typeAliases>
 </configuration>

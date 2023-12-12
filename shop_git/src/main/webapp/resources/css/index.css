@@ -14,11 +14,14 @@ ul {
     width: 100%;
     background-color: navy;
     display: flex;
+    padding-inline-start: 0; /* 목록 스타일 제거 */
+    list-style: none;
 }
 
 ul > li {
     color: lightgray;
     height : 100%;
+    margin: 0 35px; /* 좌우 간격을 10px로 조절 */
     width:90px;
     display:flex;
     align-items: center;
@@ -52,7 +55,7 @@ ul > li:hover > a {
     left: 0;
     background-color: navy; 
     flex-direction: column; /* 세로 방향으로 정렬되도록 수정 */
-}
+} 
 
 .m2 > li {
 	width: 120px;

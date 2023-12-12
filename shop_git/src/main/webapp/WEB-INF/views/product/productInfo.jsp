@@ -51,7 +51,7 @@
 		
 		<tr>
 			<td>적립포인트</td>
-			<td class="savepoint"></td>
+			<td class="savepoint">${productInfo.savepoint}</td>
 		</tr>
 		<tr>
 			
@@ -91,15 +91,29 @@
 			<!-- 유저가 관리자일 경우에만 상품 수정버튼이 보인다. -->
 			<c:if test="${sessionScope.user.admincheck == 1 }">
 			  <button class="removeProduct_Btn" type="button">상품 삭제</button>
-			</c:if>
-				
+			</c:if>				
 			</td>
 		</tr>
 		</table>	
 	</div>
-		
+			<!-- 리뷰 작성 영역  -->.
+			<div>
+				testsete
+			</div>	
 </body>
 	<script type="text/javascript">
+		// Cart 컨트롤러로 전송해줄 데이터
+		let form = {
+		user_id : '${sessionScope.user.id}',
+		product_id : '${productInfo.product_id}',
+		quantity : '',
+		product_name : '${productInfo.product_name}',
+		discount : '${productInfo.discount}',
+		savepoint : '${productInfo.savepoint}',
+		price : '${productInfo.price}'		
+		};
+	
+	
 		$(document).ready(function () {			
 			
 			// 상품 할인율 
@@ -117,12 +131,12 @@
 			discountedPrice.text(discountedValue.toFixed(2));		
 			
 			
-			// 적립포인트는 세일가의 1%만큼 적립된다.
+		/* 	// 적립포인트는 세일가의 1%만큼 적립된다.
 			let savepoint = $(".savepoint");
 			
 			let savepoint_value = discountedValue * 0.01;
 			
-			savepoint.text(savepoint_value);
+			savepoint.text(savepoint_value); */
 			
 			
 			
@@ -145,22 +159,6 @@
 					$(".quantity_input").val(--quantity);
 				}
 			});
-			
-			// Cart 컨트롤러로 전송해줄 데이터
-			let form = {
-				user_id : '${sessionScope.user.id}',
-				product_id : '${productInfo.product_id}',
-				quantity : '',
-				product_name : '${productInfo.product_name}',
-				discount : '${productInfo.discount}',
-				savepoint : '${productInfo.savepoint}',
-				price : '${productInfo.price}'
-				
-				
-			};
-			
-			
-
 			
 			$(".cart_Btn").on("click", function () {
 				form.quantity = $(".quantity_input").val();
@@ -207,7 +205,7 @@
 						
 					})
 				}
-			})
+			});
 			
 		// 즉시주문 버튼 클릭 시
 		$(".buyNow_Btn").on("click", function () {
@@ -225,6 +223,14 @@
 			
 			
 		});
+
+		
+		
+		
+
+		
+		
+		
 		
 		$(".removeProduct_Btn").on("click", function () {
 			// 삭제하시겠습니까 확인시 계속 진행 아니오 누르면 return
@@ -247,7 +253,7 @@
 			})
 			
 			
-		})
+		});
 		
 		
 	</script>

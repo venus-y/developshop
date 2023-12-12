@@ -44,12 +44,44 @@
 			order by category_name;
 		</select>
 		
-		<!-- 해당 브랜드 페이지로 이동 -->
-		<select id="get_Brand_Page" parameterType="Integer"  resultType="Product">
-			select * from product where 
-			category_code like concat (#{category_code},'%');
+		<!-- 브랜드 상품 개수 가져오기 -->
+		<select id="get_Brand_Product_Count" parameterType="Integer" resultType="int">
+			select count(*) from product
+			where category_code like concat (#{category_code}, '%');
 		</select>
 		
+		
+		<!-- 해당 브랜드 페이지로 이동 -->
+		<select id="get_Brand_Page" parameterType="Map"  resultType="Product">
+			select * from product where 
+			category_code like concat (#{category_code},'%')
+			limit #{offset}, #{pageSize};
+		</select>
+		
+		<!-- 브랜드 상품 개수 가져오기(검색 기능 적용 버전) -->
+		<select id="get_Brand_Product_Search_Count"
+		 parameterType="BrandSearchCondition" resultType="int">
+			select count(*) from product
+			where category_code like concat (#{category_code}, '%')
+			and product_name like concat ('%',
+			<!-- 키워드가 비어있을 경우엔 concat 대상에 포함시키지 않는다. -->
+			<if test="keyword != null and keyword != ''">
+			 #{keyword}, 
+			</if>
+			  '%');
+		</select>
+		
+		<!-- 브랜드 상품 가져오기(검색 기능 적용 버전) -->
+		<select id="get_Brand_Product_Search" parameterType="BrandSearchCondition"  resultType="Product">
+			select * from product where 
+			category_code like concat (#{category_code},'%')
+			and product_name like concat ('%',
+			<!-- 키워드가 비어있을 경우엔 concat 대상에 포함시키지 않는다. -->
+			<if test="keyword != null and keyword != ''">
+			 #{keyword}, 
+			</if>
+			 '%') limit #{offset}, #{pageSize};
+		</select>
 		
 		
 	</mapper>	

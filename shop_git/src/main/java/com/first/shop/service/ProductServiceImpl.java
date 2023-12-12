@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.first.shop.dao.ProductDao;
+import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
 import com.first.shop.dto.Product;
 
@@ -65,8 +66,26 @@ public class ProductServiceImpl implements ProductService {
 
 	// 브랜드 상품 페이지로 이동
 	@Override
-	public List<Product> getBrandPage(Integer category_code) {
-		return productDao.getBrand(category_code);
+	public List<Product> getBrandPage(Map map) {
+		return productDao.getBrand(map);
+	}
+
+	// 브랜드 상품 총 개수 가져오기
+	@Override
+	public int getBrand_Product_Count(Integer category_code) {
+		return productDao.getBrand_Count(category_code);
+	}
+
+	// 브랜드 상품 페이지에서 상품 이름 검색 시 나온 검색 결과 수를 가져온다.
+	@Override
+	public int getBrandProduct_SearchCount(BrandSearchCondition brandSearchCondition) {
+		return productDao.getBrand_SearchCount(brandSearchCondition);
+	}
+
+	// 브랜드 상품 페이지 내에서 상품 이름 검색 결과 가져오기
+	@Override
+	public List<Product> getBrandProduct_Search(BrandSearchCondition brandSearchCondition) {
+		return productDao.getBrand_Search(brandSearchCondition);
 	}
 
 }

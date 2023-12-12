@@ -41,10 +41,10 @@
   			<!-- 여기서 tr 태그를 닫는 의미는 현재와 이전 이니셜이 다르므로 이전목록과 현재목록을 구분하는 것 -->
   			<!-- 이니셜이 겹치치 않을 경우에만 tr 태그를 연다 -->
   			<c:if test="${initialCheck != brandInfo.category_name.substring(0,1).toUpperCase()}">
-  				<tr>
+  				<tr data-alphabet = "${brandInfo.category_name.substring(0,1).toUpperCase()}">
   			</c:if><!-- 이니셜이 겹치치 않을 경우에만 h3 태그 추가한다 --> 			
   			<c:if test="${initialCheck != brandInfo.category_name.substring(0,1).toUpperCase()}">
-  				<td><h2>${brandInfo.category_name.substring(0,1).toUpperCase()}</h2></td>
+  				<td><h2 id="${brandInfo.category_name.substring(0,1).toUpperCase()}">${brandInfo.category_name.substring(0,1).toUpperCase()}</h2></td>
   				<!-- h2 태그를 출력한 뒤에 이니셜 체크에 현재 카테고리 이름의 첫 이니셜을 저장 -->
   				<c:set var="initialCheck" value="${brandInfo.category_name.substring(0,1).toUpperCase()}"/>
   				<!-- 만약 다음에 오는 요소가 이니셜 체크와 이니셜이 같으면 tr 태그 및 h2(알파벳)을 출력하지 않음, 다를 경우에만 출력 -->
@@ -57,37 +57,32 @@
   	
     	  
   </div>
+  				
+  				
 </body>
 	<script>
 		$(document).ready(function () {
-			// 선택된 알파벳에 해당하는 브랜드들을 화면에 표시하도록 이벤트 등록
-			$(".alphaLink").on("click", function () {
-				// 선택된 알파벳의 정보를 받아온다.
-				let selectedAlphabet = $(this).data("alphabet");	
-				// 화면 갱신
-				/* showBrandsByAlphabet(selectedAlphabet); */
-			});
-			
-			// 페이지가 처음 로드됐을 경우 모든 브랜드를 표시
-			/* showBrandsByAlphabet(''); */
-			
-			// 선택한 이니셜로 시작하는 브랜드들을 표시하는 함수
-			function showBrandsByAlphabet(alphabet) {
-			/* 	// 일단 브랜드들을 전부 숨긴다.
-				a$(".kd-brand-list ul").css("display", "none");
-				// 선택한 이니셜과 일치한 브랜드 그룹을 화면에 표시
-				$(".kd-brand-list ul[data-alphabet='" + alphabet + "']").css("disply","block"); */
-			
-				// 해당 알파벳 이니셜로 스크롤 이동
-		        /* let targetId = "#" + alphabet;
-		        /* $('html, body').animate({
-		          scrollTop: $(targetId).position().top
-		        }, 500); */	 
-			}
-			
-			
-	      
-			
+
+						
 		});
+		
+		// 선택된 알파벳에 해당하는 브랜드들을 화면에 표시하도록 이벤트 등록
+		$(".alphaLink").on("click", function () {
+			// 선택된 알파벳의 정보를 받아온다.
+			let selectedAlphabet = $(this).data("alphabet");	
+			
+			// 선택된 알파벳 이니셜만 화면에 보이게 해준다.
+	       	showBrandsByAlphabet(selectedAlphabet);
+							
+		});
+		
+		function showBrandsByAlphabet(alphabet) {
+			 /* 일단 브랜드들을 전부 숨긴다. */
+				$(".kd-brand-list table tr").css("display", "none");
+/* 				 선택한 이니셜과 일치한 브랜드 그룹을 화면에 표시
+*/				$(".kd-brand-list table tr[data-alphabet='" + alphabet + "']").css("display","block");
+			 
+		}
+		
 	</script>
 </html>

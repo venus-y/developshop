@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
 import com.first.shop.dto.PageHandler;
 import com.first.shop.dto.Product;
@@ -96,10 +97,34 @@ public class ProductDaoImplTest {
 	// 브랜드 상품 목록 가져오기
 	@Test
 	public void getBrandPage() {
-		List<Category> cList = productDao.getBrand(1);
-		System.out.println(cList);
+		
+		Map map = new HashMap();
+		map.put("category_code", 1);
+		map.put("pageSize", 8);
+		map.put("offset", 0);
+		
+		List<Product> PList = productDao.getBrand(map);
+		System.out.println(PList);
 	}
 	
+	// 브랜드 상품 총 개수 가져오기
+	@Test
+	public void getBrandProductCount() {
+		int count = productDao.categoryCount(1);
+		
+		System.out.println(count);		
+	}
 	
+	// 브랜드 상품 검색 조건 테스트
+	@Test
+	public void searchTest() {
+		BrandSearchCondition brandSearchCondition = new BrandSearchCondition(1, 8, "바지", 2);
+		
+		List<Product> pList = productDao.getBrand_Search(brandSearchCondition); 
+		
+		for(int i=0; i<8; i++) {
+			System.out.println((i+1) + "번째" +  pList.get(i));
+		}
+	}
 	
 }

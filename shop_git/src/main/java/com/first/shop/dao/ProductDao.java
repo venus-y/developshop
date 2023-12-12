@@ -3,6 +3,7 @@ package com.first.shop.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
 import com.first.shop.dto.Product;
 
@@ -21,5 +22,11 @@ public interface ProductDao {
 	
 	List<Category> sortBrand();
 	
-	List<Product> getBrand(Integer category_code);
+	int getBrand_Count(Integer category_code);
+	
+	List<Product> getBrand(Map map);
+	
+	int getBrand_SearchCount(BrandSearchCondition brandSearchCondition);
+	
+	List<Product> getBrand_Search(BrandSearchCondition brandSearchCondition);
 }

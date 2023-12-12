@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
 import com.first.shop.dto.PageHandler;
 import com.first.shop.dto.Product;
@@ -30,40 +31,40 @@ public class ProductController {
 	private String uploadPath;
 	
 	// 상품 목록 조회 
-	@GetMapping("/productList")
-	public String getProductList(Integer page, Integer pageSize, Model model) {
-		// 총 상품 수를 받아온다.
-		// 받아온 상품 수를 페이지핸들러에 넘겨준 후 페이징 처리를 한다.
-		int totalCnt = productService.countAllProduct();
-		
-		System.out.println("페이지 잘 넘어갔나 확인" + page);
-		System.out.println("페이지사이즈  잘 넘어갔나 확인" + pageSize);
-
-		
-		// 처음 페이지에 들어갈 경우엔 페이지정보가 없기 때문에 기본 값을 정해준다.
-		if(page == null && pageSize == null) {
-			page = 1;
-			pageSize = 2;
-		}
-		
-		// 페이지에서 다시 다른 페이지로 이동할 경우 페이지정보를 컨트롤러에게 전달해줘야 한다.
-		PageHandler ph = new PageHandler(page, pageSize, totalCnt);
-		
-		// 페이지 오프셋과 페이지사이즈 정보를 map에 담아준다.
-		Map map = new HashMap();
-		map.put("offset", (ph.getPage()-1) * ph.getPageSize());
-		map.put("pageSize", ph.getPageSize());
-		
-		// map에 담아준 오프셋과 페이지사이즈 조건에 맞게 상품정보를 받아온다.
-		List<Product> list = productService.getPageList(map);
-		
-		// 페이지정보를 모델에 담는다.
-		model.addAttribute("list", list);
-		model.addAttribute("ph", ph);
-		model.addAttribute("uploadPath", uploadPath);
-		
-		return "/product/productList";
-	}
+//	@GetMapping("/productList")
+//	public String getProductList(bra Model model) {
+//		// 총 상품 수를 받아온다.
+//		// 받아온 상품 수를 페이지핸들러에 넘겨준 후 페이징 처리를 한다.
+//		int totalCnt = productService.countAllProduct();
+//		
+//		System.out.println("페이지 잘 넘어갔나 확인" + page);
+//		System.out.println("페이지사이즈  잘 넘어갔나 확인" + pageSize);
+//
+//		
+//		// 처음 페이지에 들어갈 경우엔 페이지정보가 없기 때문에 기본 값을 정해준다.
+//		if(page == null && pageSize == null) {
+//			page = 1;
+//			pageSize = 2;
+//		}
+//		
+//		// 페이지에서 다시 다른 페이지로 이동할 경우 페이지정보를 컨트롤러에게 전달해줘야 한다.
+//		PageHandler ph = new PageHandler(page, pageSize, totalCnt);
+//		
+//		// 페이지 오프셋과 페이지사이즈 정보를 map에 담아준다.
+//		Map map = new HashMap();
+//		map.put("offset", (ph.getPage()-1) * ph.getPageSize());
+//		map.put("pageSize", ph.getPageSize());
+//		
+//		// map에 담아준 오프셋과 페이지사이즈 조건에 맞게 상품정보를 받아온다.
+//		List<Product> list = productService.getPageList(map);
+//		
+//		// 페이지정보를 모델에 담는다.
+//		model.addAttribute("list", list);
+//		model.addAttribute("ph", ph);
+//		model.addAttribute("uploadPath", uploadPath);
+//		
+//		return "/product/productList";
+//	}
 	
 	//상품 정보 조회
 	@GetMapping("/productInfo")
@@ -77,27 +78,27 @@ public class ProductController {
 	
 	//카테고리별 상품 조회
 	@GetMapping("/categorySet")
-	public String categorySet(int category_code, String viewName, String detail, Model model, Integer page, Integer pageSize) {
+	public String categorySet(BrandSearchCondition bsc, String viewName, String detail, Model model) {
 				
 		// 페이지와 페이지사이즈정보가 없을 경우 각각 1, 8로 세팅
-		if(page == null && pageSize == null) {
-			page = 1;
-			pageSize = 2;
-		}
+//		if(page == null && pageSize == null) {
+//			page = 1;
+//			pageSize = 2;
+//		}
 		// 상품들의 총 개수를 받아온다.
-		int productCount = productService.getProduct_CategorySet_Count(category_code);
+		int productCount = productService.getProduct_CategorySet_Count(bsc.getCategory_code());
 		
 		// 페이징
-		PageHandler ph = new PageHandler(page, pageSize, productCount);
+		PageHandler ph = new PageHandler(productCount, bsc);
 		
 		
 		
 		// 상품을 받아올 때 필요한 조건들을 맵에 담는다.
 		Map map = new HashMap();
 		// 페이지 오프셋, 페이지 사이즈, 카테고리 코드 
-		map.put("offset", (page-1)*pageSize);
-		map.put("pageSize", pageSize);
-		map.put("category_code", category_code);
+		map.put("offset", (bsc.getPage()-1)*bsc.getPageSize());
+		map.put("pageSize", bsc.getPageSize());
+		map.put("category_code", bsc.getCategory_code());
 		
 		//카테고리별로 분류한 상품페이지 정보를 받아온다.
 		List<Product> productList = productService.getProduct_CategorySet(map);
@@ -130,10 +131,29 @@ public class ProductController {
 	
 	// 브랜드 상품페이지로 이동
 	@GetMapping("/brandPage")
-	public String brandPage(Integer category_code,Model model) {
-		System.out.println("요청전달 확인" + category_code);
-		List<Product> productList = productService.getBrandPage(category_code);
-		model.addAttribute("productList", productList);
+	public String brandPage(BrandSearchCondition bsc, Model model ) {
+		System.out.println("키워드 출력:" + bsc.getKeyword());
+		
+		// 페이징 처리 필요
+//		처음 화면에 들어왔을 경우 페이지와 페이지사이즈 정보가 없으니 기본값세팅
+		
+//		  if(page == null && pageSize == null) { page = 1; pageSize = 8; }
+		 
+		// 브랜드 상품의 총 수량을 DB에서 받아온다.
+		int totalCount = productService.getBrandProduct_SearchCount(bsc);
+		
+		System.out.println(totalCount);
+				
+		// 페이징 처리
+		
+		  PageHandler ph = new PageHandler(totalCount, bsc);
+		  		
+		  List<Product> productList = productService.getBrandProduct_Search(bsc);
+		  model.addAttribute("productList", productList);
+		  model.addAttribute("ph", ph);
+			 
+		 
+		
 		return "/category/brandProduct";
 	}
 	

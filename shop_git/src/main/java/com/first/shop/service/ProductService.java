@@ -3,6 +3,7 @@ package com.first.shop.service;
 import java.util.List;
 import java.util.Map;
 
+import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
 import com.first.shop.dto.Product;
 
@@ -21,5 +22,11 @@ public interface ProductService {
 	
 	List<Category> sortByBrand();
 	
-	List<Product> getBrandPage(Integer category_code);
+	List<Product> getBrandPage(Map map);
+	
+	int getBrand_Product_Count(Integer category_code);
+	
+	int getBrandProduct_SearchCount(BrandSearchCondition brandSearchCondition);
+	
+	List<Product> getBrandProduct_Search(BrandSearchCondition brandSearchCondition);
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
 import com.first.shop.dto.Product;
 
@@ -63,9 +64,29 @@ public class ProductDaoImpl implements ProductDao {
 	
 	// 브랜드 상품 페이지
 	@Override
-	public List<Product> getBrand(Integer category_code) {
-		return session.selectList(namespace+"get_Brand_Page", category_code);
+	public List<Product> getBrand(Map map) {
+		return session.selectList(namespace+"get_Brand_Page", map);
 	}
+	
+	// 브랜드 상품 총 개수 가져오기
+	@Override
+	public int getBrand_Count(Integer category_code) {
+		return session.selectOne(namespace+"get_Brand_Product_Count", category_code);
+	}
+	
+	// 브랜드 상품 검색 결과로 나온 총 상품 수량 가져오기
+	@Override
+	public int getBrand_SearchCount(BrandSearchCondition brandSearchCondition) {
+		return session.selectOne(namespace+"get_Brand_Product_Search_Count", brandSearchCondition);
+	}
+	
+	// 브랜드 상품 검색 결과로 나온 상품 목록 가져오기
+	@Override
+	public List<Product> getBrand_Search(BrandSearchCondition brandSearchCondition) {
+		return session.selectList(namespace+"get_Brand_Product_Search", brandSearchCondition);
+	}
+
+	
 	
 	
 

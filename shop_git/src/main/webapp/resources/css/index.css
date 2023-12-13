@@ -5,7 +5,7 @@
     padding: 0;
 }
 
-a { 	
+a {
 	text-decoration: none;  }
 
 ul {
@@ -53,15 +53,15 @@ ul > li:hover > a {
 	position: absolute;
 	top: 100%;
     left: 0;
-    background-color: navy; 
+    background-color: white; 
     flex-direction: column; /* 세로 방향으로 정렬되도록 수정 */
 } 
 
 .m2 > li {
 	width: 120px;
-	color: white;
+	color: black;
 	text-align: center;
-	background-color: navy;
+	background-color: white;
 }
 
 /*  */

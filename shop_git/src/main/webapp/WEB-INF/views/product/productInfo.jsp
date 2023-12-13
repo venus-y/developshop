@@ -73,6 +73,7 @@
 			</span>
 			<form id="order_form" action="/shop/order/getOrder/${sessionScope.user.id}" method="get">
 				<!-- 상품 주문에 필요한 데이터(유저 아이디, 상품 수량, 상품 아이디)  -->
+				<input type="hidden" class="quantity" id="user_id" value="${sessionScope.user.id}">				
 				<input type="hidden" class="quantity" name="orderProducts[0].quantity" value="">
 				<input type="hidden" class="product_id" name="orderProducts[0].product_id" value="${productInfo.product_id}">				
 				<input type="hidden" class="product_name" name="orderProducts[0].product_name" value="${productInfo.product_name}">
@@ -97,8 +98,17 @@
 		</table>	
 	</div>
 			<!-- 리뷰 작성 영역  -->.
-			<div>
-				testsete
+			<div class="bottom_div">
+				<div class="reivew_title">
+					<h2>리뷰</h2>
+					<c:if test="${sessionScope.user != null }">
+					<button type="button" class="review_Btn">리뷰 작성</button>
+				</c:if>
+				</div>
+				
+				<div class="review_content_ul">
+				</div>
+				
 			</div>	
 </body>
 	<script type="text/javascript">
@@ -223,14 +233,6 @@
 			
 			
 		});
-
-		
-		
-		
-
-		
-		
-		
 		
 		$(".removeProduct_Btn").on("click", function () {
 			// 삭제하시겠습니까 확인시 계속 진행 아니오 누르면 return
@@ -250,10 +252,20 @@
 				}, error: function (error) {
 					alert("삭제 중 오류가 발생했습니다.")
 				}
-			})
-			
-			
+			})			
 		});
+		
+		// 리류 등록
+		$(".review_Btn").on("click", function () {
+		  let user_id = $("#user_id").val();
+		  let product_id = $(".product_id").text();
+		  
+		  let popUp = "/shop/review/getWrite/" + user_id + "?product_id=" + product_id; 
+		  
+		  let popOption = "width = 700px, height=490px, top=300px, left=300px, scrollbars=yes";
+			
+			window.open(popUp,"리뷰 작성",popOption);
+		})
 		
 		
 	</script>

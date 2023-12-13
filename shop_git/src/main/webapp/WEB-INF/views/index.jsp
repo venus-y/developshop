@@ -23,11 +23,6 @@
 	<title>메인 페이지</title>
 	    <link rel="stylesheet" href="<c:url value='/css/index.css'/>">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>    		
-		 <!-- 부트스트랩 CSS 링크 추가 -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-		 <!-- 부트스트랩 JS 링크 추가 -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div id="main">
@@ -82,30 +77,30 @@
 	   	
 	   	<!-- 관리자용 드롭다운 메뉴 추가 -->
 	   	<c:if test="${sessionScope.user.admincheck == 1 }">
-            <li class="dropdown">
+            <li class="m1">
               <a class="dropdown-toggle" href=""
                 role="button" id="menuDropdown" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 ${adminText}
               </a>
-              <div class="dropdown-menu" aria-labelledby="menuDropdown">
+              <ul class="m2">
                 <a href="<c:url value='${OrderInfoLink}'/>">${OrderInfoText}</a>
-	    		<a href="<c:url value='${registerProductLink}'/>">${registerProductText}</a>
-              </div>           
+	    		<a href="<c:url value='${registerProductLink}'/>">${registerProductText}</a>                     
+              </ul>
             </li>
         </c:if>
 	    <!-- 회원용 드롭다운 메뉴 추가 -->	    	
-            <li class="dropdown">
+            <li class="m1">
               <a class="dropdown-toggle" href="#" role="button" id="menuDropdown" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 Menu
               </a>
-              <div class="dropdown-menu" aria-labelledby="menuDropdown">
+              <ul class="m2">
                 <a class="dropdown-item" href="<c:url value='/'/>">Home</a>
                 <a class="dropdown-item" href="<c:url value='${CartLink}'/>">${CartText}</a>
                 <a class="dropdown-item" href="<c:url value='${loginOutLink}'/>">${loginOutText}</a>
-                <a class="dropdown-item" href="<c:url value='${registerLink}'/>">${registerText}</a>
-              </div>           
+                <a class="dropdown-item" href="<c:url value='${registerLink}'/>">${registerText}</a>                       
+              </ul>
             </li>
             
             <!-- ... 나머지 메뉴 항목 ... -->

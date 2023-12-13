@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.first.shop.dao.ReviewDao">
+	
+	<!-- 리뷰 등록 -->
+	<insert id="write_Review" parameterType="Review">
+		insert into review (product_id, user_id, content, rating)
+		values (#{product_id}, #{user_id}, #{content}, #{rating});
+	</insert>
+	
+	<!-- 리뷰 작성할 상품번호, 상품명 가져오기 -->
+	<select id="review_ProductInfo" parameterType="int" resultType="Product">
+		select product_id, product_name from product
+		where product_id = #{product_id};
+	</select>
+	
+</mapper>

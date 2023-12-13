@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+body{
+	background-color: white;
+}
+
+/* Brand List 글씨설정 */
+h1{
+	text-align: left;
+}
+
+#alphabet-list{
+    display: flex;
+	
+    align-items: flex-start; /* 세로 중앙 정렬 */
+}
+
+.alphabetLink{
+	color: blue;
+}

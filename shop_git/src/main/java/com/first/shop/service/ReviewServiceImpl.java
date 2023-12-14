@@ -27,4 +27,16 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.productInfo(product_id);
 	}
 
+	// 유저가 리뷰 작성한 적 있는지 체크
+	@Override
+	public int check_ReviewHistory(Review review) {
+		return reviewDao.reviewHistory(review);		
+	}
+
+	// 리뷰 작성 전 해당 상품을 구매한 적이 있는지 체크
+	@Override
+	public int check_OrderHistory(Review review) {
+		return reviewDao.orderHistory(review);
+	}
+
 }

@@ -8,4 +8,8 @@ public interface ReviewService {
 	int writeReview(Review review);
 	
 	Product review_ProductInfo(int product_id);
+	
+	int check_ReviewHistory(Review review);
+	
+	int check_OrderHistory(Review review);
 }

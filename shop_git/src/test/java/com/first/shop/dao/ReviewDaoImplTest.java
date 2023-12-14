@@ -17,7 +17,7 @@ public class ReviewDaoImplTest {
 	@Autowired
 	ReviewDao reviewDao;
 	
-	// 댓글 등록
+	// 리뷰 등록
 	@Test
 	public void testReview() {
 		Review review = new Review();
@@ -31,11 +31,36 @@ public class ReviewDaoImplTest {
 		assertTrue(count == 1);
 	}
 	
-	// 댓글 달 상품 정보 가져오기
+	// 리뷰 달 상품 정보 가져오기
 	@Test
 	public void testReviewProduct() {
 		Product product = reviewDao.productInfo(255);
 		System.out.println(product);
 	}
+	
+	// 상품에 리뷰 등록한 적이 있는지 확인
+	@Test
+	public void checkReviewHistory() {
+		Review review = new Review();
+		review.setUser_id("geumsung7769");
+		review.setProduct_id(255);
+		
+		int check = reviewDao.reviewHistory(review);
+		
+		System.out.println("체크결과: " + check);		
+	}
+	
+	// 리뷰 작성 전 상품을 주문한 적이 있는지 확인
+	@Test
+	public void checkOrderHistory() {
+		Review review = new Review();
+		review.setUser_id("geumsung7769");
+		review.setProduct_id(255);
+		
+		int count = reviewDao.orderHistory(review);
+		
+		System.out.println(count);
+	}
+	
 
 }

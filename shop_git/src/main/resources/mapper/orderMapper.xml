@@ -25,12 +25,12 @@
 			update product set stock = #{stock} where product_id = #{product_id}
 		</update>	
 		
-		<!-- 주문 유저 정보를 가져온다 * 사실 이미 다른 매퍼에 정의돼있는 코드라 중복이 발생한다는 점이 아쉬움 -->
+		<!-- 주문한 유저 정보를 가져온다 * 사실 이미 다른 매퍼에 정의돼있는 코드라 중복이 발생한다는 점이 아쉬움 -->
 		<select id="orderUser_info" parameterType="String" resultType="User">
 			select * from user where id = #{id}
 		</select>	
 		
-		<!-- 주문 상품 정보를 가져온다. -->
+		<!-- 주문할 상품 정보를 가져온다. -->
 		<select id="orderProduct_info" parameterType="int" resultType="Product">
 			select * from product where product_id = #{product_id}
 		</select>

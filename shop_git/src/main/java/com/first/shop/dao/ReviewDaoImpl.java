@@ -25,5 +25,17 @@ public class ReviewDaoImpl implements ReviewDao {
 	public Product productInfo(int product_id) {
 		return session.selectOne(namespace+"review_ProductInfo", product_id);
 	}
+	
+	// 유저가 상품에 리뷰를 작성한 적이 있는지 확인
+	@Override
+	public int reviewHistory(Review review) {
+		return session.selectOne(namespace+"check_ReviewHistory", review);
+	}
+	
+	
+	@Override
+	public int orderHistory(Review review) {
+		return session.selectOne(namespace+"check_OrderHistory", review);
+	}
 
 }

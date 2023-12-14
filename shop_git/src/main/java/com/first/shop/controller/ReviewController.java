@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,7 +22,7 @@ public class ReviewController {
 		this.reviewService = reviewService;
 	}
 	
-	// 댓글 등록 페이지 불러오기
+	// 리뷰 등록 페이지 불러오기
 	@GetMapping("/getWrite/{user_id}")
 	public String getWrite(@PathVariable("user_id")String user_id, int product_id, Model model) {
 		// 리뷰 작성하는데 필요한 상품정보를 DB로부터 받아온다.
@@ -33,12 +34,23 @@ public class ReviewController {
 	}
 	
 	
-	// 댓글 등록 요청
+	// 리뷰 등록 요청
 	@PostMapping("/writeReview")
 	@ResponseBody
 	public void postWrite(Review review) {
-		// ajax 요청으로 받아온 댓글 정보를 넘겨준다.
+		// ajax 요청으로 받아온 리뷰 정보를 넘겨준다.
 		reviewService.writeReview(review);		
 	}
 	
+	
+	// 리뷰 작성한 적 있는지 확인
+	@PostMapping("/checkHistory")
+	@ResponseBody
+	public int checkHistory(@RequestBody Review review) {
+		System.out.println(review +" 전달받음");
+		// DB에 등록된 리뷰 정보가 있는지 확인
+		int count = reviewService.check_ReviewHistory(review);
+		// 뷰로 다시 반환
+		return count;
+	}
 }

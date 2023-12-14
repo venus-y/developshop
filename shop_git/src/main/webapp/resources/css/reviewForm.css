@@ -85,4 +85,112 @@ body{
 	    resize: none;
 	    margin-top: 10px;  	
   	}
+
+/* /* 별점 관련 설정 */
+.rating_div fieldset{
+display: inline-block;
+direction: rtl;
+border:0;
+}
+.rating_div fieldset legend{
+    text-align: right;
+}
+.rating_div input[type=radio]{
+    display: none;
+}
+.rating_div label{
+    font-size: 3em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+}
+.rating_div label:hover{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+.rating_div label:hover ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+.rating_div input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+반쪽자리 별 설정
+#half-stars-example {
+
+  use display:inline-flex to prevent whitespace issues. alternatively, you can put all the children of .rating-group on a single line
+    display: inline-flex;
+}
+
+.rating-group {
+  display: inline-flex;
+}
+
+.rating__icon {
+  pointer-events: none;
+}
+
+.rating__input {
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+.rating__label {
+  cursor: pointer;
+  padding: 0 0.1em;
+  font-size: 2rem;
+  color: orange;
+}
+
+.rating__label--half {
+  padding-right: 0;
+  margin-right: -0.6em;
+  z-index: 2;
+}
+
+.rating__icon--star {
+  color: orange;
+}
+
+.rating__icon--none {
+  color: #eee;
+}
+
+.rating__input--none:checked + .rating__label .rating__icon--none {
+  color: red;
+}
+
+.rating__input:checked ~ .rating__label .rating__icon--star {
+  color: #ddd;
+}
+
+.rating-group:hover .rating__label .rating__icon--star,
+.rating-group:hover .rating__label--half .rating__icon--star {
+  color: orange;
+}
+
+.rating__input:hover ~ .rating__label .rating__icon--star,
+.rating__input:hover ~ .rating__label--half .rating__icon--star {
+  color: #ddd;
+}
+
+.rating-group:hover .rating__input--none:not(:hover) {
+  color: #eee;
+}
+
+.rating__input--none:hover + .rating__label .rating__icon--none {
+  color: red;
+} */
+
+
+
+#reviewContents {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: solid 1.5px #D3D3D3;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+}
+  	
   	

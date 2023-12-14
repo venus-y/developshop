@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,16 +17,22 @@ import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
 import com.first.shop.dto.PageHandler;
 import com.first.shop.dto.Product;
+import com.first.shop.dto.Review;
+import com.first.shop.dto.User;
 import com.first.shop.service.ProductService;
+import com.first.shop.service.ReviewService;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
 	
 	private final ProductService productService;
+	private final ReviewService reviewService;
+
 	
-	public ProductController(ProductService productService) {
+	public ProductController(ProductService productService, ReviewService reviewService) {
 		this.productService = productService;
+		this.reviewService = reviewService;
 	}
 	
 	// 상품 목록 시 이미지 조회를 위해 이미지 저장 경로를 넘겨준다.
@@ -68,11 +77,33 @@ public class ProductController {
 	
 	//상품 정보 조회
 	@GetMapping("/productInfo")
-	public String productInfo(int product_id, Model model) {
+	public String productInfo(HttpServletRequest request ,int product_id, Model model) {
 		// 미리보기 이미지로부터 받아온 상품번호에 해당하는 상품정보를 db에서 받아온다.
 		Product productInfo = productService.getProductInfo(product_id);
 		// 상품정보를 모델에 담아 뷰에 넘겨준다.
+		
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		
+		Review review = new Review();
+		
+		//세션에 유저객체가 존재하지 않는 상태 즉 로그인 하지 않은 상태면 아래 코드들은 실행 x
+		if(user != null) {
+			// 세션에서 받아온 id를 매개변수로 받아온 상품id를 Review 객체에 담는다.
+			
+			review.setUser_id(user.getId());
+			review.setProduct_id(product_id);
+		}
+		
+		
+		
+		
+		// 접속한 유저가 해당 상품을 구매한 이력이 있는지 검사
+		int orderHistoryCheck = reviewService.check_OrderHistory(review);
+		
+		
 		model.addAttribute("productInfo", productInfo);
+		model.addAttribute("orderHistoryCheck", orderHistoryCheck);
 		return "/product/productInfo";
 	}
 	

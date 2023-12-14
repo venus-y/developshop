@@ -7,4 +7,9 @@ public interface ReviewDao {
 	int review(Review review);
 	
 	Product productInfo(int product_id);
+	
+	int orderHistory(Review review);
+	
+	int reviewHistory(Review review);
+	
 }

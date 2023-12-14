@@ -9,7 +9,8 @@ body {
 }
 
 table {
-    width: 50%;
+    width: 30%;
+    height: 20%;
     margin: 20px auto;
     border-collapse: collapse;
 }
@@ -48,4 +49,106 @@ img {
 button{
 	margin-top: 20px;
 	align-items: center;
+}
+
+ /* 리뷰쓰기 버튼 */
+  .review_Btn_div{
+  	padding : 10px;
+  }
+  .review_Btn_div button{
+	background-color: #365fdd;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 5px 12px;
+    cursor: pointer;  
+  }
+  .review_Btn_div button:hover{
+  	background-color: #1347e7;
+  }
+  
+
+/* 리뷰 작성 영역 스타일 */
+
+.review_bottom {
+    padding-bottom: 10px;
+    display: flex;
+    flex-wrap: nowrap;  /* 수정된 부분: flex-wrap 속성 추가 */
+}
+
+.user_id_span {
+    padding: 0 15px 0 3px;
+    font-weight: bold;
+}
+
+.date_span {
+    padding: 0 15px 0;
+}
+
+.rating_span {
+    color: #f39c12;
+    margin-left: auto; /* 이 부분을 추가하여 평점을 오른쪽으로 이동시킵니다. */
+}
+
+
+
+.review_title h2 {
+    padding: 15px 0 5px 5px;
+}
+
+/* 리뷰 버튼 스타일링 */
+.review_Btn_div {
+    padding: 10px;
+}
+
+.review_Btn_div button {
+    background-color: #365fdd;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 5px 12px;
+    cursor: pointer;
+}
+
+.review_Btn_div button:hover {
+    background-color: #1347e7;
+}
+
+/* 리뷰 콘텐츠 스타일링 */
+.comment_div {
+    position: relative;
+    border-bottom: 1px dotted #d4d4d4;
+    padding: 14px 0 10px 0;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.review_top {
+    padding-bottom: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center; /* 이 부분을 추가하여 세로 정렬을 가운데로 조정 */   
+}
+
+.update_review_Btn,
+.delete_review_Btn {
+    font-weight: bold;
+    width: 40px;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 5px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.update_review_Btn {
+    background-color: #b7b399;
+    color: white;
+}
+
+.delete_review_Btn {
+    background-color: #e7578f;
+    color: white;
 }

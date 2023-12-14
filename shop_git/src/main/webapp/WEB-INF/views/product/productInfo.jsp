@@ -96,19 +96,46 @@
 			</td>
 		</tr>
 		</table>	
-	</div>
+		</div>
 			<!-- 리뷰 작성 영역  -->.
 			<div class="bottom_div">
-				<div class="reivew_title">
-					<h2>리뷰</h2>
-					<c:if test="${sessionScope.user != null }">
-					<button type="button" class="review_Btn">리뷰 작성</button>
-				</c:if>
+				<div class="review_title">
+					<h2>리뷰</h2>					
 				</div>
 				
-				<div class="review_content_ul">
+			<!-- 구매 이력이 있는 사람에 한해서 리뷰 작성 가능 -->	
+			<c:if test="${orderHistoryCheck == 1 }">
+				<div class="review_Btn_div">
+				<button type="button" class="review_Btn">리뷰 작성</button>
 				</div>
+			</c:if>
 				
+				<!-- 리뷰 없을 시 나타나는 메세지 영역 -->
+				<div class="review_not_div">
+				
+				</div>
+				<!-- 리뷰 내용 출력 영역 -->
+				<ul class="review_content_ul">
+					<li>
+						<div class="comment_div">
+							<div class="review_top">
+							  	<span class="user_id_span">testUser</span>
+							  	<span class="date_span">2021-1111</span>
+							  	<span class="rating_span">평점 : <span class="rating_value_span">4</span>점</span>
+							  	<a class="update_review_Btn">수정</a><a class="delete_review_Btn">삭제</a>	 										
+							</div>
+							<div class="review_bottom">
+								<div class="review_bottom_txt">
+									teststestset
+								</div>
+							</div>
+						</div>					
+					</li>
+				</ul>
+				<!-- 리뷰 페이징 영역 -->		
+				<div>
+				
+				</div>			
 			</div>	
 </body>
 	<script type="text/javascript">
@@ -260,11 +287,36 @@
 		  let user_id = $("#user_id").val();
 		  let product_id = $(".product_id").text();
 		  
-		  let popUp = "/shop/review/getWrite/" + user_id + "?product_id=" + product_id; 
+		// 유저가 상품에 리뷰를 작성한 적이 있는지 검사해서 있을 경우 작성 못하게 해야함
+			$.ajax({
+				type: "POST",
+				url: "/shop/review/checkHistory",
+				contentType : "application/json; charset=utf-8",
+				// JSON 문자열로 변환해서 보낸다.
+				data: JSON.stringify({
+					product_id : product_id,
+					user_id : user_id
+				}),
+				// 반환값이 1일 경우 리뷰가 존재하는 상태 
+				success : function (response) {
+					// trim을 사용해 불필요한 공백들 제거
+					let result = $.trim(response);
+					if(result == "1"){
+						alert("등록된 리뷰가 이미 존재합니다.");
+						return false;
+					}
+					
+				// 등록되지 않았을 경우 리뷰 작성창을 연다.
+				  let popUp = "/shop/review/getWrite/" + user_id + "?product_id=" + product_id; 
+				  
+				  let popOption = "width = 700px, height=490px, top=300px, left=300px, scrollbars=yes";
+					
+				  window.open(popUp,"리뷰 작성",popOption);
+					
+				}
+			})
 		  
-		  let popOption = "width = 700px, height=490px, top=300px, left=300px, scrollbars=yes";
-			
-			window.open(popUp,"리뷰 작성",popOption);
+		  
 		})
 		
 		

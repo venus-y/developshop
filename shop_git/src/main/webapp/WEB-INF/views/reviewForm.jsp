@@ -6,44 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/shop/css/reviewForm.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-<style>
-	.rating_div fieldset{
-    display: inline-block;
-    direction: rtl;
-    border:0;
-}
-.rating_div fieldset legend{
-    text-align: right;
-}
-.rating_div input[type=radio]{
-    display: none;
-}
-.rating_div label{
-    font-size: 3em;
-    color: transparent;
-    text-shadow: 0 0 0 #f0f0f0;
-}
-.rating_div label:hover{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-.rating_div label:hover ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-.rating_div input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#reviewContents {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: solid 1.5px #D3D3D3;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: none;
-}
-</style>
 </head>
 <body>	
    <div class="wrapper_div">
@@ -56,8 +20,8 @@
  				<h2>${productInfo.product_name}</h2>
  			</div>
  			<!-- 평점 선택  -->
- 			<div class="rating_div">
- 				<!-- 별점 -->
+ 			<!-- <div class="rating_div">
+ 				별점
  				<fieldset>
 				    <span class="text-bold">별점을 선택해주세요</span>
 					<input type="radio" name="rating" value="5" id="val1"><label for="val1">★</label>
@@ -66,7 +30,37 @@
 					<input type="radio" name="rating" value="2" id="val4"><label for="val4">★</label>
 					<input type="radio" name="rating" value="1" id="val5"><label for="val5">★</label>
  				</fieldset>
- 			</div>			
+ 			</div> -->
+ 			<!-- 별점 선택 -->
+ 			<div id="half-stars-example">
+    <div class="rating-group">
+        <input class="rating__input rating__input--none" checked name="rating" id="rating-0" value="0" type="radio">
+        <label aria-label="0 stars" class="rating__label" for="rating-0">&nbsp;</label>
+        <label aria-label="0.5 stars" class="rating__label rating__label--half" for="rating-05"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+        <input class="rating__input" name="rating" id="rating-05" value="0.5" type="radio">
+        <label aria-label="1 star" class="rating__label" for="rating-10"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+        <input class="rating__input" name="rating" id="rating-10" value="1" type="radio">
+        <label aria-label="1.5 stars" class="rating__label rating__label--half" for="rating-15"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+        <input class="rating__input" name="rating" id="rating-15" value="1.5" type="radio">
+        <label aria-label="2 stars" class="rating__label" for="rating-20"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+        <input class="rating__input" name="rating" id="rating-20" value="2" type="radio">
+        <label aria-label="2.5 stars" class="rating__label rating__label--half" for="rating-25"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+        <input class="rating__input" name="rating" id="rating-25" value="2.5" type="radio" checked>
+        <label aria-label="3 stars" class="rating__label" for="rating-30"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+        <input class="rating__input" name="rating" id="rating-30" value="3" type="radio">
+        <label aria-label="3.5 stars" class="rating__label rating__label--half" for="rating-35"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+        <input class="rating__input" name="rating" id="rating-35" value="3.5" type="radio">
+        <label aria-label="4 stars" class="rating__label" for="rating-40"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+        <input class="rating__input" name="rating" id="rating-40" value="4" type="radio">
+        <label aria-label="4.5 stars" class="rating__label rating__label--half" for="rating-45"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+        <input class="rating__input" name="rating" id="rating-45" value="4.5" type="radio">
+        <label aria-label="5 stars" class="rating__label" for="rating-50"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+        <input class="rating__input" name="rating" id="rating-50" value="5" type="radio">
+    	<p class="desc" style="margin-bottom: 2rem; font-family: sans-serif; font-size:0.9rem">별점을 선택해주세요.</p> 
+    </div>
+  
+</div>
+ 						
  			<!-- 리뷰 작성 영역 -->
  			<div class="content_div">
  				<h4>리뷰</h4>
@@ -94,8 +88,7 @@
 		const product_id = '${productInfo.product_id}';
 		const rating = $("input[name='rating']:checked").val();
 		const content = $("textarea[name='content']").val();
-		
-		
+				
 		const form = {
 			user_id : user_id,
 			product_id : product_id,
@@ -109,7 +102,7 @@
 			return;
 		}
 		
-		// 유저가 상품에 리뷰를 작성한 적이 있는지 검사해서 있을 경우 작성 못하게 해야함
+		
 		
 		
 		

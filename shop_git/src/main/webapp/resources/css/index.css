@@ -12,7 +12,7 @@ ul {
     list-style-type: none;
     height: 80px;
     width: 100%;
-    background-color: navy;
+    background-color: #7b68ee; 
     display: flex;
     padding-inline-start: 0; /* 목록 스타일 제거 */
     list-style: none;

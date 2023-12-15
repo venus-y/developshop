@@ -95,7 +95,8 @@
 			</c:if>				
 			</td>
 		</tr>
-		</table>	
+		</table>
+		<a class="reviewList">리뷰목록 가져오기</a>	
 		</div>
 			<!-- 리뷰 작성 영역  -->.
 			<div class="bottom_div">
@@ -116,13 +117,14 @@
 				</div>
 				<!-- 리뷰 내용 출력 영역 -->
 				<ul class="review_content_ul">
-					<li>
+					<!-- <li>
 						<div class="comment_div">
 							<div class="review_top">
 							  	<span class="user_id_span">testUser</span>
 							  	<span class="date_span">2021-1111</span>
 							  	<span class="rating_span">평점 : <span class="rating_value_span">4</span>점</span>
 							  	<a class="update_review_Btn">수정</a><a class="delete_review_Btn">삭제</a>	 										
+								
 							</div>
 							<div class="review_bottom">
 								<div class="review_bottom_txt">
@@ -130,11 +132,28 @@
 								</div>
 							</div>
 						</div>					
-					</li>
+					</li> -->
 				</ul>
 				<!-- 리뷰 페이징 영역 -->		
-				<div>
-				
+				<div class="review_pageInfo_div">
+					<ul class="pageMaker">
+						<!-- <li class="pageMaker_Btn_Prev">
+								<a>이전</a>
+						</li>
+						<li class="pageMaker_Btn">
+								<a>1</a>
+						</li>
+						<li class="pageMaker_Btn">
+								<a>2</a>
+						</li>
+						<li class="pageMaker_Btn Active">
+								<a>3</a>
+						</li>
+						<li class="pageMaker_Btn Next">
+								<a>다음</a>
+						</li>
+						 -->
+					</ul>
 				</div>			
 			</div>	
 </body>
@@ -251,7 +270,13 @@
 			
 			let quantity = $(".quantity_input").val();
 			let Form_quantity = $(".quantity"); 
-
+			
+			if(${sessionScope.user == null}){
+				alert("로그인 후 이용해주세요.");
+				return false;
+			}
+			
+			
 			Form_quantity.val(quantity); 
 			form.submit();
 
@@ -282,7 +307,7 @@
 			})			
 		});
 		
-		// 리류 등록
+		// 리뷰 등록
 		$(".review_Btn").on("click", function () {
 		  let user_id = $("#user_id").val();
 		  let product_id = $(".product_id").text();
@@ -318,6 +343,66 @@
 		  
 		  
 		})
+		
+		$(".reviewList").on("click", function () {
+			getReviewList();
+		});
+		
+		
+		// 리뷰 목록 가져오기
+		function getReviewList() {
+			let product_id = $(".product_id").text();	
+			
+			/* $.ajax({
+				type: "GET",
+				url: "/shop/review/reviewList",
+				contentType : "application/json; charset=utf-8",
+				// JSON 문자열로 변환해서 보낸다.
+				data: {product_id : product_id},
+				success : function (response) {
+					alert("요청전달까진 성공");		
+				}
+			});
+			 */
+			$.getJSON("/shop/review/reviewList", {product_id : product_id}, function(obj) {
+				
+				// 작성된 리류가 없을 경우			
+				if(obj.length === 0){
+					$(".review_not_div").html('<span>작성된 리뷰가 없습니다.</span>');
+					$(".review_content_ul").html('');
+					$(".pageMaker").html('');
+				} else{
+					$(".review_not_div").html('');
+					
+					let list = obj;
+					let user_id = '${sessionScope.user.id}'; 
+					
+					let review_list = '';
+					
+					// 서버에서 받아온 리뷰 목록을 브라우저 화면 상에 출력한다.
+					$(list).each(function (i, obj) {
+						review_list += '<li>';
+						review_list += '<div class="review_div">';
+						review_list += '<div class="review_top">';
+						// 작성자 아이디, 작성일, 평점 등을 담는다.
+						review_list += '<span class="user_id_span">' + obj.user_id +'</span>';
+						review_list += '<span class="date_span">' + obj.regdate + '</span>';
+						review_list += '<span class="rating_span"> 평점 : <span class="rating_value_span">' + obj.rating + '</span>점</span>';
+						// 접속한 유저의 아이디 == 리뷰 작성자 아이디 -> 수정, 삭제 버튼 노출
+						if(user_id === obj.user_id){
+							review_list += '<a class="update_review_Btn" href="'+ obj.review_id +'">수정</a><a class="delete_review_Btn" href="'+ obj.review_id +'">삭제</a>';
+						}
+						review_list += '</div>';
+						review_list += '<div class="review_bottom">';
+						review_list += '<div class="review_bottom_txt">' + obj.content + '</div>';
+						review_list += '</div>';
+						review_list += '</li>';
+					});
+					
+					$(".review_content_ul").html(review_list);
+				}
+			})
+		}
 		
 		
 	</script>

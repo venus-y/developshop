@@ -1,5 +1,7 @@
 package com.first.shop.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.first.shop.dao.ReviewDao;
@@ -37,6 +39,12 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int check_OrderHistory(Review review) {
 		return reviewDao.orderHistory(review);
+	}
+
+	// 상품에 작성된 리뷰 목록 가져오기
+	@Override
+	public List<Review> getReviewList(int product_id) {
+		return reviewDao.reviewList(product_id);
 	}
 
 }

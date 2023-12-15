@@ -24,8 +24,14 @@
 	<!-- 상품을 주문한 유저만 리뷰를 작성할 수 있게 검증 -->
 	<select id="check_OrderHistory" parameterType="Review" resultType="int">
 		select count(*) from orders o inner join
-		order_product op where o.status = '배송완료'
+		order_product op on o.order_id = op.order_id
+		where o.status = '배송완료'
 		and o.user_id = #{user_id} and op.product_id = #{product_id};
+	</select>
+	
+	<!-- 특정 상품에 작성된 리뷰 목록을 가져온다. -->
+	<select id="get_ReviewList" parameterType="int" resultType="Review">
+		select * from review where product_id = #{product_id};
 	</select>
 	
 </mapper>

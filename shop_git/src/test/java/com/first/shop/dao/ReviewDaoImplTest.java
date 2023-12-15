@@ -2,6 +2,8 @@ package com.first.shop.dao;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +64,12 @@ public class ReviewDaoImplTest {
 		System.out.println(count);
 	}
 	
-
+	// 작성된 리뷰 목록 가져오기
+	@Test
+	public void reviewList() {
+		List<Review> list = reviewDao.reviewList(255);
+		System.out.println(list);
+		
+	}
+	
 }

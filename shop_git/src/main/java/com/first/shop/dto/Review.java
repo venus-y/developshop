@@ -2,10 +2,13 @@ package com.first.shop.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Review {
 	private int review_id;
 	private int product_id;
 	private String user_id;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	private Date regdate;
 	private String content;
 	private double rating;

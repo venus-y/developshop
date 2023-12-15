@@ -1,5 +1,7 @@
 package com.first.shop.dao;
 
+import java.util.List;
+
 import com.first.shop.dto.Product;
 import com.first.shop.dto.Review;
 
@@ -12,4 +14,7 @@ public interface ReviewDao {
 	
 	int reviewHistory(Review review);
 	
+	List<Review> reviewList(int product_id);
+	
+
 }

@@ -20,6 +20,13 @@ td {
     border: 1px solid #ddd;
 }
 
+.review_content_ul{
+	background-color: white;
+}
+.pageMaker{
+	background-color: white;
+}
+
 img {
 	display: auto;
     max-width: 100%;
@@ -66,9 +73,23 @@ button{
   .review_Btn_div button:hover{
   	background-color: #1347e7;
   }
+
+
+/* 리뷰 영역 및 페이징 중앙 정렬 */
+.bottom_div {
+    width: 70%; /* 가로폭 조절, 필요에 따라 수정 가능 */
+    margin: 20px auto; /* 가운데 정렬을 위한 마진 설정 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.review_pageInfo_div {
+    margin-top: 20px; /* 페이징과의 간격 조절, 필요에 따라 수정 가능 */
+}
   
 
 /* 리뷰 작성 영역 스타일 */
+
+
 
 .review_bottom {
     padding-bottom: 10px;
@@ -90,7 +111,13 @@ button{
     margin-left: auto; /* 이 부분을 추가하여 평점을 오른쪽으로 이동시킵니다. */
 }
 
+.pageMaker > li > a {
+	color: black;
+}
 
+.pageMaker{
+	background-color: #add8e6; 
+}
 
 .review_title h2 {
     padding: 15px 0 5px 5px;
@@ -115,20 +142,21 @@ button{
 }
 
 /* 리뷰 콘텐츠 스타일링 */
-.comment_div {
+.review_div {
     position: relative;
     border-bottom: 1px dotted #d4d4d4;
     padding: 14px 0 10px 0;
     font-size: 12px;
     display: flex;
     flex-direction: column;
+	background-color: #add8e6; 
 }
 
 .review_top {
     padding-bottom: 10px;
     display: flex;
     flex-wrap: nowrap;
-    align-items: center; /* 이 부분을 추가하여 세로 정렬을 가운데로 조정 */   
+    align-items: center; /* 이 부분을 추가하여 세로 정렬을 가운데로 조정 */     
 }
 
 .update_review_Btn,
@@ -151,4 +179,14 @@ button{
 .delete_review_Btn {
     background-color: #e7578f;
     color: white;
+}
+
+/* 글씨 색상 설정 */
+.user_id_span, .date_span, .review_bottom_txt{
+	color: black;
+}
+
+/* 배경 설정 */
+.review_content_ul{
+	background-color: #add8e6; 
 }

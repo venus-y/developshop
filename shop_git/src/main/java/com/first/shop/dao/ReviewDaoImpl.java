@@ -1,5 +1,7 @@
 package com.first.shop.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -32,10 +34,16 @@ public class ReviewDaoImpl implements ReviewDao {
 		return session.selectOne(namespace+"check_ReviewHistory", review);
 	}
 	
-	
+	// 유저가 해당상품 구매이력이 있는지 확인
 	@Override
 	public int orderHistory(Review review) {
 		return session.selectOne(namespace+"check_OrderHistory", review);
+	}
+
+	// 해당 상품에 작성된 리뷰목록을 가져온다.
+	@Override
+	public List<Review> reviewList(int product_id) {
+		return session.selectList(namespace+"get_ReviewList", product_id);
 	}
 
 }

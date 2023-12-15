@@ -1,5 +1,8 @@
 package com.first.shop.controller;
 
+import java.util.List;
+
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,5 +55,18 @@ public class ReviewController {
 		int count = reviewService.check_ReviewHistory(review);
 		// 뷰로 다시 반환
 		return count;
+	}
+	
+	// 상품에 작성된 리뷰 목록 가져오기
+	@GetMapping(value = "/reviewList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public List<Review> reviewList(int product_id){
+		// 상품정보 페이지에서 받아온 상품번호로 DB에 있는 리뷰목록을 조회한 후 받아온다.
+		List<Review> reviewList =  reviewService.getReviewList(product_id);
+		System.out.println("리뷰 목록 출력");
+		for(int i=0; i < reviewList.size(); i++) {
+			System.out.println(reviewList.get(i));
+		}
+		return reviewList;
 	}
 }

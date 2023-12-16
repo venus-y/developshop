@@ -1,6 +1,7 @@
 package com.first.shop.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,27 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 
 	// 해당 상품에 작성된 리뷰목록을 가져온다.
+//	@Override
+//	public List<Review> reviewList(int product_id) {
+//		return session.selectList(namespace+"get_ReviewList", product_id);
+//	}
+	
+	// 해당 상품에 작성된 리뷰목록(페이징 적용)을 가져온다.
 	@Override
-	public List<Review> reviewList(int product_id) {
-		return session.selectList(namespace+"get_ReviewList", product_id);
+	public List<Review> reviewList(Map map) {
+		return session.selectList(namespace+"get_ReviewList", map);
+	}
+	
+	// 해당 상품에 달린 리뷰의 개수를 가져온다.
+	@Override
+	public int reviewCount(int product_id) {
+		return session.selectOne(namespace+"get_ReviewCount", product_id);
+	}
+	
+	// 상품페이지에 작성했던 리뷰 수정
+	@Override
+	public int update(Review review) {
+		return session.update(namespace+"update_Review", review);
 	}
 
 }

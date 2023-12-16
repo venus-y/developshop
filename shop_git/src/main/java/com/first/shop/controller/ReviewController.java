@@ -1,6 +1,8 @@
 package com.first.shop.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.first.shop.dto.Product;
 import com.first.shop.dto.Review;
+import com.first.shop.dto.ReviewPageHandler;
+import com.first.shop.dto.ReviewPageInfo;
 import com.first.shop.service.ReviewService;
 
 @Controller
@@ -60,13 +64,40 @@ public class ReviewController {
 	// 상품에 작성된 리뷰 목록 가져오기
 	@GetMapping(value = "/reviewList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public List<Review> reviewList(int product_id){
-		// 상품정보 페이지에서 받아온 상품번호로 DB에 있는 리뷰목록을 조회한 후 받아온다.
-		List<Review> reviewList =  reviewService.getReviewList(product_id);
+	public ReviewPageInfo reviewList(int product_id, Integer page, Integer pageSize){
+		// 상품정보 페이지에서 받아온 상품번호로 DB에 있는 총 리뷰개수를 조회한 후 받아온다.
+		int totalReviewCount = reviewService.getReviewCount(product_id);
+		
+		// 처음 리뷰목록을 가져올 경우 page와 pageSize값이 넘어오지 않게 된다.
+		// 따라서 null예외를 방지하기 위해 기본값을 셋팅
+		if(page == null && pageSize == null) {
+			page = 1;
+			pageSize = 5;
+		}
+		
+		// 리뷰 페이지 핸들러 객체 생성
+		ReviewPageHandler rph = new ReviewPageHandler(totalReviewCount, page, pageSize);
+		
+		//Map에 페이지, 페이지사이즈, 상품정보를 담아 넘겨준다.
+		Map map = new HashMap();
+		map.put("offset", (rph.getPage() - 1) * rph.getPageSize());
+		map.put("pageSize", rph.getPageSize());
+		map.put("product_id", product_id);
+		
+		System.out.println(rph);
+		
+		
+		List<Review> reviewList =  reviewService.getReviewList(map);
 		System.out.println("리뷰 목록 출력");
 		for(int i=0; i < reviewList.size(); i++) {
 			System.out.println(reviewList.get(i));
 		}
-		return reviewList;
+		
+		// 리뷰페이지 정보 객체에 받아온 리뷰목록과 페이징정보를 담는다.
+		ReviewPageInfo reviewPageInfo = new ReviewPageInfo();
+		reviewPageInfo.setReviewList(reviewList);
+		reviewPageInfo.setRph(rph);
+		
+		return reviewPageInfo;
 	}
 }

@@ -79,7 +79,7 @@ button{
 .bottom_div {
     width: 70%; /* 가로폭 조절, 필요에 따라 수정 가능 */
     margin: 20px auto; /* 가운데 정렬을 위한 마진 설정 */
-    text-align: center; /* 텍스트 가운데 정렬 */
+    /* text-align: center; 텍스트 가운데 정렬 */
 }
 
 .review_pageInfo_div {
@@ -89,7 +89,9 @@ button{
 
 /* 리뷰 작성 영역 스타일 */
 
-
+li{
+	list-style: none;
+}
 
 .review_bottom {
     padding-bottom: 10px;
@@ -116,7 +118,11 @@ button{
 }
 
 .pageMaker{
-	background-color: #add8e6; 
+	background-color: #add8e6;
+	text-align: center; 
+	display: flex;
+	align-items: center;
+	justify-content: center; /* Add this line for horizontal centering */	
 }
 
 .review_title h2 {

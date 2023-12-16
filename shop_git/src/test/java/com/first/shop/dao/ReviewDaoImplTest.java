@@ -2,7 +2,9 @@ package com.first.shop.dao;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.first.shop.dto.Product;
 import com.first.shop.dto.Review;
+import com.first.shop.dto.ReviewPageHandler;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
@@ -67,8 +70,24 @@ public class ReviewDaoImplTest {
 	// 작성된 리뷰 목록 가져오기
 	@Test
 	public void reviewList() {
-		List<Review> list = reviewDao.reviewList(255);
+		int reviewCount = reviewDao.reviewCount(255);
+//		System.out.println("받아온 리뷰 개수: " + reviewCount);
+		ReviewPageHandler rph = new ReviewPageHandler(reviewCount, 1, 5);
+		
+		System.out.println(rph);
+		
+		Map map = new HashMap();
+		map.put("product_id", 255);
+		map.put("offset", (rph.getPage()-1)*rph.getPageSize());
+		map.put("pageSize", rph.getPageSize());
+		
+		List<Review> list = reviewDao.reviewList(map);
 		System.out.println(list);
+//		
+//		Map map = new HashMap();
+//		map.put("pageSize", map)
+//		List<Review> list = reviewDao.reviewList(255);
+//		System.out.println(list);
 		
 	}
 	

@@ -95,8 +95,7 @@
 			</c:if>				
 			</td>
 		</tr>
-		</table>
-		<a class="reviewList">리뷰목록 가져오기</a>	
+		</table>	
 		</div>
 			<!-- 리뷰 작성 영역  -->.
 			<div class="bottom_div">
@@ -168,7 +167,9 @@
 		savepoint : '${productInfo.savepoint}',
 		price : '${productInfo.price}'		
 		};
-	
+		
+		// 리뷰 가져오는데 사용될 변수
+		let product_id = $(".product_id").text();
 	
 		$(document).ready(function () {			
 			
@@ -282,7 +283,12 @@
 
 		});	
 			
+		
+			// 리뷰 목록 출력
+			$.getJSON("/shop/review/reviewList", {product_id, product_id} , function(obj) {
+				makeReviewContent(obj);
 			
+			});
 			
 		});
 		
@@ -306,6 +312,8 @@
 				}
 			})			
 		});
+		
+		
 		
 		// 리뷰 등록
 		$(".review_Btn").on("click", function () {
@@ -349,32 +357,49 @@
 		});
 		
 		
-		// 리뷰 목록 가져오기
-		function getReviewList() {
-			let product_id = $(".product_id").text();	
-			
-			/* $.ajax({
-				type: "GET",
-				url: "/shop/review/reviewList",
-				contentType : "application/json; charset=utf-8",
-				// JSON 문자열로 변환해서 보낸다.
-				data: {product_id : product_id},
-				success : function (response) {
-					alert("요청전달까진 성공");		
-				}
+
+		
+		// 리뷰 페이지 정보
+		let data = {
+			product_id : product_id,
+			page : 1,
+			pageSize : 5
+		}
+		
+		// 리뷰 동적 생성 메서드
+		let reviewListInit = function() {
+			$.getJSON("/shop/review/reviewList", data , function(obj) {
+				makeReviewContent(obj);
 			});
-			 */
-			$.getJSON("/shop/review/reviewList", {product_id : product_id}, function(obj) {
+		}
+		
+		// 리뷰 페이지 내에 있는 이전, 다음, 페이지번호가 눌렸을 때의 처리
+		$(document).on('click', '.pageMaker_Btn a', function(e) {
+			// a 태그가 눌렸을 때의 기본동작을 제어
+			e.preventDefault();
+			
+			// a 태그 내에 href와 value에서 페이지, 페이지사이즈 값을 가져온다.
+			let page = $(this).attr("href");
+			let pageSize = $(this).data('value');
+			
+			data.page = page;
+			data.pageSize = pageSize;
+			
+			reviewListInit();
+		});
 				
-				// 작성된 리류가 없을 경우			
-				if(obj.length === 0){
+		 // 리뷰를 동적으로 생성하는 메서드
+		 function makeReviewContent(obj)	 {
+			// 작성된 리뷰가 없을 경우			
+				if(obj.reviewList.length === 0){
 					$(".review_not_div").html('<span>작성된 리뷰가 없습니다.</span>');
 					$(".review_content_ul").html('');
 					$(".pageMaker").html('');
 				} else{
 					$(".review_not_div").html('');
 					
-					let list = obj;
+					let list = obj.reviewList;
+					let rph = obj.rph;
 					let user_id = '${sessionScope.user.id}'; 
 					
 					let review_list = '';
@@ -400,11 +425,46 @@
 					});
 					
 					$(".review_content_ul").html(review_list);
+					
+					/* 페이징 영역 */
+					
+					let review_pageMaker = '';
+					
+					// a 태그에 담아줄 페이지 사이즈 변수
+					let pageSize = rph.pageSize;
+					
+					// 이전으로 이동 가능여부 검사
+					if(rph.prevPage){
+						let prev_num = rph.startPage - 1;
+						review_pageMaker += '<li class="pageMaker_Btn_Prev">';
+						review_pageMaker += '<a href="' + prev_num + '" data-value = "' + pageSize + '">이전</a>';
+						review_pageMaker += '</li>';
+					}
+					// 페이지 번호 -> 끝 페이지 + 1까지 i가 증가해야 끝페이지도 화면에 출력된다.
+					for(let i = rph.startPage; i < rph.endPage+1; i++){
+						review_pageMaker += '<li class="pageMaker_Btn ';
+						// 확인할 코드
+						if(rph.page === i){
+							review_pageMaker += 'active';
+						}
+						review_pageMaker += '">';
+						review_pageMaker += 
+							'<a href="'+ i +'" data-value = "' + pageSize + '" >['+i+']</a>';
+						review_pageMaker += '</li>';
+					}
+					 // 다음으로 이동 가능 여부 검사
+					 if(rph.nextPage){
+						 let next_num = rph.endPage + 1;
+						 review_pageMaker += '<li class="pageMaker_Btn_Next">';
+						 review_pageMaker += 
+							 '<a href="' + next_num + '" data-value= "' + pageSize + '">다음</a>';
+						 review_pageMaker += '</li>';						 
+					 }
+					 
+					 $(".pageMaker").html(review_pageMaker);
 				}
-			})
 		}
 		
 		
 	</script>
-
 </html>

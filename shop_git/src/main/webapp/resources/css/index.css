@@ -8,7 +8,7 @@
 a {
 	text-decoration: none;  }
 
-ul {
+.ul_index {
     list-style-type: none;
     height: 80px;
     width: 100%;
@@ -18,7 +18,7 @@ ul {
     list-style: none;
 }
 
-ul > li {
+.ul_index > li {
     color: lightgray;
     height : 100%;
     margin: 0 35px; /* 좌우 간격을 10px로 조절 */
@@ -30,7 +30,7 @@ ul > li {
 
 /* 브랜드 메뉴 정렬 관련 설정 */
 
-ul > li:hover > a {
+.ul_index > li:hover > a {
    	color: red;
 }
 
@@ -66,7 +66,7 @@ ul > li:hover > a {
 
 /*  */
 
-ul > li > a {
+.ul_index > li > a {
 	display:flex;
     color:silver;
     margin:auto;
@@ -78,7 +78,7 @@ ul > li > a {
     text-decoration: none;
 }
 
-ul > li > a:hover {
+.ul_index > li > a:hover {
     border-bottom: 3px solid rgb(209, 209, 209);
 }
 

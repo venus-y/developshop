@@ -26,7 +26,7 @@
 </head>
 <body>
 <div id="main">
-	<ul>
+	<ul class="ul_index">
 	    <li id="logo">shop main</li>
 	    <li><a href="<c:url value ='/product/sortBrand'/>">Brand</a></li>
    		<li class="m1"><a href="<c:url value='/product/categorySet?category_code=1&viewName=top'/>">Top</a>

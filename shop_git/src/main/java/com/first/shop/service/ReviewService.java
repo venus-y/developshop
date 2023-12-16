@@ -1,6 +1,7 @@
 package com.first.shop.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.first.shop.dto.Product;
 import com.first.shop.dto.Review;
@@ -15,5 +16,11 @@ public interface ReviewService {
 	
 	int check_OrderHistory(Review review);
 	
-	List<Review> getReviewList(int product_id);
+//	List<Review> getReviewList(int product_id);
+	
+	int getReviewCount(int product_id);
+	
+	List<Review> getReviewList(Map map);
+	
+	int update_Review(Review review);
 }

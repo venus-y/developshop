@@ -30,8 +30,25 @@
 	</select>
 	
 	<!-- 특정 상품에 작성된 리뷰 목록을 가져온다. -->
-	<select id="get_ReviewList" parameterType="int" resultType="Review">
+	<!-- <select id="get_ReviewList" parameterType="int" resultType="Review">
 		select * from review where product_id = #{product_id};
+	</select> -->
+	
+	<!-- 특정 상품에 작성된 리뷰 목록(페이지 적용)을 가져온다.  -->	
+	<select id="get_ReviewList" parameterType="Map" resultType="Review">
+		select * from review where product_id = #{product_id}
+    	limit #{offset} , #{pageSize};
 	</select>
+	
+	<!-- 특정 상품에 작성된 리뷰 개수를 가져온다. -->
+	<select id="get_ReviewCount" parameterType="int" resultType="int">
+		select count(*) from review where product_id = #{product_id};
+	</select>
+	
+	<!-- 리뷰 수정 -->
+	<update id="update_Review" parameterType="Review">
+		update Review where user_id = #{user_id} and product_id = #{product_id};
+	</update>
+	
 	
 </mapper>

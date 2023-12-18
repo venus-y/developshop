@@ -25,8 +25,8 @@
 		<input class="login-Input" type="password" name="password" placeholder="Enter PassWord">
 		<!-- 아이디 기억 -->
 		<div class="rememberIdDiv">
-			<label for="rememberId" class="rememberId-label">아이디 기억</label>
 			<input class="rememberId-check" id="rememberId" type="checkbox" name="rememberId" value="on" ${empty cookie.id.value ? "" : "checked" }>
+			<label for="rememberId" class="rememberId-label">아이디 기억</label>
 		</div>
 		<input type="hidden" name="toURL" value="${param.toURL}">
 		<button>로그인</button>

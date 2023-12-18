@@ -11,11 +11,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.first.shop.dto.Product;
 import com.first.shop.dto.Review;
 import com.first.shop.dto.ReviewPageHandler;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 public class ReviewDaoImplTest {
@@ -91,4 +93,29 @@ public class ReviewDaoImplTest {
 		
 	}
 	
+	// 작성된 리뷰 수정
+	@Test
+	public void reviewUpdate() {
+		Review review = new Review();
+		review.setProduct_id(255);
+		review.setUser_id("geumsung7769");
+		review.setContent("33933333333");
+		review.setRating(5);
+		
+		
+		reviewDao.update(review);		
+	}
+	
+	// 리뷰 삭제 테스트
+	@Test
+	public void deleteTest(){
+		Review review = new Review();
+		review.setProduct_id(255);
+		review.setUser_id("geumsung7769");
+		
+		int count = reviewDao.delete(review);
+		
+		System.out.println(count);
+		assertTrue(count == 1);
+	}
 }

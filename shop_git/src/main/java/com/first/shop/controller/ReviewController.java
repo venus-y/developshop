@@ -40,6 +40,34 @@ public class ReviewController {
 		return "/reviewForm";
 	}
 	
+	// 리뷰 수정 페이지 불러오기
+		@GetMapping("/reviewUpdate/{user_id}")
+		public String reviewUpdate(@PathVariable("user_id")String user_id, Integer product_id, Model model) {
+			// 매개변수로 넘겨줄 리뷰객체
+			Review paramReview = new Review();
+			paramReview.setProduct_id(product_id);
+			paramReview.setUser_id(user_id);
+			// 리뷰를 수정하기 위해 기존에 작성됐던 리뷰정보를 가져온다.
+			Review reviewInfo = reviewService.get_ReviewInfo(paramReview);
+			model.addAttribute("reviewInfo", reviewInfo	);
+			return "/reviewUpdate";
+		}
+		
+	// 리뷰 수정
+	@PostMapping("/reviewUpdate")
+	@ResponseBody
+	public void postReviewUpdate(Review review) {
+		// 리뷰 수정 페이지로부터 받아온 정보를 넘겨준다.
+		reviewService.update_Review(review);
+	}
+	
+	// 리뷰 삭제
+	@PostMapping("/reviewDelete")
+	@ResponseBody
+	public void reviewDelete(Review review) {
+		// 리뷰 수정 페이지로부터 받아온 정보를 넘겨준다.
+		reviewService.delete_Review(review);
+	}
 	
 	// 리뷰 등록 요청
 	@PostMapping("/writeReview")

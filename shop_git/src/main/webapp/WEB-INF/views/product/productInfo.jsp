@@ -387,7 +387,47 @@
 			
 			reviewListInit();
 		});
-				
+		
+		// 리뷰 수정
+		$(document).on("click", ".update_Btn", function(e) {			
+			let product_id = ${productInfo.product_id};
+			let user_id = $(this).data('value');
+			
+			
+			
+			let popUp = "/shop/review/reviewUpdate/" + user_id
+					+ "?product_id=" + product_id;
+			let popOption = "width = 700px, height=490px, top=300px, left=300px, scrollbars=yes";
+			
+			window.open(popUp,"리뷰 수정",popOption);
+		});
+		
+		// 리뷰 삭제
+		$(document).on("click", ".delete_Btn", function(e) {			
+			// 정말 삭제할껀지 물어본 후 이후의 처리를 진행한다.
+			if(!confirm("정말로 삭제하시겠습니까?"))return;
+			
+			
+			let product_id = ${productInfo.product_id};
+			let user_id = $(this).data('value');
+			
+			let form = {
+				product_id : product_id,
+				user_id : user_id
+			}
+			
+			$.ajax({
+				url : '/shop/review/reviewDelete',
+				type : 'POST',
+				data : form,
+				success : function (result) {
+					window.close();
+					alert("리뷰 삭제 완료!");
+					location.reload(true);
+				}
+			})
+		});
+		
 		 // 리뷰를 동적으로 생성하는 메서드
 		 function makeReviewContent(obj)	 {
 			// 작성된 리뷰가 없을 경우			
@@ -415,7 +455,9 @@
 						review_list += '<span class="rating_span"> 평점 : <span class="rating_value_span">' + obj.rating + '</span>점</span>';
 						// 접속한 유저의 아이디 == 리뷰 작성자 아이디 -> 수정, 삭제 버튼 노출
 						if(user_id === obj.user_id){
-							review_list += '<a class="update_review_Btn" href="'+ obj.review_id +'">수정</a><a class="delete_review_Btn" href="'+ obj.review_id +'">삭제</a>';
+							review_list += '<button data-value="' + obj.user_id + '" class="update_Btn">수정</button>'
+							review_list += '<button data-value="' + obj.user_id + '" class="delete_Btn">삭제</button>'
+
 						}
 						review_list += '</div>';
 						review_list += '<div class="review_bottom">';

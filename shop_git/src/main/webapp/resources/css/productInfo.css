@@ -109,8 +109,9 @@ li{
 }
 
 .rating_span {
-    color: #f39c12;
+    color: navy;
     margin-left: auto; /* 이 부분을 추가하여 평점을 오른쪽으로 이동시킵니다. */
+	font-size: 30px;
 }
 
 .pageMaker > li > a {
@@ -160,7 +161,6 @@ li{
 
 .review_top {
     padding-bottom: 10px;
-    display: flex;
     flex-wrap: nowrap;
     align-items: center; /* 이 부분을 추가하여 세로 정렬을 가운데로 조정 */     
 }
@@ -176,6 +176,33 @@ li{
     border-radius: 6px;
     cursor: pointer;
 }
+
+.update_Btn{
+	background-color : navy;
+	font-weight: bold;
+    width: 40px;
+    color: white;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 5px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.delete_Btn{
+	background-color : gray;
+	font-weight: bold;
+    width: 40px;
+    color: white;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 5px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
 
 .update_review_Btn {
     background-color: #b7b399;

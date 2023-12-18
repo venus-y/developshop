@@ -23,4 +23,8 @@ public interface ReviewService {
 	List<Review> getReviewList(Map map);
 	
 	int update_Review(Review review);
+	
+	Review get_ReviewInfo(Review review);
+	
+	int delete_Review(Review review);
 }

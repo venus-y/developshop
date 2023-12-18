@@ -18,7 +18,6 @@ public class ReviewServiceImpl implements ReviewService {
 		this.reviewDao = reviewDao;
 	}
 	
-	
 	// 리뷰 댓글 등록
 	@Override
 	public int writeReview(Review review) {
@@ -59,6 +58,18 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int update_Review(Review review) {
 		return reviewDao.update(review);
+	}
+
+	// 하나의 리뷰 정보를 가져온다.
+	@Override
+	public Review get_ReviewInfo(Review review) {
+		return reviewDao.reviewInfo(review);
+	}
+
+	// 리뷰 삭제
+	@Override
+	public int delete_Review(Review review) {
+		return reviewDao.delete(review);
 	}
 
 }

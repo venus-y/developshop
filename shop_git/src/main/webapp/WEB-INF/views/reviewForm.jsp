@@ -112,7 +112,9 @@
 			data : form,
 			success : function (result) {
 				window.close();
-				alert("리뷰 등록 완료!");
+				alert("리뷰 등록 완료!");				
+		        location.reload(true);
+		        
 			}
 		
 		})

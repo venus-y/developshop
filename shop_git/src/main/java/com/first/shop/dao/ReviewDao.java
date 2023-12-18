@@ -22,4 +22,8 @@ public interface ReviewDao {
 	int reviewCount(int product_id);
 	
 	int update(Review review);
+	
+	Review reviewInfo(Review review);
+	
+	int delete(Review review);
 }

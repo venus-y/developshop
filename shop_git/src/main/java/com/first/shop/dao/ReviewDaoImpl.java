@@ -64,5 +64,17 @@ public class ReviewDaoImpl implements ReviewDao {
 	public int update(Review review) {
 		return session.update(namespace+"update_Review", review);
 	}
+	
+	// 하나의 리뷰 정보를 가져온다.
+	@Override
+	public Review reviewInfo(Review review) {
+		return session.selectOne(namespace+"get_ReviewInfo", review);
+	}
+	
+	// 리뷰 삭제
+	@Override
+	public int delete(Review review) {
+		return session.delete(namespace+"delete_Review", review);
+	}
 
 }

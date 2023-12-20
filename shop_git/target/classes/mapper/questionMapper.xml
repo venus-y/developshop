@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.first.shop.dao.QuestionBoardDao">
+
+	<!-- 질문글 등록 -->
+	<insert id="register_Question" parameterType="QandA">
+		insert into qanda (title, content, inquirytype, writer)
+		values (#{title}, #{content}, #{inquirytype}, #{writer});
+	</insert>
+	
+	<!-- 글 등록시 pbno가 null 일 경우 bno를 pbno로 설정 -->
+	<update id="set_Pbno">
+		update qanda set pbno = bno where pbno is null;
+	</update>
+	
+	<!-- 글목록 가져오기(페이징) -->
+	<select id="get_QuestionList" parameterType="Map" resultType="QandA">
+		select bno, IFNULL(pbno, bno) pbno, title, content, inquirytype, writer, regdate
+		from qanda order by pbno desc, bno asc
+		limit #{offset}, #{pageSize};
+	</select>
+	
+	<!-- 글 정보 가져오기 -->
+	<sql id="QandAInfo">
+		select * from qanda where bno = #{bno};
+	</sql>
+	
+	<!-- 총 게시물 수 가져오기 -->
+	<select id="get_AllCount" resultType="int">
+	 	select count(*) from qanda;
+	</select>
+	
+	<!-- 글정보 가져오기 -->
+	<select id="get_QuestionInfo" parameterType="int" resultType="QandA">
+		<include refid="QandAInfo"></include>
+	</select>
+	
+	<!-- 답글작성 위한 정보 가져오기 -->
+	<select id="get_forReplyInfo" parameterType="int" resultType="QandA">
+		<include refid="QandAInfo"></include>
+	</select>
+
+	<!-- 답글 등록 -->
+	<insert id="register_Reply" parameterType="QandA">
+		insert into qanda (title, pbno, content, inquirytype, writer)
+		values (#{title}, #{pbno}, #{content}, #{inquirytype}, #{writer});
+	</insert>
+	
+	<!-- 한 게시글에 답글이 하나 이상 달렸는지 확인한다. -->
+	<select id="check_ReplyCount" parameterType="int" resultType="int">
+		select count(*) from qanda where pbno = #{pbno};
+	</select>
+	
+	<!-- 답글이 하나 이상 달린 게시물의 경우 추가답글을 작성할 때 최초글의 bno을 pbno로 설정하기 위해 값을 가져온다. -->
+	<select id="get_OriginalPbno" parameterType="int" resultType="int">
+		select bno from qanda where bno = #{pbno};
+	</select>
+	
+</mapper>

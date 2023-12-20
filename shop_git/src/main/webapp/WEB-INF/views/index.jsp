@@ -14,6 +14,9 @@
 <c:set var="adminText" value="${sessionScope.user.admincheck == 1 ? 'Admin Menu' : '' }"/>
 <c:set var="OrderInfoText" value="${sessionScope.user.admincheck == 1 ? 'OrderInfo Manage' : '' }"/>
 <c:set var="OrderInfoLink" value="${sessionScope.user.admincheck == 1 ? '/admin/getOrderList' : '' }"/>
+<c:set var="QuestionListLink" value="${sessionScope.user!= null  ? '/question/getList' : '' }"/>
+<c:set var="QuestionListText" value="${sessionScope.user!= null  ? 'Q&A' : '' }"/>
+
 
 
 
@@ -100,6 +103,7 @@
                 <a class="dropdown-item" href="<c:url value='${CartLink}'/>">${CartText}</a>
                 <a class="dropdown-item" href="<c:url value='${loginOutLink}'/>">${loginOutText}</a>
                 <a class="dropdown-item" href="<c:url value='${registerLink}'/>">${registerText}</a>                       
+                <a class="dropdown-item" href="<c:url value='${QuestionListLink}'/>">${QuestionListText}</a>                                                              
               </ul>
             </li>
             

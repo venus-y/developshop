@@ -151,7 +151,7 @@ public class OrderController {
 					+ "&approval_url=http://localhost:8080/shop/order/kakaopay.approve"
 					+ "&cancel_url=http://localhost:8080/cancel"
 					+ "&fail_url=http://localhost:8080/fail";
-			// 서버에 데이터를 전달해주는 클래스
+			// 서버에 데이터를 전달해주는 클래스 
 			OutputStream outputStream = con.getOutputStream();
 			DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
 			// writeBytes() : 받은 문자열을 byte로 형변환해준다.

@@ -1,5 +1,14 @@
 package com.first.shop.controller;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.first.shop.dto.CartList;
@@ -26,6 +36,9 @@ import com.first.shop.service.OrderService;
 public class OrderController {
 	@Autowired
 	OrderService orderService;
+	
+	// 카카오페이 결제 필요한 정보
+	private String tid;
 	
 	// 장바구니 -> 주문페이지 -> 주문
 	@PostMapping("/postOrder")
@@ -110,7 +123,176 @@ public class OrderController {
 
 	}
 	
+
+	// 카카오페이
+	@RequestMapping("/kakaopay.cls")
+	@ResponseBody
+	public String kakaopay() {
+		// 접근할 주소
+		try {
+			URL address = new URL("https://kapi.kakao.com/v1/payment/ready");
+			// 서버에 연결해주는 클래스
+			HttpURLConnection con = (HttpURLConnection) address.openConnection();
+			// 통신방식
+			con.setRequestMethod("POST");
+			// 인증키
+			con.setRequestProperty("Authorization", "KakaoAK 30ba730a4960c701c62ece47fbd8e4f5");
+			// 요청 컨텐츠타입
+			con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			// 서버에 전송할 데이터가 있을 경우 true로 설정
+			con.setDoOutput(true);
+			
+			// 넘겨줄 매개변수
+			String param = "cid=TC0ONETIME"
+					+ "&partner_order_id=partner_order_id"
+					+ "&partner_user_id=partner_user_id"
+					+ "&item_name=testItem"
+					+ "&quantity=1&total_amount=10000&tax_free_amount=0"
+					+ "&approval_url=http://localhost:8080/shop/order/kakaopay.approve"
+					+ "&cancel_url=http://localhost:8080/cancel"
+					+ "&fail_url=http://localhost:8080/fail";
+			// 서버에 데이터를 전달해주는 클래스
+			OutputStream outputStream = con.getOutputStream();
+			DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+			// writeBytes() : 받은 문자열을 byte로 형변환해준다.
+			dataOutputStream.writeBytes(param);
+			// close() : 메서드 호출 시 자원을 닫음과 동시에 갖고 있던 데이터를 flush 처리
+			dataOutputStream.close();
+			
+			// 받아올 응답코드
+			int result = con.getResponseCode();
+			// 데이터를 받아올 클래스
+			InputStream inputStream;
+			// 성공했을 경우
+			if(result == 200) {
+				inputStream = con.getInputStream();
+			}else {
+			// 실패했을 경우
+				inputStream = con.getErrorStream();
+			}
+			// 받아온 데이터를 읽는 클래스
+			InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+			// 받아온 데이터를 byte -> String으로 형변환
+			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+			// 읽은 문자열을 반환
+			String readLine = bufferedReader.readLine();
+			
+			System.out.println(readLine);
+			//tid 값 추출
+			try {
+				tid = extractTid(readLine);
+				System.out.println("추출결과: " + tid);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+			return readLine;
+			
+			
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "failed";
+	}
 	
+	
+	  // 카카오페이 결제 승인	
+	  @GetMapping("/kakaopay.approve")
+	  public String payComplete(@RequestParam("pg_token") String pgToken, Model model){
+		  System.out.println(pgToken);
+		  try {
+			  URL address = new URL("https://kapi.kakao.com/v1/payment/approve");
+			  // 서버에 연결해주는 클래스
+			  HttpURLConnection con = (HttpURLConnection) address.openConnection();
+			  // 통신방식
+			  con.setRequestMethod("GET");
+			  // 인증키
+			  con.setRequestProperty("Authorization", "KakaoAK 30ba730a4960c701c62ece47fbd8e4f5");
+			  // 요청 컨텐츠타입
+			  con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			  // 서버에 전송할 데이터가 있을 경우 true로 설정
+			  con.setDoOutput(true);
+			  
+			  System.out.println("tid 설정됐나: " + tid);
+			  
+			  
+			// tid 변수에 큰따옴표가 포함되어 있다면 제거
+			tid = tid.replace("\"", "");
+			  
+			  // 넘겨줄 매개변수
+			  String param = "cid=TC0ONETIME"
+					+ "&tid="+tid
+					+ "&partner_order_id=partner_order_id"
+					+ "&partner_user_id=partner_user_id"
+					+ "&pg_token="+pgToken;
+			  
+			  System.out.println("param: " + param);
+			  
+			  
+			  	// 서버에 데이터를 전달해주는 클래스
+				OutputStream outputStream = con.getOutputStream();
+				DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+				// writeBytes() : 받은 문자열을 byte로 형변환해준다.
+				dataOutputStream.writeBytes(param);
+				// close() : 메서드 호출 시 자원을 닫음과 동시에 갖고 있던 데이터를 flush 처리
+				dataOutputStream.close();
+				
+				// 받아올 응답코드
+				int result = con.getResponseCode();
+				// 데이터를 받아올 클래스
+				InputStream inputStream;
+				// 성공했을 경우
+				if(result == 200) {
+					inputStream = con.getInputStream();
+				}else {
+				// 실패했을 경우
+					inputStream = con.getErrorStream();
+				}
+				// 받아온 데이터를 읽는 클래스
+				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+				// 받아온 데이터를 byte -> String으로 형변환
+				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+				// 읽은 문자열을 반환
+				String readLine = bufferedReader.readLine();
+				
+				
+				
+				System.out.println(readLine);
+				
+		  } catch(Exception e) {
+			  	e.printStackTrace();
+		  }
+		  
+		  
+		  return "index";
+	  }
+	  
+	  // tid(카카오페이 결제정보에 필요) 값을 추출하는 메서드
+	  private String extractTid(String jsonData) { 
+	  // "tid" 다음에 오는 큰 따옴표의 시작 인덱스
+	  int start = jsonData.indexOf("\"tid\":\"") + 6;
+    
+	  // "tid" 다음에 오는 큰 따옴표의 끝 인덱스
+	  int end = jsonData.indexOf("\"", start);
+
+	  System.out.println("Start index: " + start);
+	  // 직접 end 값을 찾아보기
+	   int manualEnd = jsonData.indexOf("\"", start + 1); // start 이후에 나오는 다음 큰 따옴표 찾기
+	   System.out.println("Manual End index: " + manualEnd);
+	  System.out.println("Extracted tid: " + jsonData.substring(start,manualEnd+1));
+
+	  
+	  // start와 end 사이의 부분을 추출하여 반환
+	  return (start >= 6 && end != -1) ? jsonData.substring(start, manualEnd+1) : null;
+	  }
+	 
 	
 	
 }

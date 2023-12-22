@@ -11,8 +11,8 @@
         body {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            /* justify-content: center;
+            align-items: center; */
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
@@ -23,8 +23,8 @@
         }
 
         form {
-            width: 600px;
-            height: 700px;
+            width: 700px;
+            height: 750px;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 8px;
@@ -62,33 +62,45 @@
             cursor: pointer;
             font-size: 16px;
         }
+        /* form과 h1 태그 페이지 중앙 정렬 설정 */
+        .center-content{
+        	width: 100%;
+		    max-width: 600px; /* 더 나은 반응성을 위해 최대 너비 설정 */
+		    margin: 0 auto; /* 가로로 가운데 정렬 */
+		    padding: 20px;
+		    box-sizing: border-box;
+        }
+        .title_text{
+        	text-align: center;
+        }
     </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/index.jsp" />
-<h1>문의 게시판</h1>
-<form id="inquiryForm" action='<c:url value="/question/postWrite"/>' method="post" >
-    <label for="title">제목:</label>
-    <input type="text" id="title" name="title" value="${qanda.title}" readonly="readonly" required>
-
-    <label for="content">내용:</label>
-    <textarea id="content"  name="content" readonly="readonly" required>${qanda.content}</textarea>
-
-    <label for="inquirytype">문의 유형:</label>
-    <select id="inquirytype" name="inquirytype" required disabled="disabled">
-        <option value="general">${qanda.inquirytype}</option>
-    </select>
-
-	<label for="writer">작성자:</label>
-    <input type="text" id="writer" name="writer" value="${sessionScope.user.id}" required readonly="readonly">
-
-    <button type="submit" >문의글 작성</button>
-    
-    <c:if test="${sessionScope.user.admincheck == 1}">
+<div class="center-content">
+	<h1 class="title_text">문의 게시판</h1>
+	   <form id="inquiryForm" action='<c:url value="/question/postWrite"/>' method="post" >
+	   <label for="title">제목:</label>
+	   <input type="text" id="title" name="title" value="${qanda.title}" readonly="readonly" required>
+	
+	   <label for="content">내용:</label>
+	   <textarea id="content"  name="content" readonly="readonly" required>${qanda.content}</textarea>
+	
+	   <label for="inquirytype">문의 유형:</label>
+	   <select id="inquirytype" name="inquirytype" required disabled="disabled">
+	       <option value="general">${qanda.inquirytype}</option>
+	   </select>
+	
+	   <label for="writer">작성자:</label>
+	   <input type="text" id="writer" name="writer" value="${sessionScope.user.id}" required readonly="readonly">
+	
+	   <button type="submit" >문의글 작성</button>
+	   
+	   <c:if test="${sessionScope.user.admincheck == 1}">
 		<button type="button" onclick="location.href='getReply?pbno=' + '${qanda.bno}'">답글 작성</button>
-    </c:if>
-</form>
-
+	   </c:if>
+	</form>
+</div>
 <script>
     function submitInquiry() {
         const title = document.getElementById('title').value;

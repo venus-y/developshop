@@ -142,6 +142,10 @@
       					<form id="order_form" class="order_form" action="/shop/order/postOrder" method="post">
       					</form>
       					<button type="button" class="order_Btn">주문하기</button>	
+      					<!-- 카카오페이 테스트 -->
+      					<button type="button" class="kakaopay_Btn">
+      						<img class="kakaopay" alt="카카오 페이" src="/upload/kakao.jpg">
+      					</button>
       				</td>	
       			</tr>
       	</table>        
@@ -357,8 +361,7 @@
 					
 					// 총 상품 수량
 					order_form += total_amount_input;
-					
-					
+										
 					let delivery_cost = $(".deliverycost_span").text();
 					
 					let delivery_cost_input = "<input name='ordersList[" + arrayCount + "].delivery_cost' type='hidden' value='" + delivery_cost + "'>";
@@ -461,7 +464,22 @@
 			 
 		})
 		
-        
+        // 카카오페이
+        $(".kakaopay_Btn").on("click", function () {
+			$.ajax({
+				url:'/shop/order/kakaopay.cls',
+				dataType: 'json',
+				success: function(data) {
+					let popUp = data.next_redirect_pc_url;
+					window.open(popUp);
+				},
+				error: function(error) {
+					alert(error);
+				}
+			})
+		})
+		
+		
      // 다음 주소 API
 		function daum_address(){
  		console.log("동작");

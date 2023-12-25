@@ -26,6 +26,7 @@ public class OrderServiceImpl implements OrderService {
 	OrderDao orderDao;
 
 	
+	// 현재 사용 x
 	// 상품 구매시 유저의 포인트사용정보, 잔액 정보가 업데이트되고 상품의 재고수량이 변경되며 최종적으로 주문정보가 등록된다.
 	@Override
 	@Transactional

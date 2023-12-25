@@ -100,9 +100,10 @@
 		    	                <td>총 적립 예상 포인트 :<span class="totalsavepoint_span"></span>포인트</td>
                 	    		<td>배송비 :<span class="deliverycost_span"></span>원</td>
                     			<td>주문 예상 금액 : <span class="finaltotalprice_span"></span>원</td>
-		                    	<td>
+		                    	<td>		                    	
 			                    	<!-- 주문 form -->
-		                    		<form action="/shop/order/getOrder/${sessionScope.user.id}" method="get" class="order_form">
+		                    		<form action="/shop/order/getOrder/${sessionScope.user.id}" method="get" class="order_form">		                    			
+								        <!-- 여기에 주문할 상품들의 정보를 동적으로 추가할 예정 -->
 		                    		</form>
 		                    	</td>
 		                    	<!-- 주문 버튼 -->
@@ -269,6 +270,8 @@
 			let totalChecked = $(".cart_checkbox:checked").length;
 			// 체크를 통과할 때마다 증가하는 변수
 			let checkedCount = 0;
+			// 장바구니에서 요청했다는 것을 알리기 위한 변수
+			let cartCheck = true;
 			
 			// 체크돼있던 상품들을 배열에 담는다.
 			$(".cart_info").each(function (index, element) {
@@ -329,7 +332,9 @@
 								 stock_check = true;
 								 if(stock_check){
 								 alert("다 통과됐을 때 실행");
-								 $(".order_form").submit();			        										 
+								 // 값을 담아서 주문폼에 추가
+			                     $(".order_form").append("<input type='hidden' name='cartCheck' value='" + cartCheck + "'>");
+			                     $(".order_form").submit();	
 								 }
 								 
 						    }

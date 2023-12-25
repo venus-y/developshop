@@ -67,6 +67,18 @@ public class OrderDaoImpl implements OrderDao {
 	public int delivery_info(DeliveryInfo deliveryInfo) {
 		return session.insert(namespace+"register_delivery_info", deliveryInfo);
 	}
+	
+	// 카카오페이 주문정보 등록
+	@Override
+	public int kakaopay_order(Orders orders) {
+		return session.insert(namespace+"register_product", orders);
+	}
+	
+	// 카카오페이 주문상품정보 등록
+	@Override
+	public int kakaopay_orderproduct(OrderProduct orderProduct) {
+		return session.insert(namespace+"register_order_product", orderProduct);
+	}
 
 	
 

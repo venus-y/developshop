@@ -42,7 +42,10 @@ public class CartController {
 		try {			
 			String user_id = connectUser.getId();
 			List<Cart> cartList = cartService.getCartList(user_id);
+			// 장바구니에서 전달되는 요청인지를 체크하기 위한 변수 선언
+			boolean cartCheck = true;
 			model.addAttribute("cartList", cartList);
+			model.addAttribute("cartCheck", cartCheck);
 		} catch(NullPointerException e) {
 			System.out.println("세션이 만료됐습니다!");
 			return "redirect:/login/getLogin";

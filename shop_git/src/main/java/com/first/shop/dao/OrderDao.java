@@ -10,6 +10,10 @@ import com.first.shop.dto.User;
 public interface OrderDao {
 	int register(Orders orders);
 	
+	int kakaopay_order(Orders orders);
+	
+	int kakaopay_orderproduct(OrderProduct orderProduct);
+	
 	int update(User user);
 	
 	int update(Product product);

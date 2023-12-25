@@ -143,9 +143,11 @@
       					</form>
       					<button type="button" class="order_Btn">주문하기</button>	
       					<!-- 카카오페이 테스트 -->
-      					<button type="button" class="kakaopay_Btn">
-      						<img class="kakaopay" alt="카카오 페이" src="/upload/kakao.jpg">
+      					<button type="button" class="kakaopay_Btn" value="${cartCheck}">
+      						<img class="kakaopay" alt="카카오 페이" src="<c:url value='/imgUpload/kakao.jpg'/>">
       					</button>
+      				<!-- 카카오페이 폼 -->
+      				
       				</td>	
       			</tr>
       	</table>        
@@ -466,8 +468,48 @@
 		
         // 카카오페이
         $(".kakaopay_Btn").on("click", function () {
+        	// 주문정보를 배열에 추가해서 보내준다.
+        	let orderProductList = [];
+        	let cartList = [];
+        	
+        	// cartCheck 변수    
+        	let cartCheck = $(".kakaopay_Btn").val();
+			// 사용 포인트 정보
+			let usedPoint = $(".point_zone").val();
+			alert(usedPoint);
+       	
+        	$(".order_info").each(function (index, element) {
+        		 let orderProduct = {
+    		            product_id : encodeURIComponent($(element).find(".product_id").val()),
+    		            price : encodeURIComponent($(element).find(".sale_price").val()),
+    		            savepoint : encodeURIComponent($(element).find(".totalsavepoint").text()),
+    		            quantity : encodeURIComponent($(element).find(".quantity").text())
+    		        };
+        		 let cart = {
+        				 product_id : encodeURIComponent($(element).find(".product_id").val()),
+        				 user_id : encodeURIComponent($(element).find(".user_id").val())        				 
+        		 };
+        		// 생성한 정보를 배열에 추가
+ 				orderProductList.push(orderProduct);
+        		cartList.push(cart);        		 
+			})
+			
+			let orderProductandCartList = {
+        		orderProductList : orderProductList,
+        		cartList : cartList,
+        		cartCheck : cartCheck,
+        		usedPoint : usedPoint
+        	};
+			
+			console.log(orderProductList);
+			console.log(cartList);
+			console.log("출력결과:" + JSON.stringify(orderProductandCartList));
+			
 			$.ajax({
-				url:'/shop/order/kakaopay.cls',
+		        url: '/shop/order/kakaopay.cls',
+		        method: 'POST',
+				contentType : 'application/json',
+				data: JSON.stringify(orderProductandCartList), 
 				dataType: 'json',
 				success: function(data) {
 					let popUp = data.next_redirect_pc_url;

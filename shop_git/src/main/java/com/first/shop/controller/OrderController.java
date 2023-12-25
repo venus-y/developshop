@@ -11,6 +11,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.first.shop.dto.CartList;
 import com.first.shop.dto.OrderProductList;
+import com.first.shop.dto.OrderProductandCartList;
 import com.first.shop.dto.OrdersList;
 import com.first.shop.dto.TempOrderProduct;
 import com.first.shop.dto.TempOrderProducts;
@@ -38,11 +43,13 @@ public class OrderController {
 	OrderService orderService;
 	
 	// 카카오페이 결제 필요한 정보
-	private String tid;
+//	private String tid;
+	
+	
 	
 	// 장바구니 -> 주문페이지 -> 주문
 	@PostMapping("/postOrder")
-	public String order( OrdersList ordersList, OrderProductList orderProductList, CartList cartList,
+	public String order(OrdersList ordersList, OrderProductList orderProductList, CartList cartList,
 			@RequestParam(defaultValue = "0", required = false) int used_point,
 			BindingResult result, RedirectAttributes rattr) throws Exception{
 		System.out.println("객체검증:" + result);
@@ -78,7 +85,16 @@ public class OrderController {
 	//주문화면
 	@GetMapping("/getOrder/{user_id}")
 	public String getOrder(@PathVariable String user_id, TempOrderProducts tempOrderProducts,
-			BindingResult result , Model model) {
+			boolean cartCheck, BindingResult result , Model model) {
+		
+		if(cartCheck) {
+			System.out.println("장바구니에서 온 요청");
+			model.addAttribute("cartCheck", cartCheck);
+		}else {
+			System.out.println("즉시 구매요청");
+		}
+		// cartCheck가 true일 경우 model에 cartCheck 값을 추가
+		
 		
 		System.out.println("값에 문제가 있나>"+result);
 		System.out.println("받아온 값 테스트 : "+ tempOrderProducts);
@@ -102,7 +118,8 @@ public class OrderController {
 		return "/order/orderPage";
 	}
 	
-
+	
+	// 현재 사용 x
 	// 상품정보 -> 주문화면
 	@PostMapping("/fromInstantOrder/{user_id}")
 	public String instantOrder(@PathVariable String user_id, TempOrderProducts tempOrderProducts, BindingResult result, Model model) {
@@ -125,9 +142,9 @@ public class OrderController {
 	
 
 	// 카카오페이
-	@RequestMapping("/kakaopay.cls")
+	@PostMapping("/kakaopay.cls")
 	@ResponseBody
-	public String kakaopay() {
+	public String kakaopay(@RequestBody OrderProductandCartList orderProductandCartList, HttpServletRequest request) {
 		// 접근할 주소
 		try {
 			URL address = new URL("https://kapi.kakao.com/v1/payment/ready");
@@ -142,6 +159,15 @@ public class OrderController {
 			// 서버에 전송할 데이터가 있을 경우 true로 설정
 			con.setDoOutput(true);
 			
+			// 넘겨줄 주문상품 및 장바구니 정보를 JSON 형태의 문자열로 변환
+//			ObjectMapper objectMapper = new ObjectMapper();
+//			String orderProductandCartListAsJson = objectMapper.writeValueAsString(orderProductandCartList);
+//			
+//			String approvalUrl = "http://localhost:8080/shop/order/kakaopay.approve";
+//			String queryString = "?orderProductandCartList=" + URLEncoder.encode(orderProductandCartListAsJson, "UTF-8");
+//			String fullUrl = approvalUrl + queryString;
+			
+			
 			// 넘겨줄 매개변수
 			String param = "cid=TC0ONETIME"
 					+ "&partner_order_id=partner_order_id"
@@ -151,6 +177,10 @@ public class OrderController {
 					+ "&approval_url=http://localhost:8080/shop/order/kakaopay.approve"
 					+ "&cancel_url=http://localhost:8080/cancel"
 					+ "&fail_url=http://localhost:8080/fail";
+			
+			System.out.println("param 출력: " + param);
+			
+			
 			// 서버에 데이터를 전달해주는 클래스 
 			OutputStream outputStream = con.getOutputStream();
 			DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
@@ -180,8 +210,11 @@ public class OrderController {
 			System.out.println(readLine);
 			//tid 값 추출
 			try {
-				tid = extractTid(readLine);
-				System.out.println("추출결과: " + tid);
+				// tid 값을 orderProductandCartList에 저장
+				orderProductandCartList.setTid(extractTid(readLine));				
+				// 세션에 주문상품, 장바구니 목록 저장
+				HttpSession session = request.getSession();
+				session.setAttribute("orderProductandCartList", orderProductandCartList);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -204,9 +237,20 @@ public class OrderController {
 	
 	
 	  // 카카오페이 결제 승인	
-	  @GetMapping("/kakaopay.approve")
-	  public String payComplete(@RequestParam("pg_token") String pgToken, Model model){
+	  @RequestMapping("/kakaopay.approve")
+	  public String payComplete(@RequestParam("pg_token") String pgToken, Model model, HttpServletRequest request){
+		  // 세션에 저장해뒀던 주문상품, 장바구니 목록을 가져온다.
+		  HttpSession session = request.getSession();
+		  
+		  OrderProductandCartList orderProductandCartList = (OrderProductandCartList) session.getAttribute("orderProductandCartList"); 
+		  System.out.println("장바구니: "+orderProductandCartList.getCartList());
+		  System.out.println("주문상품: "+orderProductandCartList.getOrderProductList());
+		  System.out.println("사용포인트: "+orderProductandCartList.getUsedPoint());
+		  System.out.println("장바구니에서 온 요청 ?: " +orderProductandCartList.isCartCheck());
+
 		  System.out.println(pgToken);
+		  
+		  
 		  try {
 			  URL address = new URL("https://kapi.kakao.com/v1/payment/approve");
 			  // 서버에 연결해주는 클래스
@@ -220,15 +264,15 @@ public class OrderController {
 			  // 서버에 전송할 데이터가 있을 경우 true로 설정
 			  con.setDoOutput(true);
 			  
-			  System.out.println("tid 설정됐나: " + tid);
+			  System.out.println("tid 설정됐나: " + orderProductandCartList.getTid());
 			  
 			  
 			// tid 변수에 큰따옴표가 포함되어 있다면 제거
-			tid = tid.replace("\"", "");
+			String tid = orderProductandCartList.getTid().replace("\"", "");
 			  
 			  // 넘겨줄 매개변수
 			  String param = "cid=TC0ONETIME"
-					+ "&tid="+tid
+					+ "&tid="+ tid
 					+ "&partner_order_id=partner_order_id"
 					+ "&partner_user_id=partner_user_id"
 					+ "&pg_token="+pgToken;
@@ -251,6 +295,7 @@ public class OrderController {
 				// 성공했을 경우
 				if(result == 200) {
 					inputStream = con.getInputStream();
+					// 주문처리 
 				}else {
 				// 실패했을 경우
 					inputStream = con.getErrorStream();

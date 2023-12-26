@@ -130,7 +130,7 @@
                 <a class="dropdown-item" href="<c:url value='${QuestionListLink}'/>">${QuestionListText}</a>                                                              
               </ul>
             </li>
-            
+             
             <!-- ... 나머지 메뉴 항목 ... -->
 	    <%-- <li><a href="<c:url value='${loginOutLink}'/>">${loginOutText}</a></li>    
 	    <li><a href="<c:url value='${registerLink}'/>">${registerText}</a></li> --%>

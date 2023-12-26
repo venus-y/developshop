@@ -14,6 +14,7 @@ import com.first.shop.dto.Cart;
 import com.first.shop.dto.CartList;
 import com.first.shop.dto.OrderProduct;
 import com.first.shop.dto.OrderProductList;
+import com.first.shop.dto.OrderProductandCartList;
 import com.first.shop.dto.Orders;
 import com.first.shop.dto.OrdersList;
 import com.first.shop.dto.Product;
@@ -196,18 +197,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	// 주문정보 생성 메서드
 		private int orderInfoRegister2(Orders orderInfo) {
-			// 주문번호를 생성한다.
-			// UUID 클래스로 랜덤한 문자열 생성
-			UUID uuId = UUID.randomUUID();
-			// 주문번호의 앞에는 날짜정보가 올 수 있게 한다. 날짜정보를 얻어오기 위해 Calendar 객체를 생성
-			Calendar cal = Calendar.getInstance();
-			// 출력하고 싶은 날짜 형식을 만든다.
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			// 날짜를 지정한 양식의 문자열로 변환한다.
-			String calString = sdf.format(cal.getTime());
-			
-			
-			String orderId = calString + "_" + uuId;
+			String orderId = createOrderId();
 			System.out.println("orderId: "+orderId);
 			
 			// 주문번호, 배송상태를 셋팅한다.
@@ -219,6 +209,22 @@ public class OrderServiceImpl implements OrderService {
 			// 주문정보 등록
 			return orderDao.register(orderInfo);
 		}
+
+	private String createOrderId() {
+		// 주문번호를 생성한다.
+		// UUID 클래스로 랜덤한 문자열 생성
+		UUID uuId = UUID.randomUUID();
+		// 주문번호의 앞에는 날짜정보가 올 수 있게 한다. 날짜정보를 얻어오기 위해 Calendar 객체를 생성
+		Calendar cal = Calendar.getInstance();
+		// 출력하고 싶은 날짜 형식을 만든다.
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		// 날짜를 지정한 양식의 문자열로 변환한다.
+		String calString = sdf.format(cal.getTime());
+		
+		
+		String orderId = calString + "_" + uuId;
+		return orderId;
+	}
 		
 		// 주문상품정보 등록
 		private int orderProductRegister(String order_id, OrderProduct orderProduct) {
@@ -229,19 +235,108 @@ public class OrderServiceImpl implements OrderService {
 			
 		}
 		
-		// 배송정보 등록
-		
-
-//	@Override
-//	public int updateUser(User user) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	public int updateProduct(Product product) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-
+		// 카카오페이 주문
+		public int kakaopay_OrderRegister(OrderProductandCartList orderProductandCartList) {
+			// 총 합산가격, 합산포인트를 저장할 변수
+			int totalPrice = 0;
+			int totalSavePoint = 0;
+			int deliveryCost = 0;
+			
+			List<OrderProduct> opList = orderProductandCartList.getOrderProductList();
+			List<Cart> cartList = orderProductandCartList.getCartList();
+			
+			// 주문할 상품목록을 순회하면서 총 합산가격, 합산포인트를 구한다.
+			// 주문한 상품의 재고를 차감한다.
+			for(int i=0; i<opList.size(); i++) {
+				totalPrice += opList.get(i).getPrice();
+				totalSavePoint += opList.get(i).getSavepoint();
+						
+			// 재고를 차감할 상품의 정보를 받아온다.
+			Product reduceProduct = orderDao.product(opList.get(i).getProduct_id());
+			System.out.println("상품 재고 갱신 전:" + reduceProduct.getStock());
+			System.out.println("===============================");
+			System.out.println("현재 순회중인 상품명:" + reduceProduct.getProduct_name());
+			// 주문한 상품수량만큼 차감한다.
+			reduceProduct.setStock(reduceProduct.getStock() - opList.get(i).getQuantity());
+			
+			
+			// DB에 있는 Product 테이블을 갱신한다.
+			orderDao.update(reduceProduct);
+			System.out.println("===============================");
+			
+			System.out.println("상품 재고 갱신 후:" + reduceProduct.getStock());
+			System.out.println("===============================");
+			}
+			
+			// 총 상품 주문금액이 5만원 이상일 경우 배송비 무료 아닐 경우 3000원
+			if(totalPrice >= 50000) {
+				deliveryCost = 0;				
+			}
+			else {
+				deliveryCost = 3000;
+			}
+			
+			// 잘 저장했나 체크
+			System.out.println("총 합산가격:" + totalPrice + "," + "합산포인트:" + totalSavePoint);
+			
+			// 결제할 유저 정보를 가져온다.
+			User user = orderDao.user(orderProductandCartList.getCartList().get(0).getUser_id());
+			
+			// 카카오페이의 경우 일반결제와는 달리 유저의 잔액을 차감시킬 필요가 없으니 포인트만 가감산처리 하면 된다.
+			
+			System.out.println("유저의 잔여포인트(before)"+ user.getPoint());
+			System.out.println("==========================");
+			
+			user.setPoint(user.getPoint() - orderProductandCartList.getUsedPoint() + totalSavePoint);
+			
+			System.out.println("==========================");
+			System.out.println("유저의 잔여포인트(after)"+ user.getPoint());
+			
+			// 주문 정보, 주문 상품 정보 , 배송정보 생성
+			
+			int ordersInfoCheck = 0;
+			int orderProductCheck = 0;
+			
+			for(int i=0; i<opList.size(); i++) {
+				// opList(주문할 상품 정보)의 정보를 토대로 주문정보를 생성
+				Orders orders = new Orders();
+				
+				String orderId = createOrderId();
+				
+				orders.setOrder_id(orderId);
+				orders.setStatus("배송준비");
+				orders.setPayment_method("카카오페이");
+				orders.setTotal_amount(opList.get(i).getQuantity());
+				orders.setUser_id(cartList.get(0).getUser_id());
+				orders.setDelivery_cost(deliveryCost);
+				
+				// 주문정보와 주문상품 정보 등록
+				ordersInfoCheck = orderDao.register(orders);
+				
+				orderProductCheck = orderProductRegister(orderId, opList.get(i));
+			
+				if(ordersInfoCheck == 1 && orderProductCheck == 1) {
+					System.out.println("주문정보 및 주문상품정보 등록 완료!");
+					
+				}
+						
+			}
+			
+			
+			// 장바구니에서 온 요청일 경우에만 지운다.
+			if(orderProductandCartList.isCartCheck()) {
+				// 장바구니에 담겨있던 상품정보를 지운다.
+				for(int i=0; i<cartList.size(); i++) {
+					orderDao.delete(cartList.get(i));
+				}
+			}
+					
+			// 정상적으로 처리됐을 경우 1을 반환
+			   if(ordersInfoCheck == 1 && orderProductCheck == 1)
+				   return 1;
+		   
+		    // 잘 안됐을 경우엔 0 반환한다.
+		   	   return 0;
+			
+		}
 }

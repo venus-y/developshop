@@ -9,7 +9,14 @@ public class Orders {
 	private int total_amount;
 	private int delivery_cost;
 	private String status;
-	
+	private String payment_method;
+		
+	public String getPayment_method() {
+		return payment_method;
+	}
+	public void setPayment_method(String payment_method) {
+		this.payment_method = payment_method;
+	}
 	public int getDelivery_cost() {
 		return delivery_cost;
 	}
@@ -49,7 +56,8 @@ public class Orders {
 	@Override
 	public String toString() {
 		return "Orders [order_id=" + order_id + ", user_id=" + user_id + ", order_date=" + order_date
-				+ ", total_amount=" + total_amount + ", delivery_cost=" + delivery_cost + ", status=" + status + "]";
+				+ ", total_amount=" + total_amount + ", delivery_cost=" + delivery_cost + ", status=" + status
+				+ ", payment_method=" + payment_method + "]";
 	}
 	
 	

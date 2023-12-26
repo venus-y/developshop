@@ -24,8 +24,32 @@
 <html>
 <head>
 	<title>메인 페이지</title>
-	    <link rel="stylesheet" href="<c:url value='/css/index.css'/>">
+<!-- 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+ -->	    <link rel="stylesheet" href="<c:url value='/css/index.css'/>">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>    		
+	<style type="text/css">
+		.jumbotron{
+					background-image: url("imgUpload/main3.jpg");
+					background-size: cover; /* 이미지를 화면에 맞게 조절합니다 */
+					text-align: center; /* 텍스트를 가운데 정렬합니다 */
+					background-size: 120% 120%; /* 이미지를 상하좌우로 20%씩 늘립니다 
+					background-position: center center; /* 이미지를 가운데로 정렬합니다 */ 
+					text-shadow: black 0.2em 0.2em 0.2em;
+					color: white;
+					padding: 100px 0; /* 상하 여백을 조절합니다 */
+					height: 750px; /*높이 조절*/
+					width: 2150px;/*넓이 조절*/ */
+				}
+		.jumbotron h2 {
+		font-size: 3em; /* 헤더 텍스트 크기를 조절합니다 */
+		margin-bottom: 0px; /* 헤더와 문단 사이의 간격을 조절합니다 */
+	}
+
+	.jumbotron p {
+		font-size: 1.5em; /* 문단 텍스트 크기를 조절합니다 */
+		margin-bottom: 10px; /* 간격을 줄임 */
+	}
+	</style>
 </head>
 <body>
 <div id="main">
@@ -123,5 +147,15 @@
 	}
 </script>
 <!-- for commit22   -->
+<div class="container">
+	<!-- 점보트론 -->
+	<div class="jumbotron">
+		<h2 class="text-center" style="height: 250px;">Entrance
+			<br>
+			Entrance는 다양한 브랜드들의 상품을 한 곳에서 볼 수 있는 온라인 편집샵입니다.
+		</h2>
+		<!-- <p class="text-center" style="height:200px;"></p> -->
+	</div>
+</div>
 </body>
 </html>

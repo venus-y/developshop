@@ -9,12 +9,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,16 +31,27 @@ import com.first.shop.dto.CartList;
 import com.first.shop.dto.OrderProductList;
 import com.first.shop.dto.OrderProductandCartList;
 import com.first.shop.dto.OrdersList;
+import com.first.shop.dto.Product;
 import com.first.shop.dto.TempOrderProduct;
 import com.first.shop.dto.TempOrderProducts;
 import com.first.shop.dto.User;
 import com.first.shop.service.OrderService;
+import com.first.shop.service.ProductService;
 
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-	@Autowired
-	OrderService orderService;
+	
+	private final OrderService orderService;
+	
+	private final ProductService productService;
+	
+	public OrderController(OrderService orderService, ProductService productService) {
+		this.orderService = orderService;
+		this.productService = productService;
+	}
+	
+
 	
 	// 카카오페이 결제 필요한 정보
 //	private String tid;
@@ -167,13 +178,33 @@ public class OrderController {
 //			String queryString = "?orderProductandCartList=" + URLEncoder.encode(orderProductandCartListAsJson, "UTF-8");
 //			String fullUrl = approvalUrl + queryString;
 			
+			//결제시 표시될 항목명
+			String item_name = "";
+			if(orderProductandCartList.getOrderProductList().size() >= 2) {
+				Product Product =  productService.getProductInfo(orderProductandCartList
+						.getOrderProductList()
+						.get(0)
+						.getProduct_id());
+				// 주문상품이 2개 이상일 경우 첫번째 상품 외 xx건
+				item_name = Product.getProduct_name() + "외" + (orderProductandCartList.
+						getOrderProductList().size() - 1) + "건";
+			}else {
+				// 주문상품이 한 개 일 경우 상품명만 표시
+				Product Product =  productService.getProductInfo(orderProductandCartList
+						.getOrderProductList()
+						.get(0)
+						.getProduct_id());
+				item_name = Product.getProduct_name();
+			}
+			
 			
 			// 넘겨줄 매개변수
 			String param = "cid=TC0ONETIME"
 					+ "&partner_order_id=partner_order_id"
 					+ "&partner_user_id=partner_user_id"
-					+ "&item_name=testItem"
-					+ "&quantity=1&total_amount=10000&tax_free_amount=0"
+					+ "&item_name="+ URLEncoder.encode(item_name,"UTF-8")
+					+ "&quantity=1&total_amount="+orderProductandCartList.getTotal_amount()
+					+ "&tax_free_amount=0"
 					+ "&approval_url=http://localhost:8080/shop/order/kakaopay.approve"
 					+ "&cancel_url=http://localhost:8080/cancel"
 					+ "&fail_url=http://localhost:8080/fail";
@@ -296,9 +327,14 @@ public class OrderController {
 				if(result == 200) {
 					inputStream = con.getInputStream();
 					// 주문처리 
+					orderService.kakaopay_OrderRegister(orderProductandCartList);
+					// 세션에서 orderProductandCartList 삭제
+					session.removeAttribute("orderProductandCartList");
 				}else {
 				// 실패했을 경우
 					inputStream = con.getErrorStream();
+				// 세션에서 orderProductandCartList 삭제
+				session.removeAttribute("orderProductandCartList");
 				}
 				// 받아온 데이터를 읽는 클래스
 				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);

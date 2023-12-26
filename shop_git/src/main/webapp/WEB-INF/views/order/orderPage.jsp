@@ -471,6 +471,9 @@
         	// 주문정보를 배열에 추가해서 보내준다.
         	let orderProductList = [];
         	let cartList = [];
+        	let total_amount = $(".finaltotalprice_span").text();
+        	
+        	alert("결제할 금액:" + total_amount);
         	
         	// cartCheck 변수    
         	let cartCheck = $(".kakaopay_Btn").val();
@@ -498,7 +501,8 @@
         		orderProductList : orderProductList,
         		cartList : cartList,
         		cartCheck : cartCheck,
-        		usedPoint : usedPoint
+        		usedPoint : usedPoint,
+        		total_amount : total_amount
         	};
 			
 			console.log(orderProductList);

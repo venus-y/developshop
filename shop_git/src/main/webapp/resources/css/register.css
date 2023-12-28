@@ -1,17 +1,14 @@
 @charset "UTF-8";
 
-form{
-	  	 width:500px;
-         /* height:700px; */	
-         display : flex;
-         flex-direction: column;
-         align-items:center;
-         position : absolute;
-         top:50%;
-         left:50%;
-         transform: translate(-50%, -50%) ;
-         border: 1px solid rgb(89,117,196);
-         border-radius: 10px;
+.registerForm{
+	width: 500px;
+    /* height: 700px; */	
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    border: 1px solid rgb(89, 117, 196);
+    border-radius: 10px;
 }
 
 /* 회원가입 문구 */
@@ -22,12 +19,18 @@ form{
 
 /* 입력값들 설정  */
 .input-field{
-		 width: 250px;
-	     height: 15px;
+		 width: 300px;
+	     /* height: 15px; */
 	     border : 1px solid rgb(89,117,196);
 	     border-radius:5px;
 }
+/* 아이디 중복 체크 버튼 설정 */
 
+#idCheck {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px; /* 원하는 간격으로 조절하세요 */
+}
 /* 아이디 형식 체크 */
 .idRegCheck1{
 	display: none;
@@ -141,3 +144,19 @@ form{
 	margin-right: center;
 	margin-bottom: 5px;
 }
+
+/* 버튼 관련 */
+.riddle {
+  border-radius: 15px;
+  border-style: solid;
+  padding: 2.5%;
+  margin-bottom: 2.5%;
+  
+}
+
+.new-riddle {
+  margin-top: 2.5%;
+  margin-bottom: 2.5%;
+}
+
+

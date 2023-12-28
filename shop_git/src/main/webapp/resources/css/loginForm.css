@@ -1,22 +1,28 @@
 @charset "UTF-8";
 
 /* 입력 양식 폼 */
-form{
-	   width:400px;
-       height:375px;
-       display : flex;
-       flex-direction: column;
-       align-items:center;
-       position : absolute;
-       top:50%;
-       left:50%;
-       transform: translate(-50%, -50%) ;
-       border: 1px solid rgb(89,117,196);
-       border-radius: 10px;
+.login_form{
+  width: 400px;
+  height: 375px;
+  /* display: flex; */
+ /*  flex-direction: column;
+  align-items: center;
+  justify-content: center; 수직 중앙 정렬
+  border: 1px solid rgb(89, 117, 196);
+  border-radius: 10px;
+  margin: auto; 수평 가운데 정렬을 위한 추가 */
+
 }
 
 
 /* 로그인 입력요소 */
+.login_input_div{
+	display: flex;	
+	flex-direction: column;
+	margin: auto; /* 수평 가운데 정렬을 위한 추가 */
+	
+}
+
 .login-Input{
 	width: 300px;
             height: 40px;
@@ -28,7 +34,6 @@ form{
 
 /* 아이디기억 체크박스 */
 .rememberId{
-	display: flex;
     align-items: left; /* 수직 중앙 정렬 */
     justify-content: flex-start; /* 왼쪽 정렬 */
 }
@@ -45,23 +50,32 @@ margin: 40px 0 30px 0;
 
 /* 아이디 기억 문구 */       
 .rememberIdDiv{
-	display: flex;
-	align-items: center;
-	position: absolute;
-	top: 225px; 
-	left: 50px;
+    align-items: center;
+    margin-top: 20px; /* 필요한 여백 조절 */
 }
 
 .rememberId-label{
 	text-align: left;	
-	color: navy;
+	color: #000040;
+	margin-left: 10px; /* 왼쪽 마진 추가 */
+	
 }
-/* 아이디 기억 체크박스*/
-.rememberId-check{
+
+/* 아이디기억 체크박스 */
+.rememberId {
+    align-items: center; /* 기존: left -> center로 수정 */
+    justify-content: flex-start;
+}
+/* .rememberId-check{
 	text-align: left;
-	margin-right:10px;
+	margin-right: 10px;
 	align-items:center;
 	color: navy;
+} */
+/* 아이디 기억 체크박스와 라벨 */
+.rememberId-check, .rememberId-label {
+    display: inline-block; /* 기존: flex -> inline-block으로 변경 */
+    vertical-align: middle; /* 수직 가운데 정렬을 위한 추가 */
 }
 
 .msg{

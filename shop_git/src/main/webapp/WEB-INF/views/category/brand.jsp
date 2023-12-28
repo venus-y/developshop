@@ -6,13 +6,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
   <title>Brand List</title>
+   <meta charset="UTF-8">
+  	  <jsp:include page="/WEB-INF/views/link-rel.jsp" />
   <link rel="stylesheet" href="/shop/css/category/brand.css">
   <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>
-  <jsp:include page="/WEB-INF/views/index.jsp" /> 	
+  <jsp:include page="/WEB-INF/views/header.jsp" />
   <header>
     <h1>Brand List</h1>
   </header>
@@ -53,13 +54,13 @@
   			</c:forEach>
   			<!-- 반복문이 종료되면 tr태그를 닫지 않고 끝내게 되기 때문에 마지막으로 한번 더 닫아준다.  -->	
   					</tr>
-  			</table>
-  	
-    	  
+  			</table>   	  
   </div>
-  				
+    <jsp:include page="/WEB-INF/views/footer.jsp" />
+  			
   				
 </body>
+  <jsp:include page="/WEB-INF/views/script.jsp" />
 	<script>
 		$(document).ready(function () {
 

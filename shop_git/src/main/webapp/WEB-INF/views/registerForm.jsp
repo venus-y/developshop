@@ -5,16 +5,16 @@
 <%@ page session="false" %>
 <html>
 <head>
+	<jsp:include page="/WEB-INF/views/link-rel.jsp" />
 	<title>회원가입 페이지</title>
 	<!-- css 설정 -->
 	<link rel="stylesheet" href="<c:url value='/css/register.css'/>">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-	
 	<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/index.jsp" />
-	<form id="registerForm" method="post">
+	<jsp:include page="/WEB-INF/views/header.jsp" />	
+	<form id="registerForm" class="registerForm" method="post">
 		<span class="title">Register</span>
 		<!-- 아이디 입력 -->
 		<label for="id">아이디</label>
@@ -26,12 +26,13 @@
 			<span class="idEmpty">아이디를 입력해주세요.</span>
 			
 		<!-- 아이디 중복체크 -->
-			<button type="button" id="idCheck">아이디 중복체크</button>
+			<button type="button" id="idCheck" class="new-riddle btn btn-primary">아이디 중복체크</button>			
 		<!-- 아이디 중복체크결과 메시지 -->
 			<font id="idCheck-font"></font>
 			<!-- 공백 여부 검사 메시지 -->
 			<span class="idCheckEmpty">아이디중복체크를 해주세요.</span>
-			
+		
+		
 		<label for="password">비밀번호</label>		
 		<!-- 비밀번호 입력 -->
 			<input class="input-field" type="password" id="password" name="password" placeholder="8~16자 영문, 숫자, 특수문자를 최소 한가지씩 조합">
@@ -80,7 +81,7 @@
 			<!-- 공백 여부 검사 메시지 -->
 			<span class="addressEmpty">주소를 입력해주세요.</span>
 		<!-- 다음 주소 API-->
-			<button type="button" class="addressSearch" id="addressSearch" >주소 찾기</button>	
+			<button type="button" class="new-riddle btn btn-primary addressSearch" id="addressSearch" >주소 찾기</button>	
 		
 		<!--  생일 입력-->
 		<label for="birth">생일</label>
@@ -115,7 +116,7 @@
 			<span class="emailReg2">이메일 형식이 올바르지 않습니다.</span>
 		
 		<!-- 이메일 인증번호 입력란, 인증번호 전송 버튼 -->
-			<button type="button" class="emailNumBtn">인증번호 전송</button>
+			<button type="button"  class="new-riddle btn btn-primary emailNumBtn" disabled="disabled">인증번호 전송</button>						
 			<label for="emailNum">인증번호 입력</label>
 			<input class="input-field" type="text" id="emailNum" name="emailNum" disabled="disabled">
 			<!-- 공백 여부 검사 메시지 -->
@@ -126,9 +127,11 @@
 			<span class="emailNumSame2">인증번호가 일치하지 않습니다.</span>
 				
 		<!-- 회원가입 요청 -->
-		<button type="button" class="register-Btn" id="register-Btn">회원가입</button>
+		<button type="button" class="btn btn-success register-Btn" id="register-Btn">회원가입</button>
 	</form>
+	     <jsp:include page="/WEB-INF/views/footer.jsp" />	
 </body>
+	 <jsp:include page="/WEB-INF/views/script.jsp" />	
 	<!-- 다음 Api 활용 -->
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>	
 	<script type="text/javascript">
@@ -423,13 +426,19 @@
 	        let emailReg1 = $(".emailReg1");
 	        let emailReg2 = $(".emailReg2");
 	      	
+	        // 이메일 정규식 통과 여부
+	        let isValidEmail = checkEmail(email);
+	        
 	        //이메일 정규식 통과시 게속해서 진행, 통과 못할 시 false반환
 	        if(checkEmail(email)){
 	        	emailReg1.css('display','block');
 	        	emailReg2.css('display','none');
+				$(".emailNumBtn").prop("disabled",false);
+
 	        }else{
 	        	emailReg2.css('display','block');
 	        	emailReg1.css('display','none');
+				$(".emailNumBtn").prop("disabled",true);
 	        }
 	                   
 		});
@@ -547,7 +556,16 @@
 		
 		// 이메일 정규식 체크
 		function checkEmail(email) {
-			var emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;	
+			var emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
+
+		    // 이메일 도메인이 최소 세 글자 이상이어야 함
+		    var emailParts = email.split('@');
+		    if (emailParts.length === 2) {
+		        var domainParts = emailParts[1].split('.');
+		        if (domainParts.length > 1 && domainParts[domainParts.length - 1].length >= 3) {
+		            return emailReg.test(email);
+		        }
+		    }
 		
 			return emailReg.test(email);
 		}

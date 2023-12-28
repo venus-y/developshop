@@ -11,31 +11,30 @@
 <head>
 <meta charset="UTF-8">
 <title>상품 목록</title>
+	<jsp:include page="/WEB-INF/views/link-rel.jsp" />	
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>    
 	<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>
-    <jsp:include page="/WEB-INF/views/index.jsp" />
+  	<jsp:include page="/WEB-INF/views/header.jsp" />
     <script>
     </script>
-    <div class="cart-container">
-        <h2>장바구니</h2>
+    <div class="m-l-25 m-r--38 m-lr-0-xl cart-container">
+        <h2 class="mtext-103 cl2">Your Cart</h2>
         <!-- 전체 체크박스 -->
         <div class="all_cart_checkbox_div">
 	        <input type="checkbox" class="all_cart_checkbox" checked="checked"><span class="all_check_span">전체선택</span>
         </div>
         
         <c:if test="${not empty cartList}">
-            <table>
+            <table class="table-shopping-cart">
                 <thead>
-                    <tr>
-                        <th>상품 이미지</th>
-                        <th>상품명</th>
-                        <th>가격</th>
-                        <th>수량</th>
-                        <th>합계</th>
-                        <th>할인가격</th>
-                        <th>총적립포인트</th>
+                    <tr class="table_head">
+                        <th class="column-1 mtext-101 cl2 mtext-101 cl2">상품명</th>
+                        <th class="column-1 mtext-101 cl2 mtext-101 cl2">가격</th>
+                        <th class="column-1 mtext-101 cl2 mtext-101 cl2">수량</th>
+                        <th class="column-1 mtext-101 cl2 mtext-101 cl2"> 합계</th>
+                        <th class="column-1 mtext-101 cl2 mtext-101 cl2">총적립포인트</th>
                     </tr>
                 </thead>
                 <!--  주문목록에 추가할 상품을 정하기 위해서 장바구니 상품 목록 위에 체크박스를 만든다.-->
@@ -44,7 +43,9 @@
                     <c:forEach var="cart" items="${cartList}">                                      
                         <tr class="cart_info">
                         	<td><input type="checkbox" class="cart_checkbox" name="selectedItems" value="${cart.cart_id}" ></td>
-                            <td><img src= "/shop/upload${cart.product_thumbimage}"></td>
+                            <td class="column-1" style="width: 100px; object-fit: cover;">
+                            	<img src= "/shop/upload${cart.product_thumbimage}">
+                            </td>
                             <td>
     	                        <input type="hidden" class="cart_id" value="${cart.cart_id}">
     	                        <input type="hidden" class="product_id" value="${cart.product_id}">  
@@ -59,7 +60,7 @@
                             	<input type="hidden" class="product_thumbimage" value="${cart.product_thumbimage}">                                                      
                             </td>
                             <!-- 장바구니 상품 수량 변경 및 삭제 시 제출할 폼 양식 -->
-                            <td>
+                            <td class="column-1">
 	                  		<form action="/shop/cart/update" method="post" id="cart_update_delete" class="cart_update_delete_form">
 			              		<input type="hidden" name="cart_id" class="update_delete_cart_id">
 			              		<input type="hidden" name="quantity" class="update_quantity">
@@ -69,24 +70,34 @@
                             </tr>
                             <tr>
                         <!-- 상품의 정보 -->
-                        	<td>제품명 : ${cart.product_name}</td>
-                       		<td>
-                       			<del>정가 : <fmt:formatNumber value="${cart.price}" pattern="#,### 원" /></del><br>
-                       			판매가 : <span><fmt:formatNumber value="${cart.saleprice}" pattern="#,### 원" /></span><br>
-                       			적립포인트 : <fmt:formatNumber value="${cart.savepoint}" pattern="#,### 원"/>
+                        	<td class="column-1 mtext-101 cl2">${cart.product_name}</td>
+                       		<td class="column-1 mtext-101 cl2">
+                       			<del>정가 : <fmt:formatNumber value="${cart.price}" pattern="#,### 원" /></del>
+                       			<br>
+                       		판매가 : <span><fmt:formatNumber value="${cart.saleprice}" pattern="#,### 원" /></span>	
                        		</td>
-                       		<td class ="quantity_info">
+                       		<td class ="column-1 mtext-101 cl2 quantity_info">
                        			<div class="quantity_div">
-                       			<input type="number" value="${cart.quantity}" class="quantity_input">
-                       			<button class="quantity_plus" id="plusBtn">+</button>
-                       			<button class="quantity_minus" id="minusBtn">-</button>
-                       			<button type="button" class="quantity_modify" id="modifyBtn" value="${cart.cart_id}">수량 변경</button>
-                       			<!-- 수량 변경할 상품 아이디 -->
-                       			<input type="hidden" value="${cart.product_id}" class="update_product_id">
-                       			<button type="button" class="remove_cart" id="removeBtn" value="${cart.cart_id}">삭제</button>
-                       			<!-- 삭제하기 전 alert으로 물어봐야함  -->
+                       				<div class="col-md-6">	
+                       					<input type="number" style="border: 1px solid #ccc;" value="${cart.quantity}" class="text-center quantity_input" min="1" max="100">
+                       				</div>
+                       			<!-- <button class="quantity_plus" id="plusBtn">+</button>
+                       			<button class="quantity_minus" id="minusBtn">-</button> -->
+                       				<div class="col-md-6">                      			
+                 	      				<button type="button" class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10 quantity_modify" id="modifyBtn" value="${cart.cart_id}">수량 변경</button>
+                    	   				<!-- 수량 변경할 상품 아이디 -->
+                       					<input type="hidden" value="${cart.product_id}" class="update_product_id">
+                       					<button type="button" class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10 remove_cart" id="removeBtn" value="${cart.cart_id}">삭제</button>
+                       					<!-- 삭제하기 전 alert으로 물어봐야함  -->
+                       				</div>
                        			</div>
-                       		</td>	
+                       		</td>
+                       		<td class="column-1 mtext-101 cl2">
+                       			<fmt:formatNumber value="${cart.totalprice}" pattern="#,### 원" />
+                       		</td>
+                       		<td class="column-1 mtext-101 cl2">
+                       			<fmt:formatNumber value="${cart.totalsavepoint}" pattern="#,###   포인트" />
+                       		</td>		
                         </tr>
                       
                         
@@ -94,13 +105,13 @@
                 	 	
                    		 <!-- 총 결제돼야 할 상품 금액 및 총 적립될 포인트 정보 -->
 		                    <tr>
-			                    <td>총 상품가격 :<span class="totalprice_span"></span>원</td>
-			                    <br>
-			                    <td>총 주문 수량 :<span class="totalquantity_span"></span>개</td>
-		    	                <td>총 적립 예상 포인트 :<span class="totalsavepoint_span"></span>포인트</td>
-                	    		<td>배송비 :<span class="deliverycost_span"></span>원</td>
-                    			<td>주문 예상 금액 : <span class="finaltotalprice_span"></span>원</td>
-		                    	<td>		                    	
+			                    <td class="column-1 mtext-101 cl2">총 상품가격 :<span class="totalprice_span"></span>원</td>
+							    <br>
+							    <td class="column-1 mtext-101 cl2">총 주문 수량 :<span class="totalquantity_span"></span>개</td>
+							    <td class="column-1 mtext-101 cl2">총 적립 예상 포인트 :<span class="totalsavepoint_span"></span>포인트</td>
+							    <td class="column-1 mtext-101 cl2">배송비 :<span class="deliverycost_span"></span>원</td>
+							    <td class="column-1 mtext-101 cl2">주문 예상 금액 : <span class="finaltotalprice_span"></span>원</td>
+							    <td>>		                    	
 			                    	<!-- 주문 form -->
 		                    		<form action="/shop/order/getOrder/${sessionScope.user.id}" method="get" class="order_form">		                    			
 								        <!-- 여기에 주문할 상품들의 정보를 동적으로 추가할 예정 -->
@@ -108,7 +119,8 @@
 		                    	</td>
 		                    	<!-- 주문 버튼 -->
 		                    	<td>
-			                    	<button type="button" class="orderBtn">주문 페이지로 이동</button>
+			                    	<button type="button" style="width:500px;" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer orderBtn">
+			                    	주문 페이지로 이동</button>
 		                    	</td>
 		                    </tr>	
 		                    	              
@@ -122,9 +134,11 @@
             <p>장바구니가 비어있습니다.</p>
         </c:if>
     </div>
+    <jsp:include page="/WEB-INF/views/footer.jsp" />
     
     <!-- 여기에 필요한 스크립트 등을 추가할 수 있습니다. -->
 </body>
+  <jsp:include page="/WEB-INF/views/script.jsp" />
 	<script type="text/javascript">
 		
 	

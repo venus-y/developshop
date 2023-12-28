@@ -8,13 +8,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<jsp:include page="/WEB-INF/views/link-rel.jsp" />
 <title>상품 목록</title>
 	<link rel="stylesheet" href="<c:url value='/css/productInfo.css'/>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>    
 	<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>	
-	<jsp:include page="/WEB-INF/views/index.jsp" />
+  <jsp:include page="/WEB-INF/views/header.jsp" />
 	<div class="product_info">
 	    <table>	
 		
@@ -154,8 +155,10 @@
 						 -->
 					</ul>
 				</div>			
-			</div>	
+			</div>
+			<jsp:include page="/WEB-INF/views/footer.jsp" />		
 </body>
+  <jsp:include page="/WEB-INF/views/script.jsp" />
 	<script type="text/javascript">
 		// Cart 컨트롤러로 전송해줄 데이터
 		let form = {

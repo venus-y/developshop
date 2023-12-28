@@ -5,11 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<jsp:include page="/WEB-INF/views/link-rel.jsp" />
 <title>Insert title here</title>
 <link rel="stylesheet" href="<c:url value='/css/category/category.css'/>">
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/index.jsp" />
+    <jsp:include page="/WEB-INF/views/header.jsp" />
 	<!-- 받아온 상품 정보를 목록에 표시한다. -->
 	<table border="1">
 		<c:forEach var="product" items="${productList}" varStatus="status">
@@ -60,8 +61,8 @@
 			<input type="submit" class="search-button" value="검색">		
 		</form>			
 	</div>
-		
-		
-	
+	<jsp:include page="/WEB-INF/views/footer.jsp" />	
 </body>
+	<jsp:include page="/WEB-INF/views/script.jsp" />
+	
 </html>

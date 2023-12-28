@@ -11,17 +11,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>주문 페이지</title>
-    <jsp:include page="/WEB-INF/views/index.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/views/link-rel.jsp" />   
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value='/css/orderPage.css'/>">
 	<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>	
 </head>
 <body>
+	 <jsp:include page="/WEB-INF/views/header.jsp" />	
     <header>
         
     </header>
    <div class="order-container">
-     <h2 class="order_h2">주문 페이지</h2>
+     <h2 class="order_h2">주문 화면</h2>
         <div class="address_div">
 	        <div class="address_btn_div">
 				<button type="button" class="address_Btn1" onclick="showAddress('1')">기본 주소</button>        		
@@ -66,7 +68,7 @@
       	<table>
       		<!-- 받아온 상품정보를 페이지에 뿌려준다. -->
       		<c:forEach items="${tempList}" var="tempInfo">
-      			<tr>
+      			<tr class="product_info_tr">
       				<th>상품 이미지</th>
                     <th>상품명</th>
                     <th>수량</th>
@@ -141,21 +143,20 @@
       				<!-- 주문 폼 -->
       					<form id="order_form" class="order_form" action="/shop/order/postOrder" method="post">
       					</form>
-      					<button type="button" class="order_Btn">주문하기</button>	
+      					<button style="display:inline;" type="button" class="custom-btn btn-1 order_Btn">주문하기</button>	
       					<!-- 카카오페이 테스트 -->
       					<button type="button" class="kakaopay_Btn" value="${cartCheck}">
-      						<img class="kakaopay" alt="카카오 페이" src="<c:url value='/imgUpload/kakao.jpg'/>">
+      						<img class="kakaopay" style="width:200px; height:70px;" alt="카카오 페이" src="<c:url value='/imgUpload/kakao.jpg'/>">
       					</button>
-      				<!-- 카카오페이 폼 -->
-      				
+      				<!-- 카카오페이 폼 -->		
       				</td>	
-      			</tr>
+    			</tr>
       	</table>        
     </div>																					
-    
+    <jsp:include page="/WEB-INF/views/footer.jsp" />    
     <!-- 여기에 필요한 스크립트 등을 추가할 수 있습니다. -->
 </body>							
-
+	<jsp:include page="/WEB-INF/views/script.jsp" />	
     <script>
     	$(document).ready(function () {
 			setOrderInfo();

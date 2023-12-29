@@ -4,7 +4,7 @@
    color:black;
    margin: 0;
    padding: 0;
-   /* background-color: #f4f4f4; */
+   background-color: lavender; 
 }
 
 /* header {
@@ -64,24 +64,30 @@ th, td {
     font-weight: bold;
 	text-align: center;
 } */
-.custom-btn {
-  width: 130px;
-  height: 40px;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px 25px;
-  font-family: 'Lato', sans-serif;
+.btn {
+  width: 140px;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
   font-weight: 500;
-  background: transparent;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
   cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
-   7px 7px 20px 0px rgba(0,0,0,.1),
-   4px 4px 5px 0px rgba(0,0,0,.1);
-  outline: none;
+  }
+
+.btn:hover {
+  background-color: #ff5722;
+      box-shadow: 0px 15px 20px rgba(119, 29, 0, 0.73);
+  color: #fff;
+  transform: translateY(-7px);
 }
+
 
 /* 1 */
 .btn-1 {
@@ -165,6 +171,55 @@ background: linear-gradient(0deg, rgba(0,3,255,1) 0%, rgba(2,126,251,1) 100%);
 .newAddress3{
 	width : 200px;
 }
+/* 포인트 존 */
+.point_zone{
+	display:inline-block;
+	border-radius: 15px;
+}
+/* 포인트 버튼 설정 */
+.animate
+{
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+.blue
+{
+	background-color: #3498db;
+	border-bottom: 5px solid #2980B9;
+	text-shadow: 0px -2px #2980B9;
+}
+.green
+{
+	background-color: #2ecc71;
+	border-bottom: 5px solid #27ae60;
+	text-shadow: 0px -2px #27ae60;
+}
+.red
+{
+	background-color: #e74c3c;
+	border-bottom: 5px solid #c0392b;
+	text-shadow: 0px -2px #c0392b;
+}
+.action-button:active
+{
+	transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}
+.action-button
+{
+	position: relative;
+	padding: 10px 40px;
+  margin: 0px 10px 10px 0px;
+  float: left;
+	border-radius: 3px;
+	font-family: 'Lato', sans-serif;
+	font-size: 18px;
+	color: #FFF;
+	text-decoration: none;	
+	border-radius: 10px;
+}
+
 
 /* 포인트 사용 취소 버튼 */
 .cancelpoint_Btn{
@@ -193,11 +248,11 @@ background: linear-gradient(0deg, rgba(0,3,255,1) 0%, rgba(2,126,251,1) 100%);
  .kakaopay{
  width:500px;
  height: 300px;
- border-radius: 20%; /* 반지름이 이미지 크기의 50%가 되도록 설정 */ 
+ border-radius:15%; /* 반지름이 이미지 크기의 50%가 되도록 설정 */ 
  }
 /* 테이블 테두리 없애기 */ 
   table {
-    border-collapse: collapse; 테이블 셀 테두리 합치기
+    border-collapse: collapse; 
 } 
 tr, th, td {
     border: none;

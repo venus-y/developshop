@@ -4,6 +4,7 @@
 <%@ page import="java.net.URLDecoder" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,8 @@
 	    <table>	
 		
 		<tr>
-			<td colspan="2"><img src="/shop/upload${productInfo.product_thumbimage}">
+			<td colspan="4">
+				<img style="width:500px;" src="/shop/upload${productInfo.product_thumbimage}">
 			</td>
 		</tr>
 		
@@ -52,25 +54,23 @@
 		
 		<tr>
 			<td>적립포인트</td>
-			<td class="savepoint">${productInfo.savepoint}</td>
+			<td class="savepoint"><fmt:formatNumber value="${productInfo.savepoint}" pattern="#,### 포인트" /><td>
 		</tr>
 		<tr>
 			
 		
 			<td colspan="2">			
-				<button type="button" onclick="location.href='/shop/product/productList?page=${param.page}&pageSize=${param.pageSize}'">상품 목록</button>
-			
-			<span>주문수량</span>
-			<input type="number" min="1" class="quantity_input" value="1">			
+			<span>주문수량</span>	
 			<!-- 상품 수량 조절 -->	
+			 <input type="number" min="1" class="quantity_input" value="1">					
 			<span>
-				<button class="plus_Btn">+</button>
-				<button class="minus_Btn">-</button>
+				<!-- button class="plus_Btn">+</button>
+				<button class="minus_Btn">-</button> -->
 			<!-- 장바구니 영역 -->				
 			<!-- 로그인 했을 경우에 장바구니를 사용할 수 있다.  -->				
-				<button class="cart_Btn">장바구니 담기</button>
+				<button class="btn cart_Btn">장바구니 담기</button>
 			<!--  즉시 구매, form에 필요한 정보를 담아 요청을 보낸다. -->				
-				<button class="buyNow_Btn" type="button">즉시 구매</button>
+				<button class="btn buyNow_Btn" type="button">즉시 구매</button>
 			</span>
 			<form id="order_form" action="/shop/order/getOrder/${sessionScope.user.id}" method="get">
 				<!-- 상품 주문에 필요한 데이터(유저 아이디, 상품 수량, 상품 아이디)  -->
@@ -84,15 +84,15 @@
 				<input type="hidden" class="product_image" name="orderProducts[0].product_image" value="${productInfo.product_image}">
 				<input type="hidden" class="product_thumbimage" name="orderProducts[0].product_thumbimage" value="${productInfo.product_thumbimage}">
 			</form>
-			
 						
+			<button class="btn" type="button" onclick="location.href='/shop/product/productList?page=${param.page}&pageSize=${param.pageSize}'">상품 목록</button>
 				<!-- 유저가 관리자일 경우에만 상품 수정버튼이 보인다. -->
 			<c:if test="${sessionScope.user.admincheck == 1 }">
-			  <button type="button" onclick="location.href='/shop/admin/updateProduct?product_id=${productInfo.product_id}&page=${param.page}&pageSize=${param.pageSize}'">상품 수정</button>
+			  <button class="btn" type="button" onclick="location.href='/shop/admin/updateProduct?product_id=${productInfo.product_id}&page=${param.page}&pageSize=${param.pageSize}'">상품 수정</button>
 			</c:if>
 			<!-- 유저가 관리자일 경우에만 상품 수정버튼이 보인다. -->
 			<c:if test="${sessionScope.user.admincheck == 1 }">
-			  <button class="removeProduct_Btn" type="button">상품 삭제</button>
+			  <button class="btn removeProduct_Btn" type="button">상품 삭제</button>
 			</c:if>				
 			</td>
 		</tr>
@@ -187,8 +187,13 @@
 			let originalValue = parseFloat(originalPrice)
 			// 할인가 = 정가 - (정가 * (할인률/100))
 			let discountedValue = originalValue - (originalValue * (discountRate/100));
+			
+			// 할인된 가격을 형식화하여 표시한다.
+			let formattedDiscountedPrice = new Intl.NumberFormat().format(discountedValue);
+
+			
 			// 구한 가격을 적용해서 표시한다.
-			discountedPrice.text(discountedValue.toFixed(2));		
+			discountedPrice.text(formattedDiscountedPrice);		
 			
 			
 		/* 	// 적립포인트는 세일가의 1%만큼 적립된다.

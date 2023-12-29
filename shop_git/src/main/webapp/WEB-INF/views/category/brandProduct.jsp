@@ -18,22 +18,22 @@
 				<c:if test="${status.index % 4 eq 0}">
 					<tr>
 				</c:if> 
-				<td>
+				<td class="mtext-112 cl2 p-b-33">
 					<div>
 					<a href='<c:url value='/product/productInfo?product_id=${product.product_id}&page=${ph.bsc.page}&pageSize=${ph.bsc.pageSize}'/>'>
 							<img  src="/shop/upload/${product.product_thumbimage}">
 					</a>	
 						<br>
-						[${product.product_name}]<br>
+						${product.product_name}<br>
 						${product.price}원<br>
 				<c:if test="${product.stock == 0}">
-					[품절]
+					품절
 				</c:if>
 				<c:if test="${product.stock < 5 && product.stock > 0 }">
-					[품절 임박!!]
+					품절 임박!
 				</c:if>
 				<c:if test="${product.stock >= 5}">
-					[판매중]
+					판매중
 				</c:if>
 					</div>
 				</td>

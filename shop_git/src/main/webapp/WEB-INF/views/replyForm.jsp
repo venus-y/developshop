@@ -5,6 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+      	  <jsp:include page="/WEB-INF/views/link-rel.jsp" />    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>답글 작성</title>
 
@@ -23,7 +24,7 @@
             margin-bottom: 20px; /* 폼과 헤더 사이에 간격 추가 */
         }
 
-        form {
+        #inquiryForm {
             width: 700px;
             height: 750px;
             padding: 20px;
@@ -77,7 +78,7 @@
     </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/index.jsp" />
+<jsp:include page="/WEB-INF/views/header.jsp" />
 <div class="center-content">
 	<h1 class="title_text">답글 작성</h1>
 	<form id="inquiryForm" action='<c:url value="/question/postReply"/>' method="post" >
@@ -101,6 +102,7 @@
 	   <button type="submit">답글 등록</button>
 	</form>
 </div>
+<jsp:include page="/WEB-INF/views/footer.jsp" />
 <script>
     function submitInquiry() {
         const title = document.getElementById('title').value;
@@ -112,6 +114,6 @@
         document.getElementById('inquiryForm').reset();
     }
 </script>
-
+<jsp:include page="/WEB-INF/views/script.jsp" />
 </body>
 </html>

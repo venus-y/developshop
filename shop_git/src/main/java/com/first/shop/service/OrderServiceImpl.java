@@ -88,7 +88,8 @@ public class OrderServiceImpl implements OrderService {
 	// 주문 처리
 	@Override
 	@Transactional
-	public int registerOrders2(OrdersList ordersList, OrderProductList orderProductList, CartList cartList, int used_point) {
+	public int registerOrders2(OrdersList ordersList, OrderProductList orderProductList,
+			CartList cartList, int used_point, boolean cartcheck) {
 		// 동시에 주문한 상품들이기 때문에 배송비는 한번만 계산한다.
 		// 맨 앞에 요소의 배송비만큼 할당한다.
 		int deliveryCost = ordersList.getOrdersList().get(0).getDelivery_cost();
@@ -154,12 +155,14 @@ public class OrderServiceImpl implements OrderService {
 		
 		
 		
-		
-		//장바구니에 담겨있던 상품정보를 지운다.
-		List<Cart> deleteList = cartList.getCartList();
-		for(int i=0; i<deleteList.size(); i++) {
-			orderDao.delete(deleteList.get(i));
+		if(cartcheck) {
+			//장바구니에 담겨있던 상품정보를 지운다.
+			List<Cart> deleteList = cartList.getCartList();
+			for(int i=0; i<deleteList.size(); i++) {
+				orderDao.delete(deleteList.get(i));
+			}
 		}
+		
 		
 		
 		// 유저의 잔여포인트에 총적립포인트만큼 가산
@@ -204,6 +207,7 @@ public class OrderServiceImpl implements OrderService {
 			// 이것도 총수량이 돼야한다. 현재는 상품 하나를 기준으로 주문하고 있음
 			orderInfo.setOrder_id(orderId);
 			orderInfo.setStatus("배송준비");
+			orderInfo.setPayment_method("일반결제");
 			
 			System.out.println("주문 정보 출력:" + orderInfo);
 			// 주문정보 등록
@@ -321,7 +325,6 @@ public class OrderServiceImpl implements OrderService {
 				}
 						
 			}
-			
 			
 			// 장바구니에서 온 요청일 경우에만 지운다.
 			if(orderProductandCartList.isCartCheck()) {

@@ -15,7 +15,7 @@ public interface OrderService {
 //	
 //	int updateProduct(Product product);
 	
-	int registerOrders2(OrdersList list, OrderProductList list2, CartList cartList, int used_point);
+	int registerOrders2(OrdersList list, OrderProductList list2, CartList cartList, int used_point, boolean cartcheck);
 
 	int kakaopay_OrderRegister(OrderProductandCartList orderProductandCartList);
 }

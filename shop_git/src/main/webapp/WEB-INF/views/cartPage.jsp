@@ -44,7 +44,7 @@
                         <tr class="cart_info">
                         	<td><input type="checkbox" class="cart_checkbox" name="selectedItems" value="${cart.cart_id}" ></td>
                             <td class="column-1" style="width: 100px; object-fit: cover;">
-                            	<img src= "/shop/upload${cart.product_thumbimage}">
+                            	<img style="max-width: 150px; max-height: 180px;" src="/shop/upload${cart.product_thumbimage}">
                             </td>
                             <td>
     	                        <input type="hidden" class="cart_id" value="${cart.cart_id}">

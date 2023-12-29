@@ -61,12 +61,7 @@
   				
 </body>
   <jsp:include page="/WEB-INF/views/script.jsp" />
-	<script>
-		$(document).ready(function () {
-
-						
-		});
-		
+	<script>		
 		// 선택된 알파벳에 해당하는 브랜드들을 화면에 표시하도록 이벤트 등록
 		$(".alphaLink").on("click", function () {
 			// 선택된 알파벳의 정보를 받아온다.

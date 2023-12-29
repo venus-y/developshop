@@ -14,6 +14,7 @@
     <jsp:include page="/WEB-INF/views/link-rel.jsp" />   
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value='/css/orderPage.css'/>">
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 	<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>	
 </head>
@@ -23,7 +24,7 @@
         
     </header>
    <div class="order-container">
-     <h2 class="order_h2">주문 화면</h2>
+     <h2 class="ltext-103 cl5 order_h2">주문 화면</h2>
         <div class="address_div">
 	        <div class="address_btn_div">
 				<button type="button" class="address_Btn1" onclick="showAddress('1')">기본 주소</button>        		
@@ -91,19 +92,26 @@
       					<input class="check_quantity" type="hidden" value="${tempInfo.quantity}">
       					<!-- 상품 세일가 참조 -->
       					<input class="sale_price" type="hidden" value="${tempInfo.totalprice}">
+      					<!-- 상품 총 적립포인트 참조 -->
+      					<input class="total_savepoint" type="hidden" value="${tempInfo.totalsavepoint}">
       					<!-- 유저의 잔액 참조 -->
       					<input class="user_money" type="hidden" value="${orderUser.money}">
       				</td>      	
       				<td class="product_name">${tempInfo.product_name}</td>
-      				<td class="quantity">${tempInfo.quantity}</td>
-      				<td class="totalsavepoint">${tempInfo.totalsavepoint}</td>
-      				<!-- 자바코드로 값을 계산하고 해당 값을 출력해야 한다. -->
-      				<td><c:out value="${tempInfo.price * tempInfo.quantity - tempInfo.totalprice}"/></td>
-      				<td class="totalprice" data-value="${tempInfo.totalprice}">
-      					<del><c:out value="${tempInfo.price * tempInfo.quantity}"/></del>
-      					<br>
-      					${tempInfo.totalprice}
+      				<td class="quantity">${tempInfo.quantity}</td>      				
+      				<td class="totalsavepoint">
+      					<fmt:formatNumber value="${tempInfo.totalsavepoint}" pattern="#,### 포인트" />
       				</td>
+      				<!-- 자바코드로 값을 계산하고 해당 값을 출력해야 한다. -->
+      				<td>
+      					 <c:set var="discountAmount" value="${tempInfo.price * tempInfo.quantity - tempInfo.totalprice}" />
+  						 <fmt:formatNumber value="${discountAmount}" pattern="#,### 원" />
+					</td>
+      				<td class="totalprice" data-value="${tempInfo.totalprice}">
+					  <del><fmt:formatNumber value="${tempInfo.price * tempInfo.quantity}" pattern="#,### 원" /></del>
+					  <br>
+					  <fmt:formatNumber value="${tempInfo.totalprice}" pattern="#,### 원" />
+					</td>
       			</tr>
       		</c:forEach>    			
       	</table>
@@ -130,11 +138,12 @@
       			<tr>     					 	     			 		
    			 		<td class="savepoint_field">      					
    			 		<!-- 적립 포인트 사용 -->
-   			 			<span>포인트 사용 : </span>
-   			 			<input type="text" class="point_zone">
-   			 			<button class="input_point_Btn">포인트 사용</button>	
-   			 			<button class="allpoint_Btn">포인트 전부 사용</button>	
-   			 			<button class="cancelpoint_Btn">사용 취소</button>
+   			 			<span>포인트 사용 :<input type="text" class="point_zone"> </span>   			 			
+   			 			<br>	
+   			 			<br>
+   			 			<button class="action-button shadow animate blue input_point_Btn">포인트 사용</button>
+   			 			<button class="action-button shadow animate green allpoint_Btn">포인트 전부 사용</button>	
+   			 			<button class="action-button shadow animate red cancelpoint_Btn">사용 취소</button>
    					</td>				     				
       			</tr> 	
       			<tr>    				
@@ -143,10 +152,10 @@
       				<!-- 주문 폼 -->
       					<form id="order_form" class="order_form" action="/shop/order/postOrder" method="post">
       					</form>
-      					<button style="display:inline;" type="button" class="custom-btn btn-1 order_Btn">주문하기</button>	
+      					<button style="display:inline;" type="button" value="${cartCheck}" class="btn order_Btn">주문하기</button>	
       					<!-- 카카오페이 테스트 -->
       					<button type="button" class="kakaopay_Btn" value="${cartCheck}">
-      						<img class="kakaopay" style="width:200px; height:70px;" alt="카카오 페이" src="<c:url value='/imgUpload/kakao.jpg'/>">
+      						<img class="kakaopay" style="width:150px; height:50px;" alt="카카오 페이" src="<c:url value='/imgUpload/kakao.jpg'/>">
       					</button>
       				<!-- 카카오페이 폼 -->		
       				</td>	
@@ -178,8 +187,8 @@
 			// 현재 페이지에 존재하는 상품들을 반복문으로 하나씩 순회해서 정보를 받아온다.
 			$(".order_info").each(function (index, element) {
 				totalprice += parseInt($(element).find(".totalprice").data("value"));
-				
-				totalsavepoint += parseInt($(element).find(".totalsavepoint").text());
+				// 상품 가격 뒤에 쉼표는 제거하고 읽어온다.
+				totalsavepoint += parseInt($(element).find(".totalsavepoint").text().replace(/,/g, ''));
 			})
 			
 			// 상품금액이 5만원 이하면 배송비 3천원 , 이상일 경우 배송비 무료
@@ -193,10 +202,22 @@
 			finaltotalprice = totalprice + deliverycost;
 			
 			// 결제 정보를 화면에 띄운다.
-			$(".totalprice_span").text(totalprice);
+			let formattedSavepoint = new Intl.NumberFormat().format(totalsavepoint);
+			$(".totalsavepoint_span").text(formattedSavepoint);
+			
+			// 기타 필요한 항목들도 형식화하여 표시 가능
+			let formattedTotalPrice = new Intl.NumberFormat().format(totalprice);
+			$(".totalprice_span").text(formattedTotalPrice);
+			
+			let formattedDeliveryCost = new Intl.NumberFormat().format(deliverycost);
+			$(".deliverycost_span").text(formattedDeliveryCost);
+			
+			let formattedFinalTotalPrice = new Intl.NumberFormat().format(finaltotalprice);
+			$(".finaltotalprice_span").text(formattedFinalTotalPrice);
+			/* $(".totalprice_span").text(totalprice);
 			$(".totalsavepoint_span").text(totalsavepoint);
         	$(".deliverycost_span").text(deliverycost);
-        	$(".finaltotalprice_span").text(finaltotalprice);
+        	$(".finaltotalprice_span").text(finaltotalprice); */ 
         }
         
         // 주소 입력란 버튼 동작
@@ -239,9 +260,12 @@
 				$(".cancelpoint_Btn").css("display", "inline"); 
 			    // 잔여포인트가 충분할 경우 기존의 결제금액에서 포인트만큼 빼준 상태로 업데이트한다
 				
-				let finalprice = parseInt($(".finaltotalprice_span").text());
+			    // 표시된 가격에서 쉼표를 제거한 값을 가져온다.
+				let finalprice = parseInt($(".finaltotalprice_span").text().replace(/,/g, ''));
+
 				let new_finalprice = finalprice - point_zone; 
-				$(".finaltotalprice_span").text(new_finalprice);				
+				// 포인트 계산이 끝난 시점에 포인트를 다시 포멧형식으로 변환
+				$(".finaltotalprice_span").text(new Intl.NumberFormat().format(new_finalprice));				
 			}	
 			
 		})
@@ -256,7 +280,7 @@
 			let user_point = parseInt(${orderUser.point});
 			
 			// 포인트 정보를 화면에 띄운다.
-			point_zone.val(user_point);
+			point_zone.val(new Intl.NumberFormat().format(user_point));
 			
 			// 사용 취소 버튼을 활성화시키고 포인트 전부 사용, 포인트 사용 버튼을 비활성화시킨다.
 		    $(".allpoint_Btn").css("display", "none");
@@ -264,10 +288,12 @@
 			$(".cancelpoint_Btn").css("display","inline");
 			
 			// 결제정보에서 포인트 금액 만큼 차감
-			let FinalTotalPrice1 = parseInt($(".finaltotalprice_span").text());
-			let FinalTotalPrice2 = FinalTotalPrice1 - user_point;
+			let finalprice = parseInt($(".finaltotalprice_span").text().replace(/,/g, ''));
+
+		    let new_finalprice = finalprice - user_point;
 			// 화면에 업데이트
-			$(".finaltotalprice_span").text(FinalTotalPrice2);
+		    $(".finaltotalprice_span").text(new Intl.NumberFormat().format(new_finalprice));
+
 			
 		})
 		
@@ -282,11 +308,13 @@
 			$(".input_point_Btn").css("display", "inline");
 
 			// 사용했던 포인트 만큼 다시 금액에 더한다.
-			let used_point = parseInt(point_zone.val());
-			let FinalTotalPrice1 = parseInt($(".finaltotalprice_span").text());
-			let FinalTotalPrice2 = FinalTotalPrice1 + used_point;
+		    let used_point = parseInt(point_zone.val().replace(/,/g, ''));
+		    let finalprice = parseInt($(".finaltotalprice_span").text().replace(/,/g, ''));
+
+		    let new_finalprice = finalprice + used_point;
 			// 다시 화면에 업데이트
-			$(".finaltotalprice_span").text(FinalTotalPrice2);
+			$(".finaltotalprice_span").text(new Intl.NumberFormat().format(new_finalprice));
+
 			// 포인트 칸을 비운다.
 			point_zone.val("");
 			
@@ -344,7 +372,19 @@
 								
 			order_form += used_point_input;
 		 	
-				$(".order_info").each(function (index, element) {
+			// 장바구니에서 온 요청인지 확인하는 변수
+			let cart_check = $(".order_Btn").val();
+			
+			alert("장바구니에서 온 요청인지 체크: " + cart_check);
+			
+			if(cart_check != ''){
+				let cart_check_input = "<input name='cartcheck' type='hidden' value='" + cart_check + "'>";
+				order_form += cart_check_input;				
+			}
+			
+			
+			
+			$(".order_info").each(function (index, element) {
 					// 넣어줄 값들을 받아와 input 형식의 데이터로 만들어준다.				
 					
 					// 재고가 상품 수량보다 부족하면 false;
@@ -365,8 +405,8 @@
 					// 총 상품 수량
 					order_form += total_amount_input;
 										
-					let delivery_cost = $(".deliverycost_span").text();
-					
+					let delivery_cost = ($(".deliverycost_span").text().replace(/,/g, ''));
+				
 					let delivery_cost_input = "<input name='ordersList[" + arrayCount + "].delivery_cost' type='hidden' value='" + delivery_cost + "'>";
 					
 					// 배송료
@@ -395,7 +435,7 @@
 					// 주문_상품 가격
 					order_form += price_input;
 										
-					let point = $(element).find(".totalsavepoint").text();
+					let point = $(element).find(".total_savepoint").val();
 										
 					let point_input = "<input name='orderProductList[" +  arrayCount + "].savepoint' type='hidden' value='" + point +"'>";
 										
@@ -406,10 +446,11 @@
 					let cart_product_id = product_id;
 					
 					let cart_user_id = user_id;
-					
+										
 					let cart_product_id_input = "<input name='cartList[" + arrayCount + "].product_id' type='hidden' value='"+ product_id +"'>";
 					
 					let cart_user_id_input = "<input name='cartList["+ arrayCount +"].user_id' type='hidden' value='" + cart_user_id + "'>";
+					
 					
 					order_form += cart_product_id_input;
 					
@@ -472,7 +513,7 @@
         	// 주문정보를 배열에 추가해서 보내준다.
         	let orderProductList = [];
         	let cartList = [];
-        	let total_amount = $(".finaltotalprice_span").text();
+        	let total_amount = ($(".finaltotalprice_span").text().replace(/,/g, ''));        	
         	
         	alert("결제할 금액:" + total_amount);
         	
@@ -486,7 +527,7 @@
         		 let orderProduct = {
     		            product_id : encodeURIComponent($(element).find(".product_id").val()),
     		            price : encodeURIComponent($(element).find(".sale_price").val()),
-    		            savepoint : encodeURIComponent($(element).find(".totalsavepoint").text()),
+    		            savepoint : encodeURIComponent($(element).find(".total_savepoint").val()),
     		            quantity : encodeURIComponent($(element).find(".quantity").text())
     		        };
         		 let cart = {

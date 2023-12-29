@@ -5,6 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+      	  <jsp:include page="/WEB-INF/views/link-rel.jsp" />    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>문의 게시판</title>
 
@@ -77,7 +78,7 @@
     </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/index.jsp" />
+  <jsp:include page="/WEB-INF/views/header.jsp" />	
 <div class="center-content">
 <h1 class="title_text">문의 게시판</h1>
 
@@ -101,6 +102,7 @@
     <button type="submit" >문의글 작성</button>
 </form>
 </div>
+    <jsp:include page="/WEB-INF/views/footer.jsp" />
 
 <script>
     function submitInquiry() {
@@ -115,4 +117,6 @@
 </script>
 
 </body>
+  <jsp:include page="/WEB-INF/views/script.jsp" />
+
 </html>

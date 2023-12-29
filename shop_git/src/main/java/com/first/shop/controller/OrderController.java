@@ -61,9 +61,10 @@ public class OrderController {
 	// 장바구니 -> 주문페이지 -> 주문
 	@PostMapping("/postOrder")
 	public String order(OrdersList ordersList, OrderProductList orderProductList, CartList cartList,
-			@RequestParam(defaultValue = "0", required = false) int used_point,
+			@RequestParam(required = false) boolean cartcheck, @RequestParam(defaultValue = "0", required = false) int used_point,
 			BindingResult result, RedirectAttributes rattr) throws Exception{
 		System.out.println("객체검증:" + result);
+		System.out.println("장바구니에서 온 요청인지 확인:" + cartcheck);
 		System.out.println("주문 정보 :" + ordersList);
 		System.out.println("==================================================================================");
 		System.out.println("주문 상품 :" + orderProductList);
@@ -73,7 +74,7 @@ public class OrderController {
 		System.out.println("사용 포인트 정보 : "+ used_point);
 		
 		try {
-			int orderResult = orderService.registerOrders2(ordersList , orderProductList , cartList, used_point);
+			int orderResult = orderService.registerOrders2(ordersList , orderProductList , cartList, used_point, cartcheck);
 			
 			if(orderResult != 1) {
 				throw new Exception("Order failed");
@@ -269,13 +270,14 @@ public class OrderController {
 	
 	  // 카카오페이 결제 승인	
 	  @RequestMapping("/kakaopay.approve")
-	  public String payComplete(@RequestParam("pg_token") String pgToken, Model model, HttpServletRequest request){
+	  public String payComplete(@RequestParam("pg_token") String pgToken, Model model,
+			  HttpServletRequest request,  RedirectAttributes rattr){
 		  // 세션에 저장해뒀던 주문상품, 장바구니 목록을 가져온다.
 		  HttpSession session = request.getSession();
 		  
 		  OrderProductandCartList orderProductandCartList = (OrderProductandCartList) session.getAttribute("orderProductandCartList"); 
-		  System.out.println("장바구니: "+orderProductandCartList.getCartList());
 		  System.out.println("주문상품: "+orderProductandCartList.getOrderProductList());
+		  System.out.println("장바구니: "+orderProductandCartList.getCartList());
 		  System.out.println("사용포인트: "+orderProductandCartList.getUsedPoint());
 		  System.out.println("장바구니에서 온 요청 ?: " +orderProductandCartList.isCartCheck());
 
@@ -330,11 +332,18 @@ public class OrderController {
 					orderService.kakaopay_OrderRegister(orderProductandCartList);
 					// 세션에서 orderProductandCartList 삭제
 					session.removeAttribute("orderProductandCartList");
+					
+					// 잘 처리됐을 경우 주문처리가 잘 완료됐다는 메세지를 저장
+					rattr.addFlashAttribute("msg", "ORDER_SUCCESS");
+
 				}else {
 				// 실패했을 경우
 					inputStream = con.getErrorStream();
 				// 세션에서 orderProductandCartList 삭제
 				session.removeAttribute("orderProductandCartList");
+				// 실패했을 경우 실패했단 메세지를 저장
+				rattr.addFlashAttribute("msg", "ORDER_FAILED");
+			
 				}
 				// 받아온 데이터를 읽는 클래스
 				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -350,9 +359,7 @@ public class OrderController {
 		  } catch(Exception e) {
 			  	e.printStackTrace();
 		  }
-		  
-		  
-		  return "index";
+		  		return "redirect:/";
 	  }
 	  
 	  // tid(카카오페이 결제정보에 필요) 값을 추출하는 메서드

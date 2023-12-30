@@ -323,6 +323,28 @@
 		
 		// 최종적으로 재고 검사를 실시
 		$(".order_Btn").on("click", function () {
+			// 유저가 새로운 배송정보를 입력했는지 확인
+			let new_address_check = false;
+			
+			// 상세주소까지 전부 입력됐을 경우 배송지 체크를 true로 바꾼다.
+			if ($(".newAddress1").val() !== '' && $(".newAddress2").val() !== '' &&
+				  $(".newAddress3").val() !== '') {
+				  new_address_check = true;
+				}
+
+			// 기존 배송지 정보						
+			let preAddress = '${orderUser.address}';
+
+			// 주문정보에 등록할 배송지정보
+			let delivery_address= '';
+			
+			// 배송지를 새로 입력하지 않았을 경우엔 기존 배송지정보를 사용한다.
+			if(new_address_check){
+				delivery_address += $(".newAddress1").val() + 	$(".newAddress2").val() 
+				+ $(".newAddress3").val();
+			}else{
+				delivery_address += preAddress;
+			}
 			
 			// 유저 보유 금액
 			let user_money = parseInt($(".user_money").val());
@@ -408,6 +430,11 @@
 					let delivery_cost = ($(".deliverycost_span").text().replace(/,/g, ''));
 				
 					let delivery_cost_input = "<input name='ordersList[" + arrayCount + "].delivery_cost' type='hidden' value='" + delivery_cost + "'>";
+					
+					// 배송지정보 추가 
+					let delivery_address_input = "<input name='ordersList[" + arrayCount + "].delivery_address' type='hidden' value='" + delivery_address + "'>";
+					
+					order_form += delivery_address_input;
 					
 					// 배송료
 					order_form += delivery_cost_input;
@@ -515,8 +542,29 @@
         	let cartList = [];
         	let total_amount = ($(".finaltotalprice_span").text().replace(/,/g, ''));        	
         	
-        	alert("결제할 금액:" + total_amount);
-        	
+        	// 유저가 새로운 배송정보를 입력했는지 확인
+			let new_address_check = false;
+			
+			// 상세주소까지 전부 입력됐을 경우 배송지 체크를 true로 바꾼다.
+			if ($(".newAddress1").val() !== '' && $(".newAddress2").val() !== '' &&
+				  $(".newAddress3").val() !== '') {
+				  new_address_check = true;
+				}
+
+			// 기존 배송지 정보						
+			let preAddress = '${sessionScope.user.address}';
+			
+			// 주문정보에 등록할 배송지정보
+			let delivery_address= '';
+
+			// 배송지를 새로 입력하지 않았을 경우엔 기존 배송지정보를 사용한다.
+			if(new_address_check){
+				delivery_address += $(".newAddress1").val() + $(".newAddress2").val() 
+				+ $(".newAddress3").val();
+			}else{
+				delivery_address += preAddress;
+			}
+        	        	
         	// cartCheck 변수    
         	let cartCheck = $(".kakaopay_Btn").val();
 			// 사용 포인트 정보
@@ -544,7 +592,8 @@
         		cartList : cartList,
         		cartCheck : cartCheck,
         		usedPoint : usedPoint,
-        		total_amount : total_amount
+        		total_amount : total_amount,
+        		delivery_address: delivery_address
         	};
 			
 			console.log(orderProductList);

@@ -3,17 +3,84 @@
 /* 입력 양식 폼 */
 form{
 			width:600px;
-            height:450px;
+           /*  height:450px; */
             display : flex;
             flex-direction: column;
             align-items:center;
-            position : absolute;
+            /* position : absolute;
             top:50%;
-            left:50%;
-            transform: translate(-50%, -50%) ;
-            border: 1px solid rgb(89,117,196);
+            left:50%; */
+/*             transform: translate(-50%, -50%) ;
+ */            border: 1px solid rgb(89,117,196);
             border-radius: 10px;
+            margin: auto;
+            color: black;
 }
+
+h1 {
+  font-size:50px;
+  color: #2cbaba;
+  padding-top:10px;
+  text-align: center;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+body { color:white }
+
+.f-input::placeholder {
+  color:black;
+  opacity:0.9;
+}
+
+.f-input {
+  background-color: transparent;
+  border:2px solid #2cbaba;
+  transition: all 0.3s;
+  padding: 13px;
+  margin-bottom: 15px;
+  width:100%;
+  box-sizing: border-box;
+   color:black;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight:500;
+  font-size: 18px;
+  border-radius: 4px;
+  line-height: 22px;
+  text-align:left;
+}
+
+.f-input:focus { 
+  border:2px solid #3a3939; }
+
+textarea {
+  height: 250px;
+  line-height: 150%;
+  resize:vertical;
+}
+
+button {
+  max-width:450px;
+   font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  background:#2cbaba;
+  border-radius:10px;
+  border:0;
+  cursor:pointer;
+  color:white;
+  font-size:24px;
+  padding-top:10px;
+  padding-bottom:10px;
+text-align:center;
+  transition: all 0.3s;
+  font-weight:600; 
+}
+button:hover {
+  
+ background:#3a3939; 
+}
+
+
+/*  */
 
 /* 상품 입력요소 */
 .product-Input{
@@ -25,14 +92,20 @@ form{
             margin-bottom: 10px;
 }
 
+/* 이미지 div 설정 */
+.product_image{
+	display: flex;
+	align-items: center;
+	justify-content: space-between; /* 가로 방향으로 요소들을 나누어 정렬 */	
+}
 
 /* 미리보기 이미지 사이즈 */
 .product_image img{
 		/* align-items 설정을 사용하려면 flex 설정을 먼저 해주어야 함. */
 		display:flex;		
 		align-items: center;
-		width: 300px;
-		height: 100px;
+		width: 230px;
+		height: 180px;
 }
 
 /* 유효성 검사 메시지 */
@@ -73,5 +146,16 @@ form{
 		display: none;
 	}
 	 
-
-
+/* 이미지 업로드 버튼*/
+#product_image{
+	display: none;
+}
+.file_Btn{
+  cursor: pointer;
+    padding: 5px 10px;
+    background-color: #3498db;
+    color: #fff;
+    width: 65px;
+    border-radius: 5px;
+    margin-top: -150px;
+}

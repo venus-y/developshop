@@ -11,13 +11,18 @@
   	  <jsp:include page="/WEB-INF/views/link-rel.jsp" />
   <link rel="stylesheet" href="/shop/css/category/brand.css">
   <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+  <style>
+  	h2{
+  	 	margin-left: 300px;
+  	}
+  </style>
 </head>
 <body>
   <jsp:include page="/WEB-INF/views/header.jsp" />
   <header>
-    <h1>Brand List</h1>
+    <h1 style="text-align: center;">Brand List</h1>
   </header>
-    <div id="alphabet-list">
+    <div id="alphabet-list" style="margin-left: 300px;">
    	 <!-- 알파벳 영역 -->
     <%!
       String[] alphabets = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ");

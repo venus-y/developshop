@@ -80,7 +80,9 @@
 			<if test="keyword != null and keyword != ''">
 			 #{keyword}, 
 			</if>
-			 '%') limit #{offset}, #{pageSize};
+			 '%')
+			 order by product_id desc
+			 limit #{offset}, #{pageSize};
 		</select>
 		
 		

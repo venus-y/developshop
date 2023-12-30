@@ -9,37 +9,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload</title>
 <title>상품 등록 페이지</title>
+  	  <jsp:include page="/WEB-INF/views/link-rel.jsp" />
 	    <link rel="stylesheet" href="<c:url value='/css/registerProductForm.css'/>">
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>    	
-		
 		<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 		
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/index.jsp" />
+	<jsp:include page="/WEB-INF/views/header.jsp" />	
+	<div class="registerProduct_div">
 	<form id="form" method="post" enctype="multipart/form-data">
 		<h3>상품 등록 페이지</h3>
 		<!-- 상품명 -->
 		<label>상품명</label>
-			<input class="product-Input" type="text" name="product_name" id="product_name">
+			<input class="f-input product-Input" type="text" name="product_name" id="product_name">
 		<!-- 상품명 공백 시 출력 메시지 -->
 			<span class="product_name_empty">상품명을 입력해주세요.</span>
 			
 		<!-- 상품가격 -->
 		<label>상품가격</label>
-			<input class="product-Input" type="text" name="price" id="price">
+			<input class="f-input product-Input" type="text" name="price" id="price">
 		<!-- 상품가격 공백 시 출력 메시지 -->
 			<span class="price_empty">가격을 입력해주세요.</span>	
 		
 		<!-- 상품 할인률 -->
 		<label>할인률</label>
-			<input class="product-Input" type="number" name="discount" id="discount" min="1" max="99">
+			<input class="f-input product-Input" type="number" name="discount" id="discount" min="1" max="99">
 		<!-- 할인률 공백 시 출력 메시지 -->
 			<span class="discount_empty">상품명을 입력해주세요.</span>
 		
 		<!-- 상품 재고 -->
 		<label>재고</label>
-			<input class="product-Input" type="number" min="1" name="stock" id="stock">
+			<input class="f-input product-Input" type="number" min="1" name="stock" id="stock">
 		<!-- 상품명 공백 시 출력 메시지 -->
 			<span class="stock_empty">재고를 입력해주세요.</span>
 		
@@ -73,24 +74,29 @@
 				
 		<!-- 상품 적립포인트 -->
 		<label>적립포인트</label>
-			<input class="product-Input" type="text" name="savepoint" id="savepoint">
+			<input class="f-input product-Input" type="text" name="savepoint" id="savepoint">
 		<!-- 적립포인트 공백 시 출력 메시지 -->
 			<span class="savepoint_empty">적립포인트를 입력해주세요.</span>
 		
 		<!-- 이미지 파일 영역-->	
-			<div class="product_image">				
-				<label for="product_image">파일 등록</label>
-		<!-- 이미지 파일 등록 -->
-				<input type="file" name="file" id="product_image">
+			<div class="product_image">	
+				<span class="product_image_empty">이미지파일을 등록해주세요.</span>	
 				<img src="" alt="이미지를 등록해주세요.">
+				<label class="file_Btn" for="product_image">
+				  업로드
+				</label>			
+				<input type="file" name="file" id="product_image">
+		<!-- 이미지 파일 등록 -->				
 			</div>
 		<!-- 파일 공백 시 출력 메시지 -->
-			<span class="product_image_empty">이미지파일을 등록해주세요.</span>	
 			
 		<!-- 등록 버튼 -->
 			<button type="button" class="register_btn">상품 등록</button>		
 	</form>
+	</div>
+	<jsp:include page="/WEB-INF/views/footer.jsp" />	
 </body>
+  <jsp:include page="/WEB-INF/views/script.jsp" />
 	<script type="text/javascript">
 	
 	$(document).ready(function () {

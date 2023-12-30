@@ -10,9 +10,11 @@
 <head>
 <meta charset="UTF-8">
 <jsp:include page="/WEB-INF/views/link-rel.jsp" />
+<jsp:include page="/WEB-INF/views/reviewLink-rel.jsp" />
 <title>상품 목록</title>
 	<link rel="stylesheet" href="<c:url value='/css/productInfo.css'/>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>    
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>    	
 	<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>	
@@ -101,7 +103,7 @@
 			<!-- 리뷰 작성 영역  -->.
 			<div class="bottom_div">
 				<div class="review_title">
-					<h2>리뷰</h2>					
+					<h2 style="text-align: center; margin-bottom: 10px;">상품 리뷰</h2>					
 				</div>
 				
 			<!-- 구매 이력이 있는 사람에 한해서 리뷰 작성 가능 -->	
@@ -443,6 +445,7 @@
 					$(".review_not_div").html('<span>작성된 리뷰가 없습니다.</span>');
 					$(".review_content_ul").html('');
 					$(".pageMaker").html('');
+					$(".review_content_ul").css("background-color","white");
 				} else{
 					$(".review_not_div").html('');
 					
@@ -451,16 +454,24 @@
 					let user_id = '${sessionScope.user.id}'; 
 					
 					let review_list = '';
-					
+					/* 작성자 이미지 */
+					let userImagePath = '<c:url value="/imgUpload/unknown.jpg"/>';
+
 					// 서버에서 받아온 리뷰 목록을 브라우저 화면 상에 출력한다.
 					$(list).each(function (i, obj) {
 						review_list += '<li>';
 						review_list += '<div class="review_div">';
 						review_list += '<div class="review_top">';
 						// 작성자 아이디, 작성일, 평점 등을 담는다.
-						review_list += '<span class="user_id_span">' + obj.user_id +'</span>';
-						review_list += '<span class="date_span">' + obj.regdate + '</span>';
-						review_list += '<span class="rating_span"> 평점 : <span class="rating_value_span">' + obj.rating + '</span>점</span>';
+						review_list += '<img src="' + userImagePath + '" alt="User Image" class="user_image">';
+						review_list += '<span class="user_id_span">' + '작성자:' + obj.user_id +'</span>';
+						review_list += '<span class="date_span">' + '작성일자:' + obj.regdate + '</span>';
+						/* 평점의 수치만틈 별점으로 표시한다. */
+						let reviewRate = obj.rating;
+						let input_reviewRate = convertRatingToStars(reviewRate);						
+						
+						
+						review_list += '<span class="rating_span"><span class="rating_value_span">' + input_reviewRate + '</span></span>';
 						// 접속한 유저의 아이디 == 리뷰 작성자 아이디 -> 수정, 삭제 버튼 노출
 						if(user_id === obj.user_id){
 							review_list += '<button data-value="' + obj.user_id + '" class="update_Btn">수정</button>'
@@ -515,6 +526,35 @@
 				}
 		}
 		
+		 // DB로부터 읽어온 평점 수치를 별점으로 변환
+		 function convertRatingToStars(rating) {
+			let stars = '';
+			// rating값에 floor를 적용했을 때 나온 수치만큼만 왕별로 취급한다.
+			let fullStars = Math.floor(rating);
+			// rating값이 1로 나누어떨어지지 않을 경우 반별을 추가한다.
+			let halfStar = (rating % 1 !== 0);
+			// 왕별과 반별을 채우고 남은 부분은 빈 별로 채운다.
+			let emptyStars = Math.floor(5-parseFloat(rating));
+			
+			// stars에 왕별 추가
+			for(let i=0; i<fullStars; i++){
+/* 		        stars += '<i class="rating__icon rating__icon--star fa fa-star"></i>';
+ */		        stars += '<i class="fas fa-star"></i>';
+
+			}
+			
+			// 반별을 추가해야되는지 확인 후 추가
+			if(halfStar){
+		        stars += '<i class="fas fa-star-half-alt"></i>';
+			}
+			if(emptyStars > 0.5){
+				for(let i=0; i<emptyStars; i++){
+			        stars += '<i class="far fa-star"></i>';
+				}
+			}
+			
+			return stars;
+		}
 		
 	</script>
 </html>

@@ -246,8 +246,10 @@ public class OrderServiceImpl implements OrderService {
 			int totalSavePoint = 0;
 			int deliveryCost = 0;
 			
+			// 주문상품정보, 장바구니정보, 배송주소를 가져온다.
 			List<OrderProduct> opList = orderProductandCartList.getOrderProductList();
 			List<Cart> cartList = orderProductandCartList.getCartList();
+			String delivery_address = orderProductandCartList.getDelivery_address();
 			
 			// 주문할 상품목록을 순회하면서 총 합산가격, 합산포인트를 구한다.
 			// 주문한 상품의 재고를 차감한다.
@@ -313,6 +315,7 @@ public class OrderServiceImpl implements OrderService {
 				orders.setTotal_amount(opList.get(i).getQuantity());
 				orders.setUser_id(cartList.get(0).getUser_id());
 				orders.setDelivery_cost(deliveryCost);
+				orders.setDelivery_address(delivery_address);
 				
 				// 주문정보와 주문상품 정보 등록
 				ordersInfoCheck = orderDao.register(orders);

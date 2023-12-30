@@ -80,11 +80,11 @@ public class AdminServiceImpl implements AdminService {
 		adminDao.updateOrders(updateOrders);		
 		// 배송상품을 받을 유저의 정보를 가져온다.
 		User receiver = orderDao.user(updateOrders.getUser_id());
-		
+				
 		// 운송장 정보를 등록한다(주문번호, 배송지, 운송장번호, 배송사번호 정보를 추가)
 		DeliveryInfo deliveryInfo = new DeliveryInfo();
 		deliveryInfo.setOrder_id(updateOrders.getOrder_id());
-		deliveryInfo.setShipping_address(receiver.getAddress());
+		deliveryInfo.setShipping_address(updateOrders.getDelivery_address());
 		deliveryInfo.setCompany_id(1);		
 		// 랜덤한 12자리의 운송장번호를 생성
 		Random random = new Random();

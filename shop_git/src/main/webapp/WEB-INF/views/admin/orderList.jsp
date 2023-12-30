@@ -54,6 +54,7 @@
         <ul class="order-details">
             <li class="order_id"><strong>주문 ID:</strong> ${orderInfo.order_id}</li>
             <li class="user_id"><strong>사용자 ID:</strong> ${orderInfo.user_id}</li>
+        	<li class="status"><strong>배송지:</strong> ${orderInfo.delivery_address}</li>
             <li class="order_date"><strong>주문 일자:</strong> ${orderInfo.order_date}</li>
             <li class="total_amount"><strong>총 수량:</strong> ${orderInfo.total_amount}</li>
             <li class="delivery_cost"><strong>배송비 :</strong> ${orderInfo.delivery_cost}</li>

@@ -5,8 +5,8 @@
 			
 		<!-- 구매 요청  -->
 		<insert id="register_product" parameterType="Orders">
-			insert into orders (order_id, user_id, total_amount, delivery_cost, status, payment_method)
-			values (#{order_id}, #{user_id}, #{total_amount}, #{delivery_cost}, #{status}, #{payment_method});
+			insert into orders (order_id, user_id, total_amount, delivery_cost, status, payment_method, delivery_address)
+			values (#{order_id}, #{user_id}, #{total_amount}, #{delivery_cost}, #{status}, #{payment_method}, #{delivery_address});
 		</insert>
 		
 		<!-- 주문_상품 테이블에 데이터 삽입 -->

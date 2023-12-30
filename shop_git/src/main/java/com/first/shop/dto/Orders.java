@@ -10,7 +10,14 @@ public class Orders {
 	private int delivery_cost;
 	private String status;
 	private String payment_method;
+	private String delivery_address;
 		
+	public String getDelivery_address() {
+		return delivery_address;
+	}
+	public void setDelivery_address(String delivery_address) {
+		this.delivery_address = delivery_address;
+	}
 	public String getPayment_method() {
 		return payment_method;
 	}
@@ -57,7 +64,7 @@ public class Orders {
 	public String toString() {
 		return "Orders [order_id=" + order_id + ", user_id=" + user_id + ", order_date=" + order_date
 				+ ", total_amount=" + total_amount + ", delivery_cost=" + delivery_cost + ", status=" + status
-				+ ", payment_method=" + payment_method + "]";
+				+ ", payment_method=" + payment_method + ", delivery_address=" + delivery_address + "]";
 	}
 	
 	

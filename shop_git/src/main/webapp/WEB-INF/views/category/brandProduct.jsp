@@ -59,7 +59,8 @@
 			<input type="text" name="keyword" class="search-input" placeholder="찾고 계신 상품명을 입력해주세요">
 			<input type="hidden" name="category_code" value="${(product.category_code/100).intValue()}">
 			<input type="submit" class="search-button" value="검색">		
-		</form>			
+		</form>	
+				
 	</div>
 	<jsp:include page="/WEB-INF/views/footer.jsp" />	
 </body>

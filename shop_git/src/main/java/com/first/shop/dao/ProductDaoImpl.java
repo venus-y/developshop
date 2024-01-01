@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
+import com.first.shop.dto.CategorySearchCondition;
 import com.first.shop.dto.Product;
 
 @Repository
@@ -45,14 +46,14 @@ public class ProductDaoImpl implements ProductDao {
 	
 	// 같은 카테고리에 속하는 상품들을 반환
 	@Override
-	public List<Product> categorySet(Map map) {
-		return session.selectList(namespace+"getProduct_CategorySet", map);
+	public List<Product> categorySet(CategorySearchCondition csc) {
+		return session.selectList(namespace+"getProduct_CategorySet", csc);
 	}
 	
 	// 카테고리에 속한 상품들의 총 개수 반환
 	@Override
-	public int categoryCount(int category_id) {
-		return session.selectOne(namespace+"getProduct_CategorySet_Count", category_id);
+	public int categoryCount(CategorySearchCondition csc) {
+		return session.selectOne(namespace+"getProduct_CategorySet_Count", csc);
 
 	}
 	

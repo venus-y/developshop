@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
+import com.first.shop.dto.CategorySearchCondition;
 import com.first.shop.dto.Product;
 
 public interface ProductDao {
@@ -16,9 +17,9 @@ public interface ProductDao {
 	
 	Product productInfo(int product_id);
 	
-	List<Product> categorySet(Map map);
+	List<Product> categorySet(CategorySearchCondition csc);
 	
-	int categoryCount(int category_id);
+	int categoryCount(CategorySearchCondition csc);
 	
 	List<Category> sortBrand();
 	

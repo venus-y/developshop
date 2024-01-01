@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.first.shop.dao.ProductDao;
 import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
+import com.first.shop.dto.CategorySearchCondition;
 import com.first.shop.dto.Product;
 
 @Service
@@ -22,8 +23,7 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> getProductList() {
 		return productDao.list(); 
 	}
-	
-	
+		
 	// 상품 개수 조회
 	@Override
 	public int countAllProduct() {
@@ -47,15 +47,15 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 카테코리 코드별로 상품정보를 가져온다.
 	@Override
-	public List<Product> getProduct_CategorySet(Map map) {
-		List<Product> productList = productDao.categorySet(map);
+	public List<Product> getProduct_CategorySet(CategorySearchCondition csc) {
+		List<Product> productList = productDao.categorySet(csc);
 		return productList;
 	}
 
 	// 카테고리로 분류된 상품들의 총 개수를 가져온다.
 	@Override
-	public int getProduct_CategorySet_Count(int category_code) {
-		return productDao.categoryCount(category_code);
+	public int getProduct_CategorySet_Count(CategorySearchCondition csc) {
+		return productDao.categoryCount(csc);
 	}
 
 	// 브랜드별로 상품 분류

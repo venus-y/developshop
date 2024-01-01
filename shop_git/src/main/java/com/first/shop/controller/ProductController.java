@@ -1,8 +1,6 @@
 package com.first.shop.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
+import com.first.shop.dto.CategoryPageHandler;
+import com.first.shop.dto.CategorySearchCondition;
 import com.first.shop.dto.PageHandler;
 import com.first.shop.dto.Product;
 import com.first.shop.dto.Review;
@@ -94,10 +94,7 @@ public class ProductController {
 			review.setUser_id(user.getId());
 			review.setProduct_id(product_id);
 		}
-		
-		
-		
-		
+				
 		// 접속한 유저가 해당 상품을 구매한 이력이 있는지 검사
 		int orderHistoryCheck = reviewService.check_OrderHistory(review);
 		
@@ -109,30 +106,20 @@ public class ProductController {
 	
 	//카테고리별 상품 조회
 	@GetMapping("/categorySet")
-	public String categorySet(BrandSearchCondition bsc, String viewName, String detail, Model model) {
-				
+	public String categorySet(CategorySearchCondition csc, String viewName, String detail, Model model) {
 		// 페이지와 페이지사이즈정보가 없을 경우 각각 1, 8로 세팅
 //		if(page == null && pageSize == null) {
 //			page = 1;
 //			pageSize = 2;
 //		}
 		// 상품들의 총 개수를 받아온다.
-		int productCount = productService.getProduct_CategorySet_Count(bsc.getCategory_code());
+		int productCount = productService.getProduct_CategorySet_Count(csc);
 		
 		// 페이징
-		PageHandler ph = new PageHandler(productCount, bsc);
-		
-		
-		
-		// 상품을 받아올 때 필요한 조건들을 맵에 담는다.
-		Map map = new HashMap();
-		// 페이지 오프셋, 페이지 사이즈, 카테고리 코드 
-		map.put("offset", (bsc.getPage()-1)*bsc.getPageSize());
-		map.put("pageSize", bsc.getPageSize());
-		map.put("category_code", bsc.getCategory_code());
+		CategoryPageHandler ph = new CategoryPageHandler(productCount, csc);
 		
 		//카테고리별로 분류한 상품페이지 정보를 받아온다.
-		List<Product> productList = productService.getProduct_CategorySet(map);
+		List<Product> productList = productService.getProduct_CategorySet(csc);
 		
 		System.out.println(productList);
 		

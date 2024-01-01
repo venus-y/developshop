@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.first.shop.dto.BrandSearchCondition;
 import com.first.shop.dto.Category;
+import com.first.shop.dto.CategorySearchCondition;
 import com.first.shop.dto.PageHandler;
 import com.first.shop.dto.Product;
 
@@ -126,5 +127,16 @@ public class ProductDaoImplTest {
 			System.out.println((i+1) + "번째" +  pList.get(i));
 		}
 	}
+	
+	// 카테고리별 분류 조건 테스트
+	@Test
+	public void cSearchTest() {
+		CategorySearchCondition csc = new CategorySearchCondition(1, 8, "청바지", 2);
+		
+		int pCount = productDao.categoryCount(csc);
+		
+		System.out.println(pCount);
+	}
+	
 	
 }

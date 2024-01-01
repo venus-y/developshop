@@ -14,6 +14,7 @@
 		<typeAlias alias="OrderProduct" type="com.first.shop.dto.OrderProduct"/>						
 		<typeAlias alias="DeliveryInfo" type="com.first.shop.dto.DeliveryInfo"/>									
 		<typeAlias alias="BrandSearchCondition" type="com.first.shop.dto.BrandSearchCondition"/>										
+		<typeAlias alias="CategorySearchCondition" type="com.first.shop.dto.CategorySearchCondition"/>												
 		<typeAlias alias="Review" type="com.first.shop.dto.Review"/>
 		<typeAlias alias="QandA" type="com.first.shop.dto.QandA"/>																						
 	</typeAliases>

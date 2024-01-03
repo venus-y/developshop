@@ -17,10 +17,10 @@ pageEncoding="UTF-8"%>
 	<table border="1">
 	<!-- status 변수의 인덱스 % 5가 될 때마다 한 행을 추가하고, 인덱스 % 5가 4 또는 마지막 status값일 경우 행을 닫는다. -->
 		<c:forEach var="product" items="${productList}" varStatus="status">
-				<%-- <c:if test="${status.index % 5 eq 0 }">
+				<!-- 가로 4 , 세로 2 형식으로 상품을 보여주기 위해서 요소를 4번째 순회했을 경우 tr 태그를 닫는다.  -->
+				<c:if test="${status.index % 4 eq 0}">
 					<tr>
-				</c:if> --%>
-				
+				</c:if>
 				<td>
 					<div>
 					<a href='<c:url value='/product/productInfo?product_id=${product.product_id}&page=${ph.csc.page}&pageSize=${ph.csc.pageSize}'/>'>
@@ -40,8 +40,8 @@ pageEncoding="UTF-8"%>
 				</c:if>
 					</div>
 				</td>
-			<%-- 	<c:if test="${status.index % 5 eq 4 or status.last }">
-				</c:if>		 --%>	
+				<c:if test="${status.index % 4 eq 3 or status.last }">
+				</c:if>	
 		</c:forEach>	
 	</table>
 	

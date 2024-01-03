@@ -95,7 +95,7 @@ public class OrderController {
 		
 	}
 	//주문화면
-	@GetMapping("/getOrder/{user_id}")
+	@GetMapping("/getOrder/{user_id:.+}")
 	public String getOrder(@PathVariable String user_id, TempOrderProducts tempOrderProducts,
 			boolean cartCheck, BindingResult result , Model model) {
 		

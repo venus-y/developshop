@@ -287,7 +287,6 @@
 				return false;
 			}
 			
-			
 			Form_quantity.val(quantity); 
 			form.submit();
 

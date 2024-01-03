@@ -106,7 +106,7 @@ public class ProductController {
 	
 	//카테고리별 상품 조회
 	@GetMapping("/categorySet")
-	public String categorySet(CategorySearchCondition csc, String viewName, String detail, Model model) {
+	public String categorySet(CategorySearchCondition csc, Model model) {
 		// 페이지와 페이지사이즈정보가 없을 경우 각각 1, 8로 세팅
 //		if(page == null && pageSize == null) {
 //			page = 1;
@@ -121,20 +121,20 @@ public class ProductController {
 		//카테고리별로 분류한 상품페이지 정보를 받아온다.
 		List<Product> productList = productService.getProduct_CategorySet(csc);
 		
-		System.out.println(productList);
-		
 		// 상품목록을 모델에 담는다.
 		model.addAttribute("productList", productList);
 		// 페이지 정보를 담는다.
 		model.addAttribute("ph", ph);
 		
+		System.out.println(csc.getDetail() + "확인");
+		
 		
 		//2차 분류가 있을 경우
-		if(detail != null) {
-			return "/category/"+viewName + "/" + detail;
+		if(csc.getDetail() != null && csc.getDetail() != "") {
+			return "/category/"+csc.getViewName() + "/" + csc.getDetail();
 		}
 		
-		return "/category/"+viewName;
+		return "/category/"+csc.getViewName();
 	}
 	
 	// 브랜드별 분류 페이지

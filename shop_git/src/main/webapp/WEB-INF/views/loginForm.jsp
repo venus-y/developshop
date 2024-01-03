@@ -44,10 +44,33 @@
         </div>        
     </form>
     <p class="text-center"><a href="<c:url value="/register/getRegister"/>">Create an Account</a></p>
+	<!-- 카카오 로그인 -->
+	<button id="kakao_login_Btn" class="btn btn-block waves-effect waves-light btn-rounded btn-outline-info mb-3">
+   	 <img class="kakao_login" alt="카카오로그인" src="<c:url value='/imgUpload/kakaoLogin.png'/>" onclick="loginWithKakao()">
+    </button>
+    
 </div>
+<!-- <div class="col-lg-12 text-center mt-3">
+    
+</div> -->
 	    <jsp:include page="/WEB-INF/views/footer.jsp" />						
 </body>
 		<jsp:include page="/WEB-INF/views/script.jsp" />
-		
+
+<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        Kakao.init('3cad3b1574d49fa40603a7bd12224f0a');
+        Kakao.isInitialized();
+    });
+
+    function loginWithKakao() {
+        Kakao.Auth.authorize({ 
+        redirectUri: 'http://localhost:8080/shop/kakao/kakao_callback' 
+        }); // 등록한 리다이렉트uri 입력
+    }
+    
+   
+</script>		
 		
 </html>

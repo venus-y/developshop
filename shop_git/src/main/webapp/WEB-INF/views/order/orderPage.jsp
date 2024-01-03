@@ -325,7 +325,7 @@
 		$(".order_Btn").on("click", function () {
 			// 유저가 새로운 배송정보를 입력했는지 확인
 			let new_address_check = false;
-			
+					
 			// 상세주소까지 전부 입력됐을 경우 배송지 체크를 true로 바꾼다.
 			if ($(".newAddress1").val() !== '' && $(".newAddress2").val() !== '' &&
 				  $(".newAddress3").val() !== '') {
@@ -413,9 +413,12 @@
 					let stock_check = false;
 					
 					//1. 주문정보 테이블 들어갈 데이터 
-					let user_id = $(element).find(".user_id").val();
+					let user_id = $(element).find(".user_id").val(); 
+					/* let user_id = '${sessionScope.user.id}';  */
 					
-					let user_id_input = "<input name='ordersList[" + arrayCount + "].user_id' type='hidden' value='" + user_id + "'>";
+					let encode_user_id = user_id;
+										
+					let user_id_input = "<input name='ordersList[" + arrayCount + "].user_id' type='hidden' value='" + encode_user_id + "'>";
 					
 					// 유저 아이디
 					order_form += user_id_input;

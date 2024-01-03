@@ -67,6 +67,8 @@ public class LoginController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		// 세션을 종료시킨다.
+		session.removeAttribute("access_token");
+		session.removeAttribute("user");
 		session.invalidate();
 		
 		return "redirect:/";

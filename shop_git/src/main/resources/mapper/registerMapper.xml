@@ -5,8 +5,8 @@
 	
 	<!-- 회원가입 -->
 	<insert id="registerUser" parameterType="User">
-		insert into user (id, password, name, sex, age, birth, address, tel, email, color)
-			values ( #{id}, #{password}, #{name}, #{sex}, #{age}, #{birth}, #{address}, #{tel}, #{email}, #{color})		
+		insert into user (id, password, name, sex, age, birth, address, tel, email, color, snscheck)
+			values ( #{id}, #{password}, #{name}, #{sex}, #{age}, #{birth}, #{address}, #{tel}, #{email}, #{color}, #{snscheck})		
 	</insert>
 	
 	<!-- 아이디 중복체크 -->

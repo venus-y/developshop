@@ -4,7 +4,7 @@
    color:black;
    margin: 0;
    padding: 0;
-   background-color: snow; 
+   background-color: white; 
 }
 
 /* header {
@@ -258,4 +258,9 @@ tr, th, td {
     border: none;
 }
 
-.
+.order-container{
+ /* 주문 영역 UI 설정 */
+ width: 50%;
+ margin: auto;	
+ heigth: auto;
+}

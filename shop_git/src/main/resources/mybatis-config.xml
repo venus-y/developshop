@@ -16,6 +16,7 @@
 		<typeAlias alias="BrandSearchCondition" type="com.first.shop.dto.BrandSearchCondition"/>										
 		<typeAlias alias="CategorySearchCondition" type="com.first.shop.dto.CategorySearchCondition"/>												
 		<typeAlias alias="Review" type="com.first.shop.dto.Review"/>
-		<typeAlias alias="QandA" type="com.first.shop.dto.QandA"/>																						
+		<typeAlias alias="QandA" type="com.first.shop.dto.QandA"/>
+		<typeAlias alias="Purchase_History" type="com.first.shop.dto.Purchase_History"/>																																														
 	</typeAliases>
 </configuration>

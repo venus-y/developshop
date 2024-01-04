@@ -18,6 +18,7 @@ import com.first.shop.dto.OrderProductandCartList;
 import com.first.shop.dto.Orders;
 import com.first.shop.dto.OrdersList;
 import com.first.shop.dto.Product;
+import com.first.shop.dto.Purchase_History;
 import com.first.shop.dto.User;
 
 @Service
@@ -344,5 +345,10 @@ public class OrderServiceImpl implements OrderService {
 		    // 잘 안됐을 경우엔 0 반환한다.
 		   	   return 0;
 			
+		}
+		
+		@Override
+		public List<Purchase_History> get_Purchase_History(String user_id) {
+			return orderDao.purchase_History(user_id);
 		}
 }

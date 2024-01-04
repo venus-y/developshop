@@ -1,10 +1,13 @@
 package com.first.shop.dao;
 
+import java.util.List;
+
 import com.first.shop.dto.Cart;
 import com.first.shop.dto.DeliveryInfo;
 import com.first.shop.dto.OrderProduct;
 import com.first.shop.dto.Orders;
 import com.first.shop.dto.Product;
+import com.first.shop.dto.Purchase_History;
 import com.first.shop.dto.User;
 
 public interface OrderDao {
@@ -28,4 +31,5 @@ public interface OrderDao {
 	
 	int delivery_info(DeliveryInfo deliveryInfo);
 	
+	List<Purchase_History> purchase_History(String user_id);
 }

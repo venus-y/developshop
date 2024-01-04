@@ -18,8 +18,14 @@ public class User {
 	private int money;
 	private String tel;
 	private String color;
+	private int snscheck;
 	
-	
+	public int getSnscheck() {
+		return snscheck;
+	}
+	public void setSnscheck(int snscheck) {
+		this.snscheck = snscheck;
+	}
 	public int getMoney() {
 		return money;
 	}
@@ -110,7 +116,7 @@ public class User {
 		return "User [id=" + id + ", password=" + password + ", name=" + name + ", age=" + age + ", sex=" + sex
 				+ ", birth=" + birth + ", address=" + address + ", email=" + email + ", regdate=" + regdate
 				+ ", admincheck=" + admincheck + ", point=" + point + ", money=" + money + ", tel=" + tel + ", color="
-				+ color + "]";
+				+ color + ", snscheck=" + snscheck + "]";
 	}
 	
 	

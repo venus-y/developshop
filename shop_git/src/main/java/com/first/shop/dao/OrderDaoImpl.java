@@ -1,5 +1,7 @@
 package com.first.shop.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,7 @@ import com.first.shop.dto.DeliveryInfo;
 import com.first.shop.dto.OrderProduct;
 import com.first.shop.dto.Orders;
 import com.first.shop.dto.Product;
+import com.first.shop.dto.Purchase_History;
 import com.first.shop.dto.User;
 
 @Repository
@@ -78,6 +81,12 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public int kakaopay_orderproduct(OrderProduct orderProduct) {
 		return session.insert(namespace+"register_order_product", orderProduct);
+	}
+	
+	// 유저의 구매 이력 가져오기
+	@Override
+	public List<Purchase_History> purchase_History(String user_id) {
+		return session.selectList(namespace+"get_Purchase_History", user_id);
 	}
 
 	

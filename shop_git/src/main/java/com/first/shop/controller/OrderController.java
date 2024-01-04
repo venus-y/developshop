@@ -32,6 +32,7 @@ import com.first.shop.dto.OrderProductList;
 import com.first.shop.dto.OrderProductandCartList;
 import com.first.shop.dto.OrdersList;
 import com.first.shop.dto.Product;
+import com.first.shop.dto.Purchase_History;
 import com.first.shop.dto.TempOrderProduct;
 import com.first.shop.dto.TempOrderProducts;
 import com.first.shop.dto.User;
@@ -380,7 +381,29 @@ public class OrderController {
 	  // start와 end 사이의 부분을 추출하여 반환
 	  return (start >= 6 && end != -1) ? jsonData.substring(start, manualEnd+1) : null;
 	  }
-	 
-	
+	  
+	  // 유저 구매이력 페이지 
+	  @GetMapping("/purchase_History")
+	  public String purchase_History(String user_id,Integer page, Integer pageSize, Model model) {
+		  
+		  // 페이지와 페이지사이즈는 null일 경우 기본값을 세팅
+		  if(page != null && pageSize != null) {
+			  page = 1;
+			  pageSize = 5;
+		  }
+		  
+		  // 총 게시물 수를 가져온다.
+		  
+		  
+		  // 구매이력 목록
+		  List<Purchase_History> phList = orderService.get_Purchase_History(user_id);
+		  
+		  model.addAttribute("phList", phList);
+		  
+		  return "order/purchaseHistory";
+		  
+	  }
+	  
+	  
 	
 }

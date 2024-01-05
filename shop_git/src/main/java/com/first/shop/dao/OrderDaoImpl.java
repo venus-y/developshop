@@ -1,6 +1,7 @@
 package com.first.shop.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,8 +86,13 @@ public class OrderDaoImpl implements OrderDao {
 	
 	// 유저의 구매 이력 가져오기
 	@Override
-	public List<Purchase_History> purchase_History(String user_id) {
-		return session.selectList(namespace+"get_Purchase_History", user_id);
+	public List<Purchase_History> purchase_History(Map map) {
+		return session.selectList(namespace+"get_Purchase_History", map);
+	}
+
+	@Override
+	public int purchase_Count(String user_id) {
+		return session.selectOne(namespace+"get_Purchase_Count", user_id);
 	}
 
 	

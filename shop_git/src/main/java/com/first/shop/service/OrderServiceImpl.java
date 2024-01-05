@@ -3,6 +3,7 @@ package com.first.shop.service;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -347,8 +348,15 @@ public class OrderServiceImpl implements OrderService {
 			
 		}
 		
+		// 구매이력 목록 가져오기
 		@Override
-		public List<Purchase_History> get_Purchase_History(String user_id) {
-			return orderDao.purchase_History(user_id);
+		public List<Purchase_History> get_Purchase_History(Map map) {
+			return orderDao.purchase_History(map);
+		}
+		
+		// 구매횟수 가져오기
+		@Override
+		public int get_Purchase_Count(String user_id) {
+			return orderDao.purchase_Count(user_id);
 		}
 }

@@ -1,6 +1,7 @@
 package com.first.shop.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.first.shop.dto.Cart;
 import com.first.shop.dto.DeliveryInfo;
@@ -31,5 +32,7 @@ public interface OrderDao {
 	
 	int delivery_info(DeliveryInfo deliveryInfo);
 	
-	List<Purchase_History> purchase_History(String user_id);
+	List<Purchase_History> purchase_History(Map map);
+	
+	int purchase_Count(String user_id);
 }

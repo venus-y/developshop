@@ -2,7 +2,9 @@ package com.first.shop.dao;
 
 import static org.junit.Assert.fail;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.first.shop.dto.OrderInfoPageHandler;
 import com.first.shop.dto.Purchase_History;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -41,5 +44,32 @@ public class OrderDaoImplTest {
 		for(int i=0; i<phList.size(); i++) {
 			System.out.println(phList.get(i));
 		}
+	}
+	
+	//구매횟수 가져오기
+	@Test
+	public void get_Purchase_Count() {
+		int count = orderDao.purchase_Count("geumsung7769");
+		
+		OrderInfoPageHandler ph = new OrderInfoPageHandler(1, 5, count);
+		
+		System.out.println(ph);
+		
+		Map map = new HashMap();
+		
+		map.put("offset", (ph.getPage()-1)*ph.getPageSize());
+		map.put("pageSize", ph.getPageSize());
+		map.put("user_id", "geumsung7769");
+		
+		List<Purchase_History> list = orderDao.purchase_History(map);
+		
+		for(int i=0; i<list.size(); i++) {
+			System.out.println(list.get(i));
+		}
+		
+		
+		
+		
+		System.out.println(count);
 	}
 }

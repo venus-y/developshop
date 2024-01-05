@@ -40,8 +40,16 @@
 			delete from cart where user_id = #{user_id} and product_id = #{product_id}
 		</delete>
 		
+		<!-- 유저의 구매이력 상품 개수 조회 -->
+		<select id="get_Purchase_Count" parameterType="String" resultType="int">
+		select count(*)	from orders o join order_product op		
+		on o.order_id = op.order_id
+		join product p on p.product_id = op.product_id
+		where o.user_id = #{user_id};
+		</select>
+		
 		<!-- 유저의 구매이력 조회 -->
-		<select id="get_Purchase_History" parameterType="String" resultType="Purchase_History">
+		<select id="get_Purchase_History" parameterType="Map" resultType="Purchase_History">
 		select o.order_id, o.order_date, o.status, o.payment_method
 		, op.product_id, op.price, op.quantity, op.savepoint,
 		 p.product_id, p.product_thumbimage, p.product_name
@@ -50,7 +58,8 @@
 		
 		on o.order_id = op.order_id
 		join product p on p.product_id = op.product_id
-		where o.user_id = #{user_id};
+		where o.user_id = #{user_id}
+		limit #{offset}, #{pageSize};
 		</select>
 		
 		

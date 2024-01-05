@@ -1,6 +1,7 @@
 package com.first.shop.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.first.shop.dto.CartList;
 import com.first.shop.dto.OrderProductList;
@@ -22,5 +23,7 @@ public interface OrderService {
 
 	int kakaopay_OrderRegister(OrderProductandCartList orderProductandCartList);
 
-	List<Purchase_History> get_Purchase_History (String user_id);
+	List<Purchase_History> get_Purchase_History (Map map);
+	
+	int get_Purchase_Count (String user_id);
 }

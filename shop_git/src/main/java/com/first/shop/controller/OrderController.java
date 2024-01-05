@@ -10,7 +10,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.first.shop.dto.CartList;
+import com.first.shop.dto.OrderInfoPageHandler;
 import com.first.shop.dto.OrderProductList;
 import com.first.shop.dto.OrderProductandCartList;
 import com.first.shop.dto.OrdersList;
@@ -47,9 +50,12 @@ public class OrderController {
 	
 	private final ProductService productService;
 	
-	public OrderController(OrderService orderService, ProductService productService) {
+	private final String uploadPath;
+	
+	public OrderController(OrderService orderService, ProductService productService, String uploadPath) {
 		this.orderService = orderService;
 		this.productService = productService;
+		this.uploadPath = uploadPath;
 	}
 	
 
@@ -384,21 +390,32 @@ public class OrderController {
 	  
 	  // 유저 구매이력 페이지 
 	  @GetMapping("/purchase_History")
-	  public String purchase_History(String user_id,Integer page, Integer pageSize, Model model) {
+	  public String purchase_History(String user_id, Integer page, Integer pageSize, Model model) {
 		  
 		  // 페이지와 페이지사이즈는 null일 경우 기본값을 세팅
-		  if(page != null && pageSize != null) {
+		  if(page == null && pageSize == null) {
 			  page = 1;
 			  pageSize = 5;
 		  }
 		  
 		  // 총 게시물 수를 가져온다.
+		  int totalCount = orderService.get_Purchase_Count(user_id);
 		  
+		  // 페이징 처리
+		  OrderInfoPageHandler ph = new OrderInfoPageHandler(page, pageSize, totalCount);
+		  
+		  // DB에서 페이징처리된 구매이력을 가져오는 데 필요한 offset, pageSize값을 Map에 담는다.
+		  Map map = new HashMap();
+		  map.put("offset", (ph.getPage()-1)*ph.getPageSize());
+		  map.put("pageSize", ph.getPageSize());
+		  map.put("user_id", user_id);
 		  
 		  // 구매이력 목록
-		  List<Purchase_History> phList = orderService.get_Purchase_History(user_id);
+		  List<Purchase_History> phList = orderService.get_Purchase_History(map);
 		  
 		  model.addAttribute("phList", phList);
+		  model.addAttribute("ph",ph);
+		  model.addAttribute("uploadPath", uploadPath);
 		  
 		  return "order/purchaseHistory";
 		  

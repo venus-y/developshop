@@ -43,4 +43,6 @@
  - 리뷰 작성
    ![review](https://github.com/Venus1234567/developshop/assets/102720261/4b1c2d27-c46c-45e3-8ee7-dbaaa6872771)
 
-   
+## 🗺️ ERD   
+<img width="616" alt="ERD" src="https://github.com/Venus1234567/developshop/assets/102720261/a8b6bddf-5295-478e-9a65-1a27ac3ce227">
+

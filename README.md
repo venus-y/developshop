@@ -10,16 +10,15 @@
 사용자들이 쉽게 원하는 의류나 브랜드를 찾을 수 있게 하는 것에 중점을 두었습니다.
 <br>
 
-## ⚙ 사용기술 
-- Backend: `Java 11` `Spring Framework` `MyBatis` `Jsp`
-- Frontend: `JQuery`
+## ⚙ 사용기술
+- Backend: `Java 11` `Spring Framework` `MyBatis` `JSP`
+- Frontend: `jQuery`
 - DB: `MySql`
-- Tools: `Spring tools 3.9.18`
 
   <br>
 
 
-## 🗺️ ERD   
+## 🗺️ ERD
 <img width="616" alt="ERD" src="https://github.com/Venus1234567/developshop/assets/102720261/a8b6bddf-5295-478e-9a65-1a27ac3ce227">
 
 <br>

@@ -42,7 +42,7 @@ public class OrderDaoImplTest {
 		List<Purchase_History> phList = orderDao.purchase_History("geumsung7769");
 
 		for(int i=0; i<phList.size(); i++) {
-			System.out.println(phList.get(i));
+			
 		}
 	}
 	
@@ -53,7 +53,7 @@ public class OrderDaoImplTest {
 		
 		OrderInfoPageHandler ph = new OrderInfoPageHandler(1, 5, count);
 		
-		System.out.println(ph);
+		
 		
 		Map map = new HashMap();
 		
@@ -64,12 +64,12 @@ public class OrderDaoImplTest {
 		List<Purchase_History> list = orderDao.purchase_History(map);
 		
 		for(int i=0; i<list.size(); i++) {
-			System.out.println(list.get(i));
+			
 		}
 		
 		
 		
 		
-		System.out.println(count);
+		
 	}
 }

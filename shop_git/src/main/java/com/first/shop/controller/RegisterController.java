@@ -57,7 +57,7 @@ public class RegisterController {
 	// 회원가입 처리
 	@PostMapping("/postRegister")
 	public String postRegisterForm(User user, BindingResult result) {
-		System.out.println("바인딩Result:"+result);
+		
 		//회원가입 페이지로부터 넘어온 유저객체의 비밀번호를 인코딩처리한다.
 		//유저의 비밀번호를 다시 세팅
 		user.setPassword(encoder.encode(user.getPassword()));
@@ -80,7 +80,7 @@ public class RegisterController {
 	@GetMapping("/mailNum")
 	public String mailNum(String email) {
 		// 이메일 넘어왔나 체크
-		System.out.println("비동기로 넘어온 이메일" + email);
+		
 		
 		// 이메일 전송을 위한 랜덤클래스 생성
 		Random random = new Random();

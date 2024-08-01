@@ -38,42 +38,7 @@ public class ProductController {
 	// 상품 목록 시 이미지 조회를 위해 이미지 저장 경로를 넘겨준다.
 	@Autowired
 	private String uploadPath;
-	
-	// 상품 목록 조회 
-//	@GetMapping("/productList")
-//	public String getProductList(bra Model model) {
-//		// 총 상품 수를 받아온다.
-//		// 받아온 상품 수를 페이지핸들러에 넘겨준 후 페이징 처리를 한다.
-//		int totalCnt = productService.countAllProduct();
-//		
-//		System.out.println("페이지 잘 넘어갔나 확인" + page);
-//		System.out.println("페이지사이즈  잘 넘어갔나 확인" + pageSize);
-//
-//		
-//		// 처음 페이지에 들어갈 경우엔 페이지정보가 없기 때문에 기본 값을 정해준다.
-//		if(page == null && pageSize == null) {
-//			page = 1;
-//			pageSize = 2;
-//		}
-//		
-//		// 페이지에서 다시 다른 페이지로 이동할 경우 페이지정보를 컨트롤러에게 전달해줘야 한다.
-//		PageHandler ph = new PageHandler(page, pageSize, totalCnt);
-//		
-//		// 페이지 오프셋과 페이지사이즈 정보를 map에 담아준다.
-//		Map map = new HashMap();
-//		map.put("offset", (ph.getPage()-1) * ph.getPageSize());
-//		map.put("pageSize", ph.getPageSize());
-//		
-//		// map에 담아준 오프셋과 페이지사이즈 조건에 맞게 상품정보를 받아온다.
-//		List<Product> list = productService.getPageList(map);
-//		
-//		// 페이지정보를 모델에 담는다.
-//		model.addAttribute("list", list);
-//		model.addAttribute("ph", ph);
-//		model.addAttribute("uploadPath", uploadPath);
-//		
-//		return "/product/productList";
-//	}
+
 	
 	//상품 정보 조회
 	@GetMapping("/productInfo")
@@ -126,7 +91,7 @@ public class ProductController {
 		// 페이지 정보를 담는다.
 		model.addAttribute("ph", ph);
 		
-		System.out.println(csc.getDetail() + "확인");
+		
 		
 		
 		//2차 분류가 있을 경우
@@ -150,7 +115,7 @@ public class ProductController {
 	// 브랜드 상품페이지로 이동
 	@GetMapping("/brandPage")
 	public String brandPage(BrandSearchCondition bsc, Model model ) {
-		System.out.println("키워드 출력:" + bsc.getKeyword());
+		
 		
 		// 페이징 처리 필요
 //		처음 화면에 들어왔을 경우 페이지와 페이지사이즈 정보가 없으니 기본값세팅
@@ -160,7 +125,7 @@ public class ProductController {
 		// 브랜드 상품의 총 수량을 DB에서 받아온다.
 		int totalCount = productService.getBrandProduct_SearchCount(bsc);
 		
-		System.out.println(totalCount);
+		
 				
 		// 페이징 처리
 		

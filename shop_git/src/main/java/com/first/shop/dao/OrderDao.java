@@ -18,9 +18,7 @@ public interface OrderDao {
 	
 	int kakaopay_orderproduct(OrderProduct orderProduct);
 	
-	int update(User user);
-	
-	int update(Product product);
+	int updateUser(User user);
 	
 	User user(String id);
 	
@@ -35,4 +33,14 @@ public interface OrderDao {
 	List<Purchase_History> purchase_History(Map map);
 	
 	int purchase_Count(String user_id);
+	
+	int updateStock(List<Product> products);
+
+	List<Product> productByIds(List<Integer> productIds);
+	
+	int deleteCart(List<Cart> carts);
+	
+	int registerOrder(List<Orders> orderList);
+	
+	int registerOrderProduct(List<OrderProduct> orderProducts);
 }

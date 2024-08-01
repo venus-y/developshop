@@ -18,8 +18,8 @@ public class AdminInterceptor implements HandlerInterceptor {
 		User user = (User)httpSession.getAttribute("user");
 		
 		if(user == null || user.getAdmincheck() == 0) {
-			System.out.println("관리자 페이지 접근권한 x");
-			response.sendRedirect("/shop");
+			
+			response.sendRedirect("loginForm");
 			return false;
 		}else {
 			return true;

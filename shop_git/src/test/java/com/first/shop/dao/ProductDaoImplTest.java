@@ -26,14 +26,14 @@ public class ProductDaoImplTest {
 	public void testList() {
 		List<Product> list = productDao.list();
 		
-		System.out.println(list);
+		
 	}
 	
 	@Test
 	// 상품 개수 조회
 	public void cnt() {
 		int prCnt = productDao.count();
-		System.out.println(prCnt);
+		
 	}
 	
 	
@@ -43,7 +43,7 @@ public class ProductDaoImplTest {
 		PageHandler ph = new PageHandler();
 		int totalCnt = productDao.count();		
 		ph.Paging(1, 2, totalCnt);
-//		System.out.println(ph);
+//		
 		
 		// 상품 페이지 정보를 가져오기 위해 필요한 값들을 map에 담아 넘겨준다.
 		Map map = new HashMap();
@@ -52,7 +52,7 @@ public class ProductDaoImplTest {
 		map.put("pageSize", ph.getPageSize());
 		
 		List<Product> list = productDao.pageList(map);
-		System.out.println(list);	
+			
 	}
 	
 	//상품 정보 조회
@@ -60,10 +60,10 @@ public class ProductDaoImplTest {
 	public void getProduct() {
 		Product product = productDao.productInfo(55);
 		if(product != null) {
-			System.out.println("조회 성공");
-			System.out.println(product);
+			
+			
 		}else {
-			System.out.println("상품이 존재하지 않습니다.");
+			
 		}
 		
 		
@@ -81,9 +81,9 @@ public class ProductDaoImplTest {
 		List<Product> list = productDao.categorySet(map);
 		
 		for(int i=0; i<list.size(); i++) {
-			System.out.print(i+"번째");
-			System.out.println(list.get(i));
-			System.out.println("------------------------");
+			
+			
+			
 		}		
 	}
 	
@@ -92,7 +92,7 @@ public class ProductDaoImplTest {
 	public void getBrandSort() {
 		List<Category> list = productDao.sortBrand();
 		
-		System.out.println(list);
+		
 	}
 	
 	// 브랜드 상품 목록 가져오기
@@ -105,7 +105,7 @@ public class ProductDaoImplTest {
 		map.put("offset", 0);
 		
 		List<Product> PList = productDao.getBrand(map);
-		System.out.println(PList);
+		
 	}
 	
 	// 브랜드 상품 총 개수 가져오기
@@ -113,7 +113,7 @@ public class ProductDaoImplTest {
 	public void getBrandProductCount() {
 		int count = productDao.categoryCount(1);
 		
-		System.out.println(count);		
+				
 	}
 	
 	// 브랜드 상품 검색 조건 테스트
@@ -124,7 +124,7 @@ public class ProductDaoImplTest {
 		List<Product> pList = productDao.getBrand_Search(brandSearchCondition); 
 		
 		for(int i=0; i<8; i++) {
-			System.out.println((i+1) + "번째" +  pList.get(i));
+			
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class ProductDaoImplTest {
 		
 		int pCount = productDao.categoryCount(csc);
 		
-		System.out.println(pCount);
+		
 	}
 	
 	

@@ -27,7 +27,7 @@ public class UploadFileSettings {
 		// 파일 이름과 uuid 사이에 '_' 구분자를 넣어 사용한다.
 		String newFileName = uuid + "_" + fileName;
 		
-		System.out.println("파일이름 출력"+newFileName);
+		
 		
 		// 이미지경로는 업로드경로에 날짜정보를 더해주는 것으로 설정
 		String imgPath = uploadPath + yyMMddPath;
@@ -44,8 +44,8 @@ public class UploadFileSettings {
 		// 업로드경로 + 파일구분자 + 파일이름을 합쳐 이미지파일경로를 생성한다.
 		File image = new File(imgPath + File.separator + newFileName);
 		
-		System.out.println("타겟"+ targetFile.getPath());
-		System.out.println("이미지"+ image.getPath());
+		
+		
 		
 		
 		// 썸네일 파일의 이름은  업로드경로와 파일구분자 + "s_" + 파일 구분자 파일이름 형태로 생성한다.

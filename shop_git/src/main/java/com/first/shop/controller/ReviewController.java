@@ -82,7 +82,7 @@ public class ReviewController {
 	@PostMapping("/checkHistory")
 	@ResponseBody
 	public int checkHistory(@RequestBody Review review) {
-		System.out.println(review +" 전달받음");
+		
 		// DB에 등록된 리뷰 정보가 있는지 확인
 		int count = reviewService.check_ReviewHistory(review);
 		// 뷰로 다시 반환
@@ -112,13 +112,13 @@ public class ReviewController {
 		map.put("pageSize", rph.getPageSize());
 		map.put("product_id", product_id);
 		
-		System.out.println(rph);
+		
 		
 		
 		List<Review> reviewList =  reviewService.getReviewList(map);
-		System.out.println("리뷰 목록 출력");
+		
 		for(int i=0; i < reviewList.size(); i++) {
-			System.out.println(reviewList.get(i));
+			
 		}
 		
 		// 리뷰페이지 정보 객체에 받아온 리뷰목록과 페이징정보를 담는다.

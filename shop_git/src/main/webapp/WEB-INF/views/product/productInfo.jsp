@@ -197,16 +197,6 @@
 			// 구한 가격을 적용해서 표시한다.
 			discountedPrice.text(formattedDiscountedPrice);		
 			
-			
-		/* 	// 적립포인트는 세일가의 1%만큼 적립된다.
-			let savepoint = $(".savepoint");
-			
-			let savepoint_value = discountedValue * 0.01;
-			
-			savepoint.text(savepoint_value); */
-			
-			
-			
 			// 선택 수량과 재고를 비교하기 위해 재고정보를 가져온다.
 			let stock = $(".stock_input").val();
 			
@@ -230,15 +220,12 @@
 			$(".cart_Btn").on("click", function () {
 				form.quantity = $(".quantity_input").val();
 				
-			// 선택한 상품수량과 상품재고를 비교해서 선택수량이 상품재고보다 많을 시 알림 메시지를 띄운다.
 				
 			if(${empty sessionScope.user}){
 				
-				// 로그인에 성공 후 현재 페이지로 다시 돌아오기 위해 현재 URL을 저장한다.
 				let currentUrl = encodeURIComponent(window.location.href);
 				alert("로그인 후 이용해주세요, 로그인 화면으로 이동합니다.");
 				location.href = '/shop/login/getLogin?toURL='+currentUrl;
-				// 로그인 후 원래 있던 페이지로 이동하는 것이 자연스럽다.
 				return false;
 			}
 			
@@ -253,17 +240,12 @@
 						data : form,
 						success : function (result) {	
 							
-							// 동일한 상품이 장바구니에 존재할 경우						
 							let same = $.trim(result);
 							if(same == "same product already exists"){
 								alert(result);
 								return;
 							}
 							
-							// 잘 등록됐을 경우 등록 메세지 출력
-							alert(result)
-							
-							// 사용자에게 장바구니로 이동할껀지 묻는다.	
 							if(confirm("장바구니로 이동하시겠습니까?")){
 								location.href='/shop/cart/getCart';	
 							}

@@ -33,7 +33,7 @@ public class QuestionBoardController {
 	// 질문글 작성
 	@PostMapping("/postWrite")
 	public String postWrite(QandA qandA) {
-		System.out.println("qandA 객체 출력: " + qandA);
+		
 		questionBoardService.register_Question(qandA);
 		// 원래는 게시글 목록으로 와야함
 		return "redirect:/";
@@ -89,7 +89,7 @@ public class QuestionBoardController {
 	// 답글 등록
 	@PostMapping("/postReply")
 	public String postReply(QandA qandA) {
-		System.out.println("넘어온 정보 출력: " + qandA);
+		
 		
 		questionBoardService.register_Reply(qandA);
 		return "redirect:/question/getList";

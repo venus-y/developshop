@@ -24,19 +24,20 @@ import com.first.shop.service.AdminService;
 import com.first.shop.service.ProductService;
 import com.first.shop.utils.UploadFileSettings;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
-	
-	@Autowired
-	// 업로드 경로를 주입받는다.
-	private String uploadPath;
+public class AdminController {	
+//	@Autowired
+	private final String uploadPath;
 	
 	private final AdminService adminService;
 	
 	private final ProductService productService;
 	
-	public AdminController(AdminService adminService, ProductService productService) {
+	public AdminController(String uploadPath, AdminService adminService, ProductService productService) {
+		this.uploadPath = uploadPath;
 		this.adminService = adminService;
 		this.productService = productService;
 	}
@@ -68,7 +69,6 @@ public class AdminController {
 	// 상품 삭제 
 	@PostMapping("/deleteProduct")
 	public String delete(@RequestParam int product_id) {
-		System.out.println("여기까진 전달");
 		adminService.deleteProductInfo(product_id);
 		return "/product/productList";
 	}
@@ -79,18 +79,12 @@ public class AdminController {
 	// 매개변수로 상품정보와 파일정보를 받는다.
 	public String postRegister(Product product, MultipartFile file) throws IOException {
 		
-		System.out.println("상품 카테고리 코드 확인:" + product.getCategory_code());
-		
 		// uploadPath 값을 imgUploadPath에 넣어준다.
 		String imgUploadPath = uploadPath;
-		
-		
-		System.out.println("imgUploadPath:"+imgUploadPath);
 		
 		// 현재 년/월/일을 계산하여 경로를 생성한다.
 		String yyMMddPath = UploadFileSettings.calcPath(imgUploadPath);
 		
-		System.out.println("yyMMddPath:" +yyMMddPath);
 		
 		// 파일명 변수
 		String fileName = null;
@@ -104,16 +98,12 @@ public class AdminController {
 			// 존재하지 않는 파일일 경우 이미지없음 파일을 저장한다.
 			fileName = uploadPath + File.separator + "images" + File.separator + "noProduct.png";
 		}
-		
-		System.out.println("fileName:"+fileName);
-			
+					
 		//상품정보에 이미지정보를 추가한다. 파일 구분자 + 경로 + 구분자 + 파일명
 		product.setProduct_image(yyMMddPath + File.separator + fileName);
 		//썸네일정보를 추가해준다. 년월일 + 구분자와 구분자 사이에 "s"를 추가하고 다음에 오는 구분자 뒤에 "s_"를 추가하고 뒤에 파일명을 덧붙인다.
 		product.setProduct_thumbimage(yyMMddPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
-		System.out.println("image info:"+product.getProduct_image());
-		System.out.println("tImage info" + product.getProduct_thumbimage());
 		
 		// 뷰로부터 넘어온 상품 객체와 상품이미지를 서비스단으로 넘긴다.
 		adminService.registerProduct(product);
@@ -127,8 +117,6 @@ public class AdminController {
 			, @RequestParam("existing_thumbimage") String existingThumbImage,
             @RequestParam("existing_image") String existing_image)  throws IOException {
 		// 수정페이지에서 전달된 상품 객체의 정보로 기존 상품정보를 수정해주어야 한다.
-		System.out.println("이미지주소체크"+existing_image);
-		System.out.println("이미지주소체크2"+existingThumbImage);
 		
 		// 받아온 파일을 이미지저장소에 업로드 한다.
 		
@@ -160,7 +148,6 @@ public class AdminController {
 		// 상품 객체에 이미지정보를 세팅한다.
 		product.setProduct_image(datePath + File.separator + fileName);
 		product.setProduct_thumbimage(datePath + File.separator + "s" + File.separator + "s_" + fileName);
-		System.out.println("상품정보:"+product);
 		
 		// 수정 작업을 서비스단으로 넘긴다.
 		adminService.updateProductInfo(product);
@@ -183,25 +170,10 @@ public class AdminController {
 	@PostMapping("/deliveryInfo")
 	@ResponseBody
 	public String deliveryInfo(@RequestBody Orders orders) {
-		System.out.println("비동기처리 전달 ? :" + orders);	
 		adminService.registerDeliveryInfo(orders);		
 		return "success";
 	}
 	
 	
-	// 카테고리 불러오기
-//	@GetMapping("/getCategoryList")
-//	public void getCategory(Model model) throws JsonProcessingException {
-//		
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		
-//		List<Category> list  = adminService.getCategoryList();
-//	
-//		// 자바 객체를 String 타입의 JSON 객체로 변환해준다.
-//		String cateList = objectMapper.writeValueAsString(list);
-//		// 받아온 카테고리 리스트를 모델에 담아 뷰로 반환
-//		
-//		
-//	}
 	
 }

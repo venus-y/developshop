@@ -93,7 +93,7 @@ public class KakaoService {
 				 result += br_line;
 			 }
 			 
-			 System.out.println("response:" + result);
+			 
 			 
 			 JsonParser parser = new JsonParser();
 			 JsonElement element = parser.parse(result);

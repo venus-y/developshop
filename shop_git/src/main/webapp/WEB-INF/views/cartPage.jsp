@@ -215,7 +215,6 @@
 				headers: {"content-type" : "application/json"},
 				// 성공 시 삭제 완료 메시지를 띄운다.
 				success: function (result) {
-					alert("result:"+result);
 					alert("해당 상품을 장바구니에서 삭제하였습니다.");	
 					location.reload(true);
 				}, error: function (error) {
@@ -325,19 +324,13 @@
 							// 받아온 재고 정보
 							let stock = response;
 							
-							 alert("재고를 검사해야 할 횟수 " + totalChecked);
 							
 							 if(quantity > stock) {
 								stock_check = false;
 								// alert을 위에 두면 아래 코드가 실행되기를 기다리지 않고 이후의 처리를 진행하므로 순서에 유의
-								alert("요청수량이 재고보다 많음 -> 현재 통과된 횟수: " + checkedCount);
-						        alert("주문form 제출가능여부: " + stock_check);						       
-								alert($(element).find(".product_name").val() + "의 재고가 부족합니다.");		       
 							}else if(quantity <= stock){
 								// 통과할 경우 카운트 증가
 								checkedCount ++;
-								alert("재고가 충분함 -> 현재 통과된 횟수: " + checkedCount);
-						        alert("주문form 제출가능여부: " + stock_check);								
 							}
 							
 							
@@ -345,7 +338,6 @@
 							 if(checkedCount === totalChecked){	
 								 stock_check = true;
 								 if(stock_check){
-								 alert("다 통과됐을 때 실행");
 								 // 값을 담아서 주문폼에 추가
 			                     $(".order_form").append("<input type='hidden' name='cartCheck' value='" + cartCheck + "'>");
 			                     $(".order_form").submit();	

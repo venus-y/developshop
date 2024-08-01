@@ -9,7 +9,7 @@ public class BrandSearchCondition {
 	private String keyword = "";
 	
 	public BrandSearchCondition(Integer page, Integer pageSize, String keyword, int category_code) {
-		System.out.println("검색조건 생성자 실행");
+		
 		// page와 pageSize가 전달됐을 경우에만 담아준다.
 		if(page != null && pageSize != null) {
 			this.page = page;

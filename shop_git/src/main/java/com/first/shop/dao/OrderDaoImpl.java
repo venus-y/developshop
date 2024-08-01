@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,55 +19,49 @@ import com.first.shop.dto.User;
 @Repository
 public class OrderDaoImpl implements OrderDao {
 	
-	String namespace="com.first.shop.dao.OrderMapper.";
+	String namespace="com.first.shop.dao.OrderMapper.";	
 	
 	@Autowired
 	SqlSession session;
 	
-	// 주문정보 등록
+	@Autowired
+	SqlSessionTemplate sqlSessionTemplate;
+	
+	@Override
+	public List<Product> productByIds(List<Integer> productIds) {
+		return session.selectList(namespace+"selectProductsByIds", productIds);
+	}
+	
 	@Override
 	public int register(Orders orders) {
-		return session.insert(namespace+"register_product", orders); 
+		return session.insert(namespace+"registerOrder", orders); 
 	}
 	
-	// 주문상품정보 등록
 	@Override
 	public int order_product(OrderProduct orderProduct) {
-		return session.insert(namespace+"register_order_product", orderProduct);
+		return session.insert(namespace+"registerOrderproduct", orderProduct);
 	}
 	
-	// 유저 금액, 포인트정보 업데이트
 	@Override
-	public int update(User user) {
-		return session.update(namespace+"update_user", user);
+	public int updateUser(User user) {
+		return session.update(namespace+"updateUser", user);
 	}
 	
-	// 상품 재고 업데이트
-	@Override
-	public int update(Product product) {
-		return session.update(namespace+"update_stock", product);
-	}
-	
-	
-	// 주문 유저 정보 받아오기
 	@Override
 	public User user(String id) {
-		return session.selectOne(namespace+"orderUser_info", id);
+		return session.selectOne(namespace+"orderUserInfo", id);
 	}
 
-	// 주문 상품 정보 받아오기
 	@Override
 	public Product product(int product_id) {
-		return session.selectOne(namespace+"orderProduct_info", product_id);		
+		return session.selectOne(namespace+"orderProductInfo", product_id);		
 	}
 	
-	// 주문이 완료된 상품을 장바구니에서 제거
 	@Override
 	public int delete(Cart cart) {
-		return session.delete(namespace+"delete_Ordered_Cart", cart);
+		return session.delete(namespace+"deleteOrderedCart", cart);
 	}
 	
-	// 배송정보 등록
 	@Override
 	public int delivery_info(DeliveryInfo deliveryInfo) {
 		return session.insert(namespace+"register_delivery_info", deliveryInfo);
@@ -75,25 +70,73 @@ public class OrderDaoImpl implements OrderDao {
 	// 카카오페이 주문정보 등록
 	@Override
 	public int kakaopay_order(Orders orders) {
-		return session.insert(namespace+"register_product", orders);
+		return session.insert(namespace+"registerOrder", orders);
 	}
 	
-	// 카카오페이 주문상품정보 등록
 	@Override
 	public int kakaopay_orderproduct(OrderProduct orderProduct) {
-		return session.insert(namespace+"register_order_product", orderProduct);
+		return session.insert(namespace+"registerOrderproduct", orderProduct);
 	}
-	
-	// 유저의 구매 이력 가져오기
+
 	@Override
 	public List<Purchase_History> purchase_History(Map map) {
-		return session.selectList(namespace+"get_Purchase_History", map);
+		return session.selectList(namespace+"getPurchaseHistory", map);
 	}
 
 	@Override
 	public int purchase_Count(String user_id) {
-		return session.selectOne(namespace+"get_Purchase_Count", user_id);
+		return session.selectOne(namespace+"getPurchaseCount", user_id);
 	}
+	
+    @Override
+    public int deleteCart(List<Cart> carts) {
+        try (SqlSession session = sqlSessionTemplate.getSqlSessionFactory().openSession(org.apache.ibatis.session.ExecutorType.BATCH)) {
+            for (Cart cart : carts) {
+                session.delete(namespace + "deleteOrderedCart", cart);
+            }
+            session.commit();
+        }
+        return carts.size();
+    }
+
+    @Override
+    public int registerOrder(List<Orders> orderList) {
+        try (SqlSession session = sqlSessionTemplate.getSqlSessionFactory().openSession(org.apache.ibatis.session.ExecutorType.BATCH)) {
+            for (Orders order : orderList) {
+                session.insert(namespace + "registerOrder", order);
+            }
+            session.commit();
+        }
+        return orderList.size();
+    }
+
+    @Override
+    public int registerOrderProduct(List<OrderProduct> orderProducts) {
+        try (SqlSession session = sqlSessionTemplate.getSqlSessionFactory().openSession(org.apache.ibatis.session.ExecutorType.BATCH)) {
+            for (OrderProduct orderProduct : orderProducts) {
+                session.insert(namespace + "registerOrderproduct", orderProduct);
+            }
+            session.commit();
+        }
+        return orderProducts.size();
+    }
+
+    @Override
+    public int updateStock(List<Product> products) {
+        try (SqlSession session = sqlSessionTemplate.getSqlSessionFactory().openSession(org.apache.ibatis.session.ExecutorType.BATCH)) {
+            for (Product product : products) {
+                session.update(namespace + "updateStock", product);
+            }
+            session.commit();
+        }
+        return products.size();
+    }
+	
+
+
+	
+
+	
 
 	
 

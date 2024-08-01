@@ -2,9 +2,12 @@ package com.first.shop.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Orders {
 	private String order_id;
 	private String user_id;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date order_date;
 	private int total_amount;
 	private int delivery_cost;

@@ -47,7 +47,7 @@ public class CartController {
 			model.addAttribute("cartList", cartList);
 			model.addAttribute("cartCheck", cartCheck);
 		} catch(NullPointerException e) {
-			System.out.println("세션이 만료됐습니다!");
+			
 			return "redirect:/login/getLogin";
 		}
 			
@@ -81,7 +81,7 @@ public class CartController {
 	@ResponseBody
 	public String update(@RequestBody Cart cart) {
 		// 장바구니 페이지로부터 들어온 정보에 맞게 기존의 장바구니를 새롭게 수정한다.
-		System.out.println("장바구니 객체 확인" + cart);
+		
 		int checkResult = cartService.updateCart(cart);
 		
 		if(checkResult == 0) {
@@ -96,9 +96,9 @@ public class CartController {
 	@ResponseBody
 	public String remove(@PathVariable Integer cart_id) {
 		
-//		System.out.println("BindingResult:"+result);
+//		
 		// 장바구니 번호 잘 넘어왔는지 확인
-		System.out.println("cart_id:"+cart_id);
+		
 		// 삭제 요청
 		cartService.removeCart(cart_id);
 		return "success";
@@ -108,10 +108,10 @@ public class CartController {
 	@GetMapping("/check/{product_id}")
 	@ResponseBody
 	public int check(@PathVariable Integer product_id) {
-		System.out.println("넘어간 상품 아이디:" + product_id);
+		
 		
 		int stock = cartService.getStock_int(product_id);
-		System.out.println("재고수량:"+stock);
+		
 		
 		return stock;
 	}

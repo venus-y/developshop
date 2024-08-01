@@ -14,16 +14,14 @@ public interface OrderService {
 	int registerOrders(int product_id, String id, int quantity);
 	
 	User getUserInfo(String user_id);
-
-//	int updateUser(User user);
-//	
-//	int updateProduct(Product product);
 	
-	int registerOrders2(OrdersList list, OrderProductList list2, CartList cartList, int used_point, boolean cartcheck);
+	int registerOrder(OrdersList list, OrderProductList list2, CartList cartList, int used_point, boolean cartcheck);
 
 	int kakaopay_OrderRegister(OrderProductandCartList orderProductandCartList);
 
 	List<Purchase_History> get_Purchase_History (Map map);
 	
 	int get_Purchase_Count (String user_id);
+	
 }
+

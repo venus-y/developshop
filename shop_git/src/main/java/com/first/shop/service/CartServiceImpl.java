@@ -31,7 +31,7 @@ public class CartServiceImpl implements CartService {
 		
 		// 총 적립포인트, 총 가격정보를 초기화해준다.
 		cart.init();
-		System.out.println("cart정보:"+cart);
+		
 		return cartDao.register(cart);
 	}
 	

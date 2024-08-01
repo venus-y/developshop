@@ -140,7 +140,7 @@ public class PageHandler {
 		
 		//시작페이지는 (현재 페이지-1)/navSize  * navSize + 1로 한다.
 		startPage = ((bsc.getPage()-1)/navSize)*navSize + 1;
-		System.out.println(startPage + " 시작페이지체크");
+		
 		
 
 		//최대페이지는 최대페이지 cnt값으로 한다.

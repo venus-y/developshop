@@ -34,8 +34,6 @@ public class LoginController {
 	public String postLogin(User user, boolean rememberId, HttpServletRequest request,
 			HttpServletResponse response, String toURL) throws UnsupportedEncodingException {
 		
-		System.out.println("요청은 갔나?");
-		
 		User dbUser = loginService.checkUser(user);
 		// 로그인 실패시 메세지와 함께 로그인 페이지로 재이동시킨다.
 		String msg = URLEncoder.encode("아이디나 비밀번호가 일치하지 않습니다.","utf-8");
@@ -56,10 +54,7 @@ public class LoginController {
 			Cookie cookie = new Cookie("id", dbUser.getId());
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
-		}
-		System.out.println("toURL: [" + toURL + "]");
-		System.out.println("toURL is empty: " + toURL.isEmpty());
-		
+		}		
 		return toURL.isEmpty() ? "redirect:/" : "redirect:" + toURL;
 	}
 	

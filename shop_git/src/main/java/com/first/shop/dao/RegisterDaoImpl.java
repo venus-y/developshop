@@ -28,7 +28,7 @@ public class RegisterDaoImpl implements RegisterDao {
 	@Override
 	public int check(User user) {
 		int cnt = session.selectOne(namespace+"idCheck",user); 
-		System.out.println(cnt);
+		
 		return cnt;
 		
 	}

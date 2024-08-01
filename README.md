@@ -19,7 +19,8 @@
 
 
 ## 🗺️ ERD
-<img width="616" alt="ERD" src="https://github.com/Venus1234567/developshop/assets/102720261/a8b6bddf-5295-478e-9a65-1a27ac3ce227">
+![shop_erd](https://github.com/user-attachments/assets/f56607b5-087e-4444-847f-0d3d31daf82d)
+
 
 <br>
 
